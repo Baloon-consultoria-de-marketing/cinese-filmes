@@ -1,8 +1,6 @@
 import type { Metadata } from "next";
 import { Inter, Raleway, Roboto } from "next/font/google";
-import { Header } from "./components/Header";
-import { Footer } from "./components/Footer";
-import "./globals.css";
+import "../globals.css";
 
 // Configuração da Inter
 const inter = Inter({
@@ -35,11 +33,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="pt-br">
-      <body className={`${inter.variable} ${raleway.variable} ${roboto.variable} antialiased`}>
-        <Header />
-        {children}
-        <Footer />
-      </body>
+      <body className={`${inter.variable} ${raleway.variable} ${roboto.variable} antialiased`}>{children}</body>
     </html>
   );
 }
