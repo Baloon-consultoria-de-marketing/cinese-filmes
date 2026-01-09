@@ -3,7 +3,7 @@ import Link from "next/link";
 
 export const Footer = () => {
   return (
-    <footer className="flex flex-col items-center justify-center gap-8 ">
+    <footer className=" flex flex-col items-center justify-between gap-8 ">
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 w-full max-w-7xl px-4">
         <div>
           <p className="font-normal font-[raleway] text-lg md:text-xl">CINESE</p>
@@ -32,7 +32,7 @@ export const Footer = () => {
       </div>
       <div className="w-full bg-(--color-dark-obsidian) p-4">
         <div className="flex items-center justify-center">
-          <p className="text-xs md:text-sm text-gray-500 text-center">&copy; {new Date().getFullYear()} Cinese Filmes. Todos os direitos reservados.</p>
+          <p className="text-xs md:text-sm text-(--color-white) text-center">&copy; {new Date().getFullYear()} Cinese Filmes. Todos os direitos reservados.</p>
         </div>
       </div>
     </footer>

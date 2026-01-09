@@ -1,5 +1,6 @@
 import React from "react";
 import Image from "next/image";
+import Link from "next/link";
 
 interface WhatsappButtonProps {
   position?: "bottom-right" | "bottom-left" | "top-right" | "top-left";
@@ -37,11 +38,10 @@ export const WhatsappButton: React.FC<WhatsappButtonProps> = ({
             text-align: center;
             position: absolute;
             display: block;
-            right: calc(0% - 100px);
+            right: calc(50% - 100px);
             min-width: 200px;
             max-width: 200px;
-            bottom: calc(100% + 40px);
-            transform: translate(-50%);
+            bottom: calc(100% + 20px);
             animation: fade-in 500ms ease;
             background: #00E785;
             border-radius: 4px;
@@ -61,31 +61,21 @@ export const WhatsappButton: React.FC<WhatsappButtonProps> = ({
             to { opacity: 1; }
           }
         `}</style>
-
-      <a
-        data-wa-tooltip={tooltipText}
+      <Link
+        href={whatsappUrl}
         target="_blank"
         rel="noopener noreferrer"
-        href={whatsappUrl}
+        data-wa-tooltip={tooltipText}
+        className="fixed flex items-center justify-center cursor-pointer no-underline text-lg font-semibold font-sans z-999999999 rounded-full"
         style={{
-          cursor: "pointer",
-          height: "auto",
-          width: "auto",
-          position: "fixed",
           ...positionStyles[position],
-          display: "flex",
-          textDecoration: "none",
-          fontSize: "18px",
-          fontWeight: 600,
-          fontFamily: "sans-serif",
-          alignItems: "center",
-          zIndex: 999999999,
-          borderRadius: "100px",
           animation: "pulse 2.5s ease infinite",
+          width: "60px",
+          height: "60px",
         }}
       >
-        <Image src="/whatsappButton.png" alt="WhatsApp" width={60} height={60} />
-      </a>
+        <Image className="rounded-full" src="/whatsappButton.png" alt="WhatsApp" width={60} height={60} />
+      </Link>
     </>
   );
 };
