@@ -2,9 +2,12 @@
 
 import { useEffect, useState } from "react";
 
-export const SectionNav = () => {
+interface SectionNavProps {
+  sections: string[];
+}
+
+export const SectionNav = ({ sections }: SectionNavProps) => {
   const [activeSection, setActiveSection] = useState(0);
-  const sections = ["section-1", "section-2", "section-3"];
 
   useEffect(() => {
     const observers: IntersectionObserver[] = [];
@@ -32,7 +35,7 @@ export const SectionNav = () => {
     return () => {
       observers.forEach((observer) => observer.disconnect());
     };
-  }, []);
+  }, [sections]);
 
   const scrollToSection = (index: number) => {
     const element = document.getElementById(sections[index]);
@@ -42,9 +45,14 @@ export const SectionNav = () => {
   };
 
   return (
-    <nav className="fixed right-8 top-1/2 -translate-y-1/2 z-40 flex flex-col gap-4">
+    <nav className="fixed right-8 top-1/2 -translate-y-1/2 z-40 flex flex-col gap-4 ">
       {sections.map((_, index) => (
-        <button key={index} onClick={() => scrollToSection(index)} className="group relative flex items-center justify-center" aria-label={`Ir para seção ${index + 1}`}>
+        <button
+          key={index}
+          onClick={() => scrollToSection(index)}
+          className="group relative flex items-center justify-center cursor-pointer hover:transform hover:scale-110 ease-in-out duration-300"
+          aria-label={`Ir para seção ${index + 1}`}
+        >
           <div className={`w-3 h-3 rounded-full border-2 transition-all duration-300 ${activeSection === index ? "bg-white border-white scale-125" : "bg-transparent border-white hover:scale-110"}`} />
         </button>
       ))}
