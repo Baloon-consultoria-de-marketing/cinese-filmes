@@ -1,7 +1,6 @@
 "use client";
 
 import { WhatsappButton } from "../components/whatsapp-button";
-import { SectionNav } from "../components/SectionNav";
 import Image from "next/image";
 
 export default function Content() {
