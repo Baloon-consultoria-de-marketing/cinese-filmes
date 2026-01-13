@@ -1,0 +1,18 @@
+export const mockImages = [
+  { src: "/microsoft.png", alt: "Microsoft" },
+  { src: "/serasa.png", alt: "Serasa" },
+  { src: "/porto.png", alt: "Porto" },
+  { src: "/klabin.png", alt: "Klabin" },
+  { src: "/skyone.png", alt: "Skyone" },
+  { src: "/atlantica-hotels.png", alt: "Atlantica Hotels" },
+  { src: "/printbag.png", alt: "Printbag" },
+  { src: "/aramis.png", alt: "Aramis" },
+  { src: "/prevent-senior.png", alt: "Prevent Senior" },
+  { src: "/bunzl.png", alt: "Bunzl" },
+  { src: "/john-deere.png", alt: "John Deere" },
+  { src: "/renault.png", alt: "Renault" },
+  { src: "/vivo.png", alt: "Vivo" },
+  { src: "/hbo.png", alt: "HBO" },
+  { src: "/netshoes.png", alt: "Netshoes" },
+  { src: "/cloud-target.png", alt: "Cloud Target" },
+];
