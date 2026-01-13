@@ -2,10 +2,13 @@
 
 import { WhatsappButton } from "./components/whatsapp-button";
 import { SectionNav } from "./components/SectionNav";
+import { Header } from "./components/Header";
+import { Footer } from "./components/Footer";
 
 export default function Home() {
   return (
     <>
+      <Header />
       <main className="w-full mb-10">
         {/* Seção 1 */}
         <section id="section-1" className="relative w-full md:aspect-video aspect-9/16 md:h-auto h-screen overflow-hidden">
@@ -48,6 +51,7 @@ export default function Home() {
       </main>
       <SectionNav sections={["section-1", "section-2", "section-3"]} />
       <WhatsappButton />
+      <Footer />
     </>
   );
 }

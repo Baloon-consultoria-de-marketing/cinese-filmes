@@ -1,11 +1,14 @@
 "use client";
 
+import { Footer } from "../components/Footer";
+import { Header } from "../components/Header";
 import { WhatsappButton } from "../components/whatsapp-button";
 import Image from "next/image";
 
 export default function Content() {
   return (
     <>
+      <Header fullWidth={true} />
       <main className="w-full mb-10">
         <section className="relative w-full aspect-video overflow-hidden">
           <video className="w-full h-full object-cover" autoPlay loop muted playsInline preload="auto">
@@ -60,6 +63,7 @@ export default function Content() {
         <section></section>
         <WhatsappButton />
       </main>
+      <Footer />
     </>
   );
 }

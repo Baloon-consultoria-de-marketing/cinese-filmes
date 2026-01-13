@@ -35,11 +35,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="pt-br">
-      <body className={`${inter.variable} ${raleway.variable} ${roboto.variable} antialiased`}>
-        <Header />
-        {children}
-        <Footer />
-      </body>
+      <body className={`${inter.variable} ${raleway.variable} ${roboto.variable} antialiased`}>{children}</body>
     </html>
   );
 }
