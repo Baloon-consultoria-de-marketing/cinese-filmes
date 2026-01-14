@@ -19,6 +19,32 @@ export interface ModalData {
   }[];
 }
 
+export interface GalleryModalData {
+  title: string;
+  subtitle: string;
+  images: {
+    src: string;
+    alt: string;
+    width?: number;
+    height?: number;
+  }[];
+}
+
+export const galleryModalData: GalleryModalData = {
+  title: "EVENTOS ETC",
+  subtitle: "Sua reprodução e seu maior programa de beneficiamento veio as melhores talentos.",
+  images: [
+    { src: "/teste.mp4", alt: "Imagem 1", width: 300, height: 400 },
+    { src: "/teste.mp4", alt: "Imagem 2", width: 300, height: 300 },
+    { src: "/teste.mp4", alt: "Imagem 3", width: 300, height: 500 },
+    { src: "/teste.mp4", alt: "Imagem 4", width: 300, height: 300 },
+    { src: "/teste.mp4", alt: "Imagem 5", width: 300, height: 400 },
+    { src: "/teste.mp4", alt: "Imagem 6", width: 300, height: 300 },
+    { src: "/teste.mp4", alt: "Imagem 7", width: 300, height: 350 },
+    { src: "/teste.mp4", alt: "Imagem 8", width: 300, height: 300 },
+  ],
+};
+
 export const modalDataMap: Record<string, ModalData> = {
   treinamento: {
     category: "EFICIÊNCIA, PADRONIZAÇÃO E ENGAJAMENTO",

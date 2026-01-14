@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { ModalData } from "../content/modalMock";
 
 interface ModalProps {
@@ -13,6 +13,7 @@ interface ModalProps {
 export const Modal = ({ isOpen, onClose, data, color }: ModalProps) => {
   const [carouselFilter, setCarouselFilter] = useState<string>(data.tabs[0]?.id || "");
   const [prevDataId, setPrevDataId] = useState<string | undefined>(undefined);
+  const [isClosing, setIsClosing] = useState(false);
 
   // Reset para a primeira aba quando trocar de modal
   if (data.tabs[0]?.id !== prevDataId) {
@@ -20,7 +21,15 @@ export const Modal = ({ isOpen, onClose, data, color }: ModalProps) => {
     setCarouselFilter(data.tabs[0]?.id || "");
   }
 
-  if (!isOpen) return null;
+  const handleClose = () => {
+    setIsClosing(true);
+    setTimeout(() => {
+      setIsClosing(false);
+      onClose();
+    }, 500);
+  };
+
+  if (!isOpen && !isClosing) return null;
 
   const colorMap = {
     blue: "bg-[var(--color-blue-light)]",
@@ -33,12 +42,12 @@ export const Modal = ({ isOpen, onClose, data, color }: ModalProps) => {
   });
 
   return (
-    <div className="relative z-30 w-full flex justify-center">
-      <div className={`relative -mt-12 w-full max-w-[80%] rounded-2xl shadow-2xl overflow-hidden ${colorMap[color]}`}>
+    <div className={`relative z-30 w-full flex justify-center ${isClosing ? "animate-slideDown" : "animate-slideUp"}`}>
+      <div className={`relative -mt-8 w-full max-w-[80%] rounded-2xl shadow-2xl overflow-hidden ${colorMap[color]}`}>
         {/* Header com botão de fechar */}
         <div className="flex items-start justify-end pt-4 px-4">
           <button
-            onClick={onClose}
+            onClick={handleClose}
             className="text-gray-900 hover:text-white text-2xl font-bold w-10 h-10 flex items-center justify-center cursor-pointer rounded-full transition-all duration-300"
             aria-label="Fechar modal"
           >
@@ -132,6 +141,46 @@ export const Modal = ({ isOpen, onClose, data, color }: ModalProps) => {
             opacity: 1;
             transform: translateY(0);
           }
+        }
+        @keyframes fadeOut {
+          from {
+            opacity: 1;
+          }
+          to {
+            opacity: 0;
+          }
+        }
+        @keyframes slideUp {
+          from {
+            opacity: 0;
+            transform: translateY(30px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+        @keyframes slideDown {
+          from {
+            opacity: 1;
+            transform: translateY(0);
+          }
+          to {
+            opacity: 0;
+            transform: translateY(30px);
+          }
+        }
+        .animate-fadeIn {
+          animation: fadeIn 0.5s ease-in-out;
+        }
+        .animate-fadeOut {
+          animation: fadeOut 0.5s ease-in-out;
+        }
+        .animate-slideUp {
+          animation: slideUp 0.5s ease-in-out;
+        }
+        .animate-slideDown {
+          animation: slideDown 0.5s ease-in-out;
         }
         .scrollbar-hide::-webkit-scrollbar {
           display: none;

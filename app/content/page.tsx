@@ -8,7 +8,8 @@ import { mockImages } from "./mockImages";
 import React from "react";
 import { Button } from "../components/Button";
 import { Modal } from "../components/Modal";
-import { modalDataMap, ModalData } from "./modalMock";
+import { GalleryModal } from "../components/GalleryModal";
+import { modalDataMap, ModalData, galleryModalData } from "./modalMock";
 import Swal from "sweetalert2";
 
 export default function Content() {
@@ -18,6 +19,7 @@ export default function Content() {
   const [modalColor, setModalColor] = React.useState<"blue" | "gray" | "yellow">("blue");
   const [phoneValue, setPhoneValue] = React.useState("");
   const [emailError, setEmailError] = React.useState("");
+  const [showGalleryModal, setShowGalleryModal] = React.useState(false);
 
   const openModal = (key: string, color: "blue" | "gray" | "yellow", section: string) => {
     setModalData(modalDataMap[key]);
@@ -25,9 +27,16 @@ export default function Content() {
     setActiveSection(section);
   };
 
+  const openGalleryModal = (color: "blue" | "gray" | "yellow", section: string) => {
+    setModalColor(color);
+    setActiveSection(section);
+    setShowGalleryModal(true);
+  };
+
   const closeModal = () => {
     setActiveSection(null);
     setModalData(null);
+    setShowGalleryModal(false);
   };
 
   const formatPhone = (value: string) => {
@@ -188,11 +197,7 @@ export default function Content() {
                 PROPÓSITO
               </Button>
             </div>
-            {modalData && activeSection === "inbound" && (
-              <div className="-mt-16 px-4 pt-20">
-                <Modal isOpen={true} onClose={closeModal} data={modalData} color={modalColor} />
-              </div>
-            )}
+            {modalData && activeSection === "inbound" && <Modal isOpen={true} onClose={closeModal} data={modalData} color={modalColor} />}
           </div>
         </section>
         <section className="flex justify-center">
@@ -212,11 +217,7 @@ export default function Content() {
                 PROPÓSITO
               </Button>
             </div>
-            {modalData && activeSection === "endomarketing" && (
-              <div className="-mt-16 px-4 pt-20">
-                <Modal isOpen={true} onClose={closeModal} data={modalData} color={modalColor} />
-              </div>
-            )}
+            {modalData && activeSection === "endomarketing" && <Modal isOpen={true} onClose={closeModal} data={modalData} color={modalColor} />}
           </div>
         </section>
         <section className="flex justify-center">
@@ -226,15 +227,11 @@ export default function Content() {
               <Image src="/EMPLOYER-BRANDING-MOBILE.png" alt="Inbound Marketing" width={1920} height={1080} className="block md:hidden" />
             </div>
             <div className="flex w-full justify-center items-center gap-4 mt-8 relative z-40">
-              <Button color="blue" onClick={() => openModal("saiba-mais", "blue", "employer")}>
+              <Button color="blue" onClick={() => openGalleryModal("blue", "employer")}>
                 SAIBA MAIS
               </Button>
             </div>
-            {modalData && activeSection === "employer" && (
-              <div className="-mt-16 px-4 pt-20">
-                <Modal isOpen={true} onClose={closeModal} data={modalData} color={modalColor} />
-              </div>
-            )}
+            {showGalleryModal && activeSection === "employer" && <GalleryModal isOpen={true} onClose={closeModal} data={galleryModalData} />}
           </div>
         </section>
         <section className="flex mt-8 flex-col items-center rounded-xl lg:flex-row gap-8 lg:gap-12 px-12 py-16 max-w-7xl mx-auto" style={{ boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.15)" }}>
