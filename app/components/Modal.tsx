@@ -152,10 +152,9 @@ export const Modal = ({ isOpen, onClose, data, color, showSolutions = false }: M
                       }}
                     >
                       <div className="relative mb-3 rounded-xl overflow-hidden bg-gray-200 aspect-video shadow-md">
-                        <video className="w-full h-full object-cover" src={item.thumbnail} muted playsInline />
+                        <video className="w-full h-full object-cover" src={typeof item.thumbnail === "string" ? item.thumbnail : undefined} muted playsInline />
                         <div className="absolute bottom-2 right-2 bg-black/80 text-white text-xs px-2 py-1 rounded font-semibold">{item.duration}</div>
                       </div>
-                      <p className="text-sm font-bold mb-1 text-gray-900">{item.title}</p>
                       <p className="text-xs text-gray-600 leading-relaxed">{item.description}</p>
                     </div>
                   ))}

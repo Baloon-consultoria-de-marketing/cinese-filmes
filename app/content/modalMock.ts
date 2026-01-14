@@ -16,7 +16,6 @@ export interface ModalData {
     type: string;
     thumbnail: string;
     duration: string;
-    title: string;
     description: string;
   }[];
 }
@@ -61,23 +60,32 @@ export const modalDataMapInbound: Record<string, ModalData> = {
     carouselItems: [
       {
         type: "reels",
-        thumbnail: "/public/portfolio/amem.png",
+        thumbnail: "/teste.mp4",
         duration: "4:31",
-        title: "Vídeo 1",
         description: "Quem não instrui o cliente em sua jornada de compra, acaba perdendo ele para o concorrente.",
       },
       {
         type: "shorts",
-        thumbnail: "/public/portfolio/cinese.png",
+        thumbnail: "/teste.mp4",
         duration: "5:01",
-        title: "Vídeo 2",
+        description: "Quem não instrui o cliente em sua jornada de compra, acaba perdendo ele para o concorrente.",
+      },
+      {
+        type: "shorts",
+        thumbnail: "/teste.mp4",
+        duration: "5:01",
         description: "Quem não instrui o cliente em sua jornada de compra, acaba perdendo ele para o concorrente.",
       },
       {
         type: "reels",
-        thumbnail: "/public/portfolio/fair-price.png",
+        thumbnail: "/teste.mp4",
         duration: "2:44",
-        title: "Vídeo 3",
+        description: "Quem não instrui o cliente em sua jornada de compra, acaba perdendo ele para o concorrente.",
+      },
+      {
+        type: "reels",
+        thumbnail: "/teste.mp4",
+        duration: "2:44",
         description: "Quem não instrui o cliente em sua jornada de compra, acaba perdendo ele para o concorrente.",
       },
     ],
@@ -104,30 +112,26 @@ export const modalDataMapInbound: Record<string, ModalData> = {
     carouselItems: [
       {
         type: "animacoes",
-        thumbnail: "/public/portfolio/amem.png",
+        thumbnail: "/teste.mp4",
         duration: "4:31",
-        title: "Cultura 1",
         description: "Quem não instrui o cliente em sua jornada de compra, acaba perdendo ele para o concorrente.",
       },
       {
         type: "institucional",
-        thumbnail: "/public/portfolio/cinese.png",
+        thumbnail: "/teste.mp4",
         duration: "5:01",
-        title: "Cultura 2",
         description: "Quem não instrui o cliente em sua jornada de compra, acaba perdendo ele para o concorrente.",
       },
       {
         type: "explicativos",
-        thumbnail: "/public/portfolio/fair-price.png",
+        thumbnail: "/teste.mp4",
         duration: "2:44",
-        title: "Cultura 3",
         description: "Quem não instrui o cliente em sua jornada de compra, acaba perdendo ele para o concorrente.",
       },
       {
         type: "branded",
-        thumbnail: "/public/portfolio/cinese.png",
+        thumbnail: "/teste.mp4",
         duration: "5:01",
-        title: "Cultura 4",
         description: "Quem não instrui o cliente em sua jornada de compra, acaba perdendo ele para o concorrente.",
       },
     ],
@@ -135,8 +139,7 @@ export const modalDataMapInbound: Record<string, ModalData> = {
   proposito: {
     category: "FUNDO DO FUNIL",
     title: "DECISÃO",
-    description:
-      "Objetivo: Converter leads em clientes, incentivando a tomada de decisão com base em confiança e prova social.\n\nSoluções Indicadas:\n• Videocases: Mostram resultados reais e histórias de sucesso, encurtando a jornada de compra.\n• Vídeos Publicitários: Comunicação focada em conversão, com apelo direto e criativo.\n• Campanhas de Retargeting: Vídeos curtos e segmentados para públicos que já demonstraram interesse na marca.",
+    description: "Objetivo: Converter leads em clientes, incentivando a tomada de decisão com base em confiança e prova social.",
     solutionStrong: ["Videocases:", "Vídeos Publicitários:", "Campanhas de Retargeting:"],
     solutions: [
       " Mostram resultados reais e histórias de sucesso, encurtando a jornada de compra.",
@@ -153,30 +156,26 @@ export const modalDataMapInbound: Record<string, ModalData> = {
     carouselItems: [
       {
         type: "videocases",
-        thumbnail: "/public/portfolio/amem.png",
+        thumbnail: "/teste.mp4",
         duration: "4:31",
-        title: "Propósito 1",
         description: "Quem não instrui o cliente em sua jornada de compra, acaba perdendo ele para o concorrente.",
       },
       {
         type: "publicitarios",
-        thumbnail: "/public/portfolio/cinese.png",
+        thumbnail: "/teste.mp4",
         duration: "5:01",
-        title: "Propósito 2",
         description: "Quem não instrui o cliente em sua jornada de compra, acaba perdendo ele para o concorrente.",
       },
       {
         type: "retargeting",
-        thumbnail: "/public/portfolio/fair-price.png",
+        thumbnail: "/teste.mp4",
         duration: "2:44",
-        title: "Propósito 3",
         description: "Quem não instrui o cliente em sua jornada de compra, acaba perdendo ele para o concorrente.",
       },
       {
         type: "videocases",
-        thumbnail: "/public/portfolio/cinese.png",
+        thumbnail: "/teste.mp4",
         duration: "5:01",
-        title: "Propósito 4",
         description: "Quem não instrui o cliente em sua jornada de compra, acaba perdendo ele para o concorrente.",
       },
     ],
@@ -194,23 +193,20 @@ export const modalDataMapInbound: Record<string, ModalData> = {
     carouselItems: [
       {
         type: "apresentacao",
-        thumbnail: "/public/portfolio/amem.png",
+        thumbnail: "/teste.mp4",
         duration: "4:31",
-        title: "Institucional 1",
         description: "Apresente sua empresa de forma profissional.",
       },
       {
         type: "cases",
-        thumbnail: "/public/portfolio/cinese.png",
+        thumbnail: "/teste.mp4",
         duration: "5:01",
-        title: "Institucional 2",
         description: "Conte a história da sua marca.",
       },
       {
         type: "apresentacao",
-        thumbnail: "/public/portfolio/fair-price.png",
+        thumbnail: "/teste.mp4",
         duration: "2:44",
-        title: "Institucional 3",
         description: "Conheça nossa equipe.",
       },
     ],
@@ -231,23 +227,20 @@ export const modalsDataMapEndomarketing: Record<string, ModalData> = {
     carouselItems: [
       {
         type: "reels",
-        thumbnail: "/public/portfolio/amem.png",
+        thumbnail: "/teste.mp4",
         duration: "4:31",
-        title: "Vídeo 1",
         description: "Quem não instrui o cliente em sua jornada de compra, acaba perdendo ele para o concorrente.",
       },
       {
         type: "shorts",
-        thumbnail: "/public/portfolio/cinese.png",
+        thumbnail: "/teste.mp4",
         duration: "5:01",
-        title: "Vídeo 2",
         description: "Quem não instrui o cliente em sua jornada de compra, acaba perdendo ele para o concorrente.",
       },
       {
         type: "reels",
-        thumbnail: "/public/portfolio/fair-price.png",
+        thumbnail: "/teste.mp4",
         duration: "2:44",
-        title: "Vídeo 3",
         description: "Quem não instrui o cliente em sua jornada de compra, acaba perdendo ele para o concorrente.",
       },
     ],
@@ -274,30 +267,26 @@ export const modalsDataMapEndomarketing: Record<string, ModalData> = {
     carouselItems: [
       {
         type: "animacoes",
-        thumbnail: "/public/portfolio/amem.png",
+        thumbnail: "/teste.mp4",
         duration: "4:31",
-        title: "Cultura 1",
         description: "Quem não instrui o cliente em sua jornada de compra, acaba perdendo ele para o concorrente.",
       },
       {
         type: "institucional",
-        thumbnail: "/public/portfolio/cinese.png",
+        thumbnail: "/teste.mp4",
         duration: "5:01",
-        title: "Cultura 2",
         description: "Quem não instrui o cliente em sua jornada de compra, acaba perdendo ele para o concorrente.",
       },
       {
         type: "explicativos",
-        thumbnail: "/public/portfolio/fair-price.png",
+        thumbnail: "/teste.mp4",
         duration: "2:44",
-        title: "Cultura 3",
         description: "Quem não instrui o cliente em sua jornada de compra, acaba perdendo ele para o concorrente.",
       },
       {
         type: "branded",
-        thumbnail: "/public/portfolio/cinese.png",
+        thumbnail: "/teste.mp4",
         duration: "5:01",
-        title: "Cultura 4",
         description: "Quem não instrui o cliente em sua jornada de compra, acaba perdendo ele para o concorrente.",
       },
     ],
@@ -323,30 +312,26 @@ export const modalsDataMapEndomarketing: Record<string, ModalData> = {
     carouselItems: [
       {
         type: "videocases",
-        thumbnail: "/public/portfolio/amem.png",
+        thumbnail: "/teste.mp4",
         duration: "4:31",
-        title: "Propósito 1",
         description: "Quem não instrui o cliente em sua jornada de compra, acaba perdendo ele para o concorrente.",
       },
       {
         type: "publicitarios",
-        thumbnail: "/public/portfolio/cinese.png",
+        thumbnail: "/teste.mp4",
         duration: "5:01",
-        title: "Propósito 2",
         description: "Quem não instrui o cliente em sua jornada de compra, acaba perdendo ele para o concorrente.",
       },
       {
         type: "retargeting",
-        thumbnail: "/public/portfolio/fair-price.png",
+        thumbnail: "/teste.mp4",
         duration: "2:44",
-        title: "Propósito 3",
         description: "Quem não instrui o cliente em sua jornada de compra, acaba perdendo ele para o concorrente.",
       },
       {
         type: "videocases",
-        thumbnail: "/public/portfolio/cinese.png",
+        thumbnail: "/teste.mp4",
         duration: "5:01",
-        title: "Propósito 4",
         description: "Quem não instrui o cliente em sua jornada de compra, acaba perdendo ele para o concorrente.",
       },
     ],
