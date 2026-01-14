@@ -35,14 +35,14 @@ export const galleryModalData: GalleryModalData = {
   title: "EVENTOS ETC",
   subtitle: "Sua reprodução e seu maior programa de beneficiamento veio as melhores talentos.",
   images: [
-    { src: "/teste.mp4", alt: "Imagem 1", width: 300, height: 400 },
-    { src: "/teste.mp4", alt: "Imagem 2", width: 300, height: 300 },
-    { src: "/teste.mp4", alt: "Imagem 3", width: 300, height: 500 },
-    { src: "/teste.mp4", alt: "Imagem 4", width: 300, height: 300 },
-    { src: "/teste.mp4", alt: "Imagem 5", width: 300, height: 400 },
-    { src: "/teste.mp4", alt: "Imagem 6", width: 300, height: 300 },
-    { src: "/teste.mp4", alt: "Imagem 7", width: 300, height: 350 },
-    { src: "/teste.mp4", alt: "Imagem 8", width: 300, height: 300 },
+    { src: "/amem.png", alt: "Imagem 1", width: 300, height: 400 },
+    { src: "/amem.png", alt: "Imagem 2", width: 300, height: 300 },
+    { src: "/amem.png", alt: "Imagem 3", width: 300, height: 500 },
+    { src: "/amem.png", alt: "Imagem 4", width: 300, height: 300 },
+    { src: "/amem.png", alt: "Imagem 5", width: 300, height: 400 },
+    { src: "/amem.png", alt: "Imagem 6", width: 300, height: 300 },
+    { src: "/amem.png", alt: "Imagem 7", width: 300, height: 350 },
+    { src: "/amem.png", alt: "Imagem 8", width: 300, height: 300 },
   ],
 };
 
@@ -52,7 +52,7 @@ export const modalDataMapInbound: Record<string, ModalData> = {
     title: "EAD VÍDEOS DE TREINAMENTO",
     description: "Centralização de treinamentos e formações em um canal de fácil acesso, reduzindo custos e promovendo padronização de informações.",
     benefits: ["Formação de gerações de colaboradores.", "Comunicação clara das diretrizes corporativas.", "Redução de custos com treinamentos presenciais."],
-    videoSrc: "/teste.mp4",
+    videoSrc: "/videoHorizontal.mp4",
     tabs: [
       { id: "reels", label: "Reels" },
       { id: "shorts", label: "Shorts" },
@@ -60,31 +60,31 @@ export const modalDataMapInbound: Record<string, ModalData> = {
     carouselItems: [
       {
         type: "reels",
-        thumbnail: "/teste.mp4",
+        thumbnail: "/videoHorizontal.mp4",
         duration: "4:31",
         description: "Quem não instrui o cliente em sua jornada de compra, acaba perdendo ele para o concorrente.",
       },
       {
         type: "shorts",
-        thumbnail: "/teste.mp4",
+        thumbnail: "/videoHorizontal.mp4",
         duration: "5:01",
         description: "Quem não instrui o cliente em sua jornada de compra, acaba perdendo ele para o concorrente.",
       },
       {
         type: "shorts",
-        thumbnail: "/teste.mp4",
+        thumbnail: "/videoHorizontal.mp4",
         duration: "5:01",
         description: "Quem não instrui o cliente em sua jornada de compra, acaba perdendo ele para o concorrente.",
       },
       {
         type: "reels",
-        thumbnail: "/teste.mp4",
+        thumbnail: "/videoHorizontal.mp4",
         duration: "2:44",
         description: "Quem não instrui o cliente em sua jornada de compra, acaba perdendo ele para o concorrente.",
       },
       {
         type: "reels",
-        thumbnail: "/teste.mp4",
+        thumbnail: "/videoHorizontal.mp4",
         duration: "2:44",
         description: "Quem não instrui o cliente em sua jornada de compra, acaba perdendo ele para o concorrente.",
       },
@@ -102,7 +102,7 @@ export const modalDataMapInbound: Record<string, ModalData> = {
       "Detlaham produtos, serviços ou processos, promovendo tranquilidade e clareza.",
     ],
     benefits: ["Melhora o entendimento sobre os serviços ou produtos.", "Fortalece a confiança na marca como solução ideal.", "Posiciona a empresa como autoridade no segmento."],
-    videoSrc: "/teste.mp4",
+    videoSrc: "/videoHorizontal.mp4",
     tabs: [
       { id: "animacoes", label: "Animações Explicativas" },
       { id: "institucional", label: "Vídeo Institucional" },
@@ -112,25 +112,25 @@ export const modalDataMapInbound: Record<string, ModalData> = {
     carouselItems: [
       {
         type: "animacoes",
-        thumbnail: "/teste.mp4",
+        thumbnail: "/videoHorizontal.mp4",
         duration: "4:31",
         description: "Quem não instrui o cliente em sua jornada de compra, acaba perdendo ele para o concorrente.",
       },
       {
         type: "institucional",
-        thumbnail: "/teste.mp4",
+        thumbnail: "/videoHorizontal.mp4",
         duration: "5:01",
         description: "Quem não instrui o cliente em sua jornada de compra, acaba perdendo ele para o concorrente.",
       },
       {
         type: "explicativos",
-        thumbnail: "/teste.mp4",
+        thumbnail: "/videoHorizontal.mp4",
         duration: "2:44",
         description: "Quem não instrui o cliente em sua jornada de compra, acaba perdendo ele para o concorrente.",
       },
       {
         type: "branded",
-        thumbnail: "/teste.mp4",
+        thumbnail: "/videoHorizontal.mp4",
         duration: "5:01",
         description: "Quem não instrui o cliente em sua jornada de compra, acaba perdendo ele para o concorrente.",
       },
@@ -147,7 +147,7 @@ export const modalDataMapInbound: Record<string, ModalData> = {
       " Vídeos curtos e segmentados para públicos que já demonstraram interesse na marca.",
     ],
     benefits: ["Reduz o tempo para fechamento de negócios.", "Prova de confiabilidade com cases reais.", "Geração de clientes satisfeitos e fidelizados."],
-    videoSrc: "/teste.mp4",
+    videoSrc: "/videoHorizontal.mp4",
     tabs: [
       { id: "videocases", label: "Videocases" },
       { id: "publicitarios", label: "Vídeos Publicitários" },
@@ -156,25 +156,25 @@ export const modalDataMapInbound: Record<string, ModalData> = {
     carouselItems: [
       {
         type: "videocases",
-        thumbnail: "/teste.mp4",
+        thumbnail: "/videoHorizontal.mp4",
         duration: "4:31",
         description: "Quem não instrui o cliente em sua jornada de compra, acaba perdendo ele para o concorrente.",
       },
       {
         type: "publicitarios",
-        thumbnail: "/teste.mp4",
+        thumbnail: "/videoHorizontal.mp4",
         duration: "5:01",
         description: "Quem não instrui o cliente em sua jornada de compra, acaba perdendo ele para o concorrente.",
       },
       {
         type: "retargeting",
-        thumbnail: "/teste.mp4",
+        thumbnail: "/videoHorizontal.mp4",
         duration: "2:44",
         description: "Quem não instrui o cliente em sua jornada de compra, acaba perdendo ele para o concorrente.",
       },
       {
         type: "videocases",
-        thumbnail: "/teste.mp4",
+        thumbnail: "/videoHorizontal.mp4",
         duration: "5:01",
         description: "Quem não instrui o cliente em sua jornada de compra, acaba perdendo ele para o concorrente.",
       },
@@ -185,7 +185,7 @@ export const modalDataMapInbound: Record<string, ModalData> = {
     title: "CONTEÚDOS INSTITUCIONAIS",
     description: "Materiais estratégicos para fortalecer a imagem da sua empresa no mercado e atrair os melhores talentos.",
     benefits: ["Atração de talentos qualificados.", "Fortalecimento da reputação corporativa.", "Aumento da visibilidade da marca."],
-    videoSrc: "/teste.mp4",
+    videoSrc: "/videoHorizontal.mp4",
     tabs: [
       { id: "apresentacao", label: "Apresentação" },
       { id: "cases", label: "Cases" },
@@ -193,19 +193,19 @@ export const modalDataMapInbound: Record<string, ModalData> = {
     carouselItems: [
       {
         type: "apresentacao",
-        thumbnail: "/teste.mp4",
+        thumbnail: "/videoHorizontal.mp4",
         duration: "4:31",
         description: "Apresente sua empresa de forma profissional.",
       },
       {
         type: "cases",
-        thumbnail: "/teste.mp4",
+        thumbnail: "/videoHorizontal.mp4",
         duration: "5:01",
         description: "Conte a história da sua marca.",
       },
       {
         type: "apresentacao",
-        thumbnail: "/teste.mp4",
+        thumbnail: "/videoHorizontal.mp4",
         duration: "2:44",
         description: "Conheça nossa equipe.",
       },
@@ -219,7 +219,7 @@ export const modalsDataMapEndomarketing: Record<string, ModalData> = {
     title: "EAD VÍDEOS DE TREINAMENTO",
     description: "Centralização de treinamentos e formações em um canal de fácil acesso, reduzindo custos e promovendo padronização de informações.",
     benefits: ["Formação de gerações de colaboradores.", "Comunicação clara das diretrizes corporativas.", "Redução de custos com treinamentos presenciais."],
-    videoSrc: "/teste.mp4",
+    videoSrc: "/videoHorizontal.mp4",
     tabs: [
       { id: "reels", label: "Reels" },
       { id: "shorts", label: "Shorts" },
@@ -227,19 +227,19 @@ export const modalsDataMapEndomarketing: Record<string, ModalData> = {
     carouselItems: [
       {
         type: "reels",
-        thumbnail: "/teste.mp4",
+        thumbnail: "/videoHorizontal.mp4",
         duration: "4:31",
         description: "Quem não instrui o cliente em sua jornada de compra, acaba perdendo ele para o concorrente.",
       },
       {
         type: "shorts",
-        thumbnail: "/teste.mp4",
+        thumbnail: "/videoHorizontal.mp4",
         duration: "5:01",
         description: "Quem não instrui o cliente em sua jornada de compra, acaba perdendo ele para o concorrente.",
       },
       {
         type: "reels",
-        thumbnail: "/teste.mp4",
+        thumbnail: "/videoHorizontal.mp4",
         duration: "2:44",
         description: "Quem não instrui o cliente em sua jornada de compra, acaba perdendo ele para o concorrente.",
       },
@@ -257,7 +257,7 @@ export const modalsDataMapEndomarketing: Record<string, ModalData> = {
       "Detlaham produtos, serviços ou processos, promovendo tranquilidade e clareza.",
     ],
     benefits: ["Melhora o entendimento sobre os serviços ou produtos.", "Fortalece a confiança na marca como solução ideal.", "Posiciona a empresa como autoridade no segmento."],
-    videoSrc: "/teste.mp4",
+    videoSrc: "/videoHorizontal.mp4",
     tabs: [
       { id: "animacoes", label: "Animações Explicativas" },
       { id: "institucional", label: "Vídeo Institucional" },
@@ -267,25 +267,25 @@ export const modalsDataMapEndomarketing: Record<string, ModalData> = {
     carouselItems: [
       {
         type: "animacoes",
-        thumbnail: "/teste.mp4",
+        thumbnail: "/videoHorizontal.mp4",
         duration: "4:31",
         description: "Quem não instrui o cliente em sua jornada de compra, acaba perdendo ele para o concorrente.",
       },
       {
         type: "institucional",
-        thumbnail: "/teste.mp4",
+        thumbnail: "/videoHorizontal.mp4",
         duration: "5:01",
         description: "Quem não instrui o cliente em sua jornada de compra, acaba perdendo ele para o concorrente.",
       },
       {
         type: "explicativos",
-        thumbnail: "/teste.mp4",
+        thumbnail: "/videoHorizontal.mp4",
         duration: "2:44",
         description: "Quem não instrui o cliente em sua jornada de compra, acaba perdendo ele para o concorrente.",
       },
       {
         type: "branded",
-        thumbnail: "/teste.mp4",
+        thumbnail: "/videoHorizontal.mp4",
         duration: "5:01",
         description: "Quem não instrui o cliente em sua jornada de compra, acaba perdendo ele para o concorrente.",
       },
@@ -303,7 +303,7 @@ export const modalsDataMapEndomarketing: Record<string, ModalData> = {
       " Vídeos curtos e segmentados para públicos que já demonstraram interesse na marca.",
     ],
     benefits: ["Reduz o tempo para fechamento de negócios.", "Prova de confiabilidade com cases reais.", "Geração de clientes satisfeitos e fidelizados."],
-    videoSrc: "/teste.mp4",
+    videoSrc: "/videoHorizontal.mp4",
     tabs: [
       { id: "videocases", label: "Videocases" },
       { id: "publicitarios", label: "Vídeos Publicitários" },
@@ -312,25 +312,25 @@ export const modalsDataMapEndomarketing: Record<string, ModalData> = {
     carouselItems: [
       {
         type: "videocases",
-        thumbnail: "/teste.mp4",
+        thumbnail: "/videoHorizontal.mp4",
         duration: "4:31",
         description: "Quem não instrui o cliente em sua jornada de compra, acaba perdendo ele para o concorrente.",
       },
       {
         type: "publicitarios",
-        thumbnail: "/teste.mp4",
+        thumbnail: "/videoHorizontal.mp4",
         duration: "5:01",
         description: "Quem não instrui o cliente em sua jornada de compra, acaba perdendo ele para o concorrente.",
       },
       {
         type: "retargeting",
-        thumbnail: "/teste.mp4",
+        thumbnail: "/videoHorizontal.mp4",
         duration: "2:44",
         description: "Quem não instrui o cliente em sua jornada de compra, acaba perdendo ele para o concorrente.",
       },
       {
         type: "videocases",
-        thumbnail: "/teste.mp4",
+        thumbnail: "/videoHorizontal.mp4",
         duration: "5:01",
         description: "Quem não instrui o cliente em sua jornada de compra, acaba perdendo ele para o concorrente.",
       },

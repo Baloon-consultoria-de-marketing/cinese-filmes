@@ -157,7 +157,7 @@ export default function Content() {
         <section className="relative w-full aspect-video overflow-hidden">
           <video className="w-full h-full object-cover" autoPlay loop muted playsInline preload="auto">
             {/* O caminho deve começar sempre com / e NÃO incluir a palavra 'public' e possuir apenas um nome */}
-            <source src="/teste.mp4" type="video/mp4" />
+            <source src="/videoHorizontal.mp4" type="video/mp4" />
           </video>
           <div className="absolute inset-0 flex items-center justify-center bg-black/20">
             <h2 className="text-white text-3xl md:text-4xl lg:text-5xl font-bold text-center px-4 drop-shadow-lg max-w-200">Se você não contar a sua historia Alguém fará isso por você!</h2>
@@ -179,7 +179,7 @@ export default function Content() {
             </div>
             <video className="w-full lg:w-75 h-auto lg:h-119.5 aspect-9/16 object-cover max-w-md" autoPlay loop muted playsInline preload="auto">
               {/* O caminho deve começar sempre com / e NÃO incluir a palavra 'public' e possuir apenas um nome */}
-              <source src="/teste.mp4" type="video/mp4" />
+              <source src="/videoVertical.mp4" type="video/mp4" />
             </video>
           </div>
         </section>

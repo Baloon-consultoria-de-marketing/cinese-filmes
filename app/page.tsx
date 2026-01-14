@@ -38,7 +38,7 @@ export default function Home() {
         <section id="section-1" className="relative w-full md:aspect-video aspect-9/16 md:h-auto h-screen overflow-hidden">
           <video className="w-full h-full object-cover" autoPlay loop muted playsInline preload="metadata">
             {/* O caminho deve começar sempre com / e NÃO incluir a palavra 'public' */}
-            <source src="/teste.mp4" type="video/mp4" />
+            <source src="/videoHorizontal.mp4" type="video/mp4" />
           </video>
           <div className="absolute inset-0 flex items-center justify-center bg-black/20">
             <h2 className="text-white text-4xl md:text-6xl font-bold text-center px-4 drop-shadow-lg">CINESE</h2>
@@ -48,7 +48,7 @@ export default function Home() {
         {/* Seção 2 */}
         <section id="section-2" className="relative w-full md:aspect-video aspect-9/16 md:h-auto h-screen overflow-hidden">
           <video className="w-full h-full object-cover" autoPlay loop muted playsInline preload="metadata">
-            <source src="/teste.mp4" type="video/mp4" />
+            <source src="/videoHorizontal.mp4" type="video/mp4" />
           </video>
           <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/20 px-4">
             <div className="flex flex-col gap-2">
@@ -62,7 +62,7 @@ export default function Home() {
         {/* Seção 3 */}
         <section id="section-3" className="relative w-full md:aspect-video aspect-9/16 md:h-auto h-screen overflow-hidden">
           <video className="w-full h-full object-cover" autoPlay loop muted playsInline preload="metadata">
-            <source src="/teste.mp4" type="video/mp4" />
+            <source src="/videoHorizontal.mp4" type="video/mp4" />
           </video>
           <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/20 px-4">
             <div className="flex flex-col gap-2">
