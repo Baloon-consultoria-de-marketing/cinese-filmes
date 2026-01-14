@@ -34,10 +34,10 @@ export const Footer = () => {
           <div className="flex flex-col gap-2 ">
             <p className="font-raleway font-bold text-base uppercase tracking-[0.2em] text-black">Redes Sociais</p>
             <div className="flex gap-5 mt-1">
-              <Link href="https://www.instagram.com/cinesefilmes/" target="_blank" rel="noopener noreferrer" className="hover:scale-110 transition-transform">
+              <Link href="https://www.instagram.com/cinese_content" target="_blank" rel="noopener noreferrer" className="hover:scale-110 transition-transform">
                 <Image src="/instagram.png" alt="Instagram" width={44.5} height={48} className="w-10 h-auto md:w-[44.5px]" />
               </Link>
-              <Link href="https://www.linkedin.com/company/cinese-filmes/" target="_blank" rel="noopener noreferrer" className="hover:scale-110 transition-transform">
+              <Link href="https://www.linkedin.com/company/cinesefilmes/" target="_blank" rel="noopener noreferrer" className="hover:scale-110 transition-transform">
                 <Image src="/linkedin.png" alt="Linkedin" width={44.5} height={48} className="w-10 h-auto md:w-[44.5px]" />
               </Link>
             </div>
