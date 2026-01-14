@@ -34,14 +34,23 @@ export const GalleryModal = ({ isOpen, onClose, data }: GalleryModalProps) => {
   React.useEffect(() => {
     if (isOpen) {
       setIsClosing(false);
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "unset";
     }
+
+    return () => {
+      document.body.style.overflow = "unset";
+    };
   }, [isOpen]);
 
   if (!isOpen) return null;
 
   return (
-    <div className={`fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm ${isClosing ? "animate-fadeOut" : "animate-fadeIn"}`}>
-      <div className={`relative w-full max-w-[80%] rounded-2xl shadow-2xl overflow-hidden bg-white max-h-[85vh] flex flex-col ${isClosing ? "animate-scaleOut" : "animate-scaleIn"}`}>
+    <div className={`fixed inset-0 z-50 flex items-center justify-center bg-black/50 md:bg-black/50 backdrop-blur-sm ${isClosing ? "animate-fadeOut" : "animate-fadeIn"}`}>
+      <div
+        className={`relative w-full h-full md:w-[90%] lg:w-[80%] md:h-auto md:rounded-2xl shadow-2xl overflow-hidden bg-white md:max-h-[85vh] flex flex-col ${isClosing ? "animate-scaleOut" : "animate-scaleIn"}`}
+      >
         {/* Header com botão de fechar */}
         <div className="flex items-start justify-end pt-4 px-4 shrink-0">
           <button

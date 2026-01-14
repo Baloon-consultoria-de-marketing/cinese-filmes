@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { ModalData } from "../content/modalMock";
 
 interface ModalProps {
@@ -29,6 +29,19 @@ export const Modal = ({ isOpen, onClose, data, color }: ModalProps) => {
     }, 500);
   };
 
+  // Bloqueia o scroll do body quando o modal está aberto
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "unset";
+    }
+
+    return () => {
+      document.body.style.overflow = "unset";
+    };
+  }, [isOpen]);
+
   if (!isOpen && !isClosing) return null;
 
   const colorMap = {
@@ -42,8 +55,10 @@ export const Modal = ({ isOpen, onClose, data, color }: ModalProps) => {
   });
 
   return (
-    <div className={`relative z-30 w-full flex justify-center ${isClosing ? "animate-slideDown" : "animate-slideUp"}`}>
-      <div className={`relative -mt-8 w-full max-w-[80%] rounded-2xl shadow-2xl overflow-hidden ${colorMap[color]}`}>
+    <div className={`fixed inset-0 z-50 flex items-start justify-center bg-black/30 backdrop-blur-sm ${isClosing ? "animate-fadeOut" : "animate-fadeIn"}`}>
+      <div
+        className={`relative w-full h-full md:w-[90%] lg:w-[80%] md:h-auto md:rounded-2xl shadow-2xl overflow-y-auto md:overflow-visible md:my-20 ${colorMap[color]} ${isClosing ? "animate-slideDown" : "animate-slideUp"}`}
+      >
         {/* Header com botão de fechar */}
         <div className="flex items-start justify-end pt-4 px-4">
           <button
@@ -56,7 +71,7 @@ export const Modal = ({ isOpen, onClose, data, color }: ModalProps) => {
         </div>
 
         {/* Conteúdo principal */}
-        <div className="p-8 lg:p-12">
+        <div className="p-4 md:p-8 lg:p-12">
           <div className="flex flex-col lg:flex-row gap-8">
             {/* Lado esquerdo - Texto */}
             <div className="flex-1">
