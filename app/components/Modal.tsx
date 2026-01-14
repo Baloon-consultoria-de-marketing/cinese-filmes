@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useState } from "react";
-import Image from "next/image";
 import { ModalData } from "../content/modalMock";
 
 interface ModalProps {
@@ -18,7 +17,7 @@ export const Modal = ({ isOpen, onClose, data, color }: ModalProps) => {
 
   const colorMap = {
     blue: "bg-[var(--color-blue-light)]",
-    gray: "bg-[var(--color-gray-muted)]",
+    gray: "bg-[var(--color-gray-light)]",
     yellow: "bg-[var(--color-yellow-soft)]",
   };
 

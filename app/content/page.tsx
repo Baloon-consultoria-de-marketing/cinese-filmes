@@ -9,13 +9,15 @@ import React from "react";
 import { Button } from "../components/Button";
 import { Modal } from "../components/Modal";
 import { modalDataMap, ModalData } from "./modalMock";
+import Swal from "sweetalert2";
 
 export default function Content() {
   const [isSubmitting, setIsSubmitting] = React.useState(false);
-  const [submitMessage, setSubmitMessage] = React.useState("");
   const [activeSection, setActiveSection] = React.useState<string | null>(null);
   const [modalData, setModalData] = React.useState<ModalData | null>(null);
   const [modalColor, setModalColor] = React.useState<"blue" | "gray" | "yellow">("blue");
+  const [phoneValue, setPhoneValue] = React.useState("");
+  const [emailError, setEmailError] = React.useState("");
 
   const openModal = (key: string, color: "blue" | "gray" | "yellow", section: string) => {
     setModalData(modalDataMap[key]);
@@ -28,11 +30,71 @@ export default function Content() {
     setModalData(null);
   };
 
+  const formatPhone = (value: string) => {
+    // Remove tudo que não é dígito
+    const cleaned = value.replace(/\D/g, "");
+
+    // Aplica a máscara
+    if (cleaned.length <= 10) {
+      // Formato: (XX) XXXX-XXXX
+      return cleaned.replace(/^(\d{2})(\d)/, "($1) $2").replace(/(\d{4})(\d)/, "$1-$2");
+    } else {
+      // Formato: (XX) XXXXX-XXXX
+      return cleaned
+        .replace(/^(\d{2})(\d)/, "($1) $2")
+        .replace(/(\d{5})(\d)/, "$1-$2")
+        .slice(0, 15);
+    }
+  };
+
+  const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const formatted = formatPhone(e.target.value);
+    setPhoneValue(formatted);
+  };
+
+  const validateEmail = (email: string) => {
+    const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    return emailRegex.test(email);
+  };
+
+  const handleEmailBlur = (e: React.FocusEvent<HTMLInputElement>) => {
+    if (e.target.value && !validateEmail(e.target.value)) {
+      Swal.fire({
+        title: "Email Inválido",
+        text: "Por favor, insira um email válido",
+        icon: "warning",
+        confirmButtonText: "Ok",
+        confirmButtonColor: "#9DC4D4",
+      });
+      setEmailError("Por favor, insira um email válido");
+    } else {
+      setEmailError("");
+    }
+  };
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    const formElement = e.currentTarget;
+    const emailInput = formElement.email as HTMLInputElement;
+
+    // Valida email antes de enviar
+    if (!validateEmail(emailInput.value)) {
+      Swal.fire({
+        title: "Email Inválido",
+        text: "Por favor, insira um email válido antes de enviar",
+        icon: "warning",
+        confirmButtonText: "Ok",
+        confirmButtonColor: "#9DC4D4",
+      });
+      setEmailError("Por favor, insira um email válido");
+      return;
+    }
+
     setIsSubmitting(true);
 
-    const formData = new FormData(e.currentTarget);
+    const formData = new FormData(formElement);
+    formData.append("access_key", "c15ae6a2-1610-49ee-9d63-692e511bb875");
 
     try {
       const response = await fetch("https://api.web3forms.com/submit", {
@@ -40,14 +102,37 @@ export default function Content() {
         body: formData,
       });
 
-      if (response.ok) {
-        setSubmitMessage("Mensagem enviada com sucesso!");
-        e.currentTarget.reset();
+      const data = await response.json();
+
+      if (data.success) {
+        Swal.fire({
+          title: "Sucesso!",
+          text: "Mensagem enviada com sucesso! Entraremos em contato em breve.",
+          icon: "success",
+          confirmButtonText: "Ok",
+          confirmButtonColor: "#9DC4D4",
+        });
+        formElement.reset();
+        setPhoneValue("");
+        setEmailError("");
       } else {
-        setSubmitMessage("Erro ao enviar. Tente novamente.");
+        Swal.fire({
+          title: "Erro!",
+          text: "Não foi possível enviar sua mensagem. Tente novamente.",
+          icon: "error",
+          confirmButtonText: "Tentar Novamente",
+          confirmButtonColor: "#9DC4D4",
+        });
       }
-    } catch {
-      setSubmitMessage("Erro ao enviar. Tente novamente.");
+    } catch (error) {
+      console.error("Erro ao enviar formulário:", error);
+      Swal.fire({
+        title: "Erro!",
+        text: "Ocorreu um erro ao enviar sua mensagem. Tente novamente.",
+        icon: "error",
+        confirmButtonText: "Tentar Novamente",
+        confirmButtonColor: "#9DC4D4",
+      });
     } finally {
       setIsSubmitting(false);
     }
@@ -153,17 +238,33 @@ export default function Content() {
               <p className="text-gray-600 text-lg max-w-112.5">Fale com a CINESE e descubra novas formas de conectar sua marca ao público.</p>
             </div>
             <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-              <input type="hidden" name="access_key" value="SUA_CHAVE_AQUI" />
               <input type="text" name="name" placeholder="Nome" className="w-full p-4 border border-gray-200 rounded-md focus:outline-none focus:border-gray-300" required />
-              <input type="tel" name="phone" placeholder="Telefone" className="w-full p-4 border border-gray-200 rounded-md focus:outline-none focus:border-gray-300" required />
-              <input type="email" name="email" placeholder="Email" className="w-full p-4 border border-gray-200 rounded-md focus:outline-none focus:border-gray-300" required />
+              <input
+                type="tel"
+                name="phone"
+                placeholder="Telefone"
+                value={phoneValue}
+                onChange={handlePhoneChange}
+                className="w-full p-4 border border-gray-200 rounded-md focus:outline-none focus:border-gray-300"
+                required
+              />
+              <div className="w-full">
+                <input
+                  type="email"
+                  name="email"
+                  placeholder="Email"
+                  onBlur={handleEmailBlur}
+                  className="w-full p-4 border border-gray-200 rounded-md focus:outline-none focus:border-gray-300"
+                  required
+                />
+                {emailError && <p className="text-red-500 text-sm mt-1">{emailError}</p>}
+              </div>
               <textarea
                 name="message"
                 placeholder="Mensagem"
                 className="w-full p-4 min-h-28 border border-gray-200 rounded-md h-24 resize-none focus:outline-none focus:border-gray-300"
                 required
               ></textarea>
-              {submitMessage && <p className="text-center text-sm">{submitMessage}</p>}
               <button
                 type="submit"
                 disabled={isSubmitting}
