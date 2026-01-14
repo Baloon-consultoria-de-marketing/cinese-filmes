@@ -9,7 +9,7 @@ import React from "react";
 import { Button } from "../components/Button";
 import { Modal } from "../components/Modal";
 import { GalleryModal } from "../components/GalleryModal";
-import { modalDataMap, ModalData, galleryModalData } from "./modalMock";
+import { modalDataMapInbound, modalsDataMapEndomarketing, ModalData, galleryModalData } from "./modalMock";
 import Swal from "sweetalert2";
 
 export default function Content() {
@@ -23,7 +23,8 @@ export default function Content() {
   const [showSolutions, setShowSolutions] = React.useState(false);
 
   const openModal = (key: string, color: "blue" | "gray" | "yellow", section: string, showSolutionsParam: boolean = false) => {
-    setModalData(modalDataMap[key]);
+    const modalMap = section === "endomarketing" ? modalsDataMapEndomarketing : modalDataMapInbound;
+    setModalData(modalMap[key]);
     setModalColor(color);
     setActiveSection(section);
     setShowSolutions(showSolutionsParam);
