@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { ModalData } from "../content/modalMock";
 
 interface ModalProps {
@@ -11,7 +11,14 @@ interface ModalProps {
 }
 
 export const Modal = ({ isOpen, onClose, data, color }: ModalProps) => {
-  const [carouselFilter, setCarouselFilter] = useState<"reels" | "shorts">("reels");
+  const [carouselFilter, setCarouselFilter] = useState<string>(data.tabs[0]?.id || "");
+  const [prevDataId, setPrevDataId] = useState<string | undefined>(undefined);
+
+  // Reset para a primeira aba quando trocar de modal
+  if (data.tabs[0]?.id !== prevDataId) {
+    setPrevDataId(data.tabs[0]?.id);
+    setCarouselFilter(data.tabs[0]?.id || "");
+  }
 
   if (!isOpen) return null;
 
@@ -22,8 +29,7 @@ export const Modal = ({ isOpen, onClose, data, color }: ModalProps) => {
   };
 
   const filteredCarousel = data.carouselItems.filter((item) => {
-    if (carouselFilter === "reels") return item.type === "reel";
-    return item.type === "short";
+    return item.type === carouselFilter;
   });
 
   return (
@@ -42,7 +48,7 @@ export const Modal = ({ isOpen, onClose, data, color }: ModalProps) => {
 
         {/* Conteúdo principal */}
         <div className="p-8 lg:p-12">
-          <div className="flex flex-col lg:flex-row gap-8 mb-12">
+          <div className="flex flex-col lg:flex-row gap-8">
             {/* Lado esquerdo - Texto */}
             <div className="flex-1">
               <p className="text-xs font-semibold text-gray-600 mb-2 uppercase tracking-wider">{data.category}</p>
@@ -64,9 +70,11 @@ export const Modal = ({ isOpen, onClose, data, color }: ModalProps) => {
 
             {/* Lado direito - Vídeo */}
             <div className="flex-1">
-              <video className="w-full h-full object-cover rounded-xl shadow-lg max-h-96" autoPlay loop muted playsInline>
-                <source src={data.videoSrc} type="video/mp4" />
-              </video>
+              <div className="relative mx-auto" style={{ aspectRatio: "9/16", maxHeight: "478px", maxWidth: "290px" }}>
+                <video className="w-full h-full object-cover rounded-xl shadow-lg" autoPlay loop muted playsInline>
+                  <source src={data.videoSrc} type="video/mp4" />
+                </video>
+              </div>
             </div>
           </div>
 
@@ -75,31 +83,26 @@ export const Modal = ({ isOpen, onClose, data, color }: ModalProps) => {
             <h3 className="text-xl font-bold mb-6 text-gray-900">Soluções Indicadas</h3>
 
             {/* Toggle Reels/Shorts */}
-            <div className="inline-flex gap-1 mb-6 bg-white/30 rounded-lg  p-1">
-              <button
-                onClick={() => setCarouselFilter("reels")}
-                className={`px-8 py-3 rounded-lg cursor-pointer font-semibold transition-all duration-300 ease-in-out ${
-                  carouselFilter === "reels" ? "bg-white text-gray-900 shadow-md scale-105" : "bg-transparent text-gray-700 hover:bg-white/30"
-                }`}
-              >
-                Reels
-              </button>
-              <button
-                onClick={() => setCarouselFilter("shorts")}
-                className={`px-8 py-3 rounded-lg cursor-pointer font-semibold transition-all duration-300 ease-in-out ${
-                  carouselFilter === "shorts" ? "bg-white text-gray-900 shadow-md scale-105" : "bg-transparent text-gray-700 hover:bg-white/30"
-                }`}
-              >
-                Shorts
-              </button>
+            <div className="inline-flex gap-1 mb-6 bg-white/30 rounded-lg p-1">
+              {data.tabs.map((tab) => (
+                <button
+                  key={tab.id}
+                  onClick={() => setCarouselFilter(tab.id)}
+                  className={`px-4 py-0.5 rounded-lg cursor-pointer font-semibold transition-all duration-300 ease-in-out ${
+                    carouselFilter === tab.id ? "bg-white text-gray-900 shadow-md scale-105" : "bg-transparent text-gray-700 hover:bg-white/30"
+                  }`}
+                >
+                  {tab.label}
+                </button>
+              ))}
             </div>
 
             {/* Carrossel */}
             <div className="relative">
-              <div className="flex gap-4 overflow-x-auto pb-4 scrollbar-hide snap-x snap-mandatory">
+              <div className="flex gap-4 overflow-x-auto pb-4 scrollbar-hide snap-x snap-mandatory" key={carouselFilter}>
                 {filteredCarousel.map((item, index) => (
                   <div
-                    key={index}
+                    key={`${carouselFilter}-${index}`}
                     className="shrink-0 w-64 snap-start transition-all duration-500 ease-in-out"
                     style={{
                       animation: "fadeIn 0.5s ease-in-out",

@@ -173,8 +173,10 @@ export default function Content() {
         </section>
         <section className="flex justify-center">
           <div className="w-full">
-            <Image src="/INBOUND-MARKETING.png" alt="Inbound Marketing" width={1920} height={1080} className="hidden md:block" />
-            <Image src="/INBOUND-MARKETING-MOBILE.png" alt="Inbound Marketing" width={1920} height={1080} className="block md:hidden" />
+            <div className="flex items-center justify-center">
+              <Image src="/INBOUND-MARKETING.png" alt="Inbound Marketing" width={1920} height={1080} className="hidden md:block" />
+              <Image src="/INBOUND-MARKETING-MOBILE.png" alt="Inbound Marketing" width={1920} height={1080} className="block md:hidden" />
+            </div>
             <div className="flex w-full justify-center items-center gap-4 mt-8 relative z-40">
               <Button color="blue" onClick={() => openModal("treinamento", "blue", "inbound")}>
                 TREINAMENTO
@@ -195,8 +197,10 @@ export default function Content() {
         </section>
         <section className="flex justify-center">
           <div className="w-full">
-            <Image src="/ENDOMARKETING.png" alt="Inbound Marketing" width={1920} height={1080} className="hidden md:block" />
-            <Image src="/ENDOMARKETING-MOBILE.png" alt="Inbound Marketing" width={1920} height={1080} className="block md:hidden" />
+            <div className="flex items-center justify-center">
+              <Image src="/ENDOMARKETING.png" alt="Inbound Marketing" width={1920} height={1080} className="hidden md:block" />
+              <Image src="/ENDOMARKETING-MOBILE.png" alt="Inbound Marketing" width={1920} height={1080} className="block md:hidden" />
+            </div>
             <div className="flex w-full justify-center items-center gap-4 mt-8 relative z-40">
               <Button color="blue" onClick={() => openModal("treinamento", "blue", "endomarketing")}>
                 TREINAMENTO
@@ -217,8 +221,10 @@ export default function Content() {
         </section>
         <section className="flex justify-center">
           <div className="w-full">
-            <Image src="/EMPLOYER-BRANDING.png" alt="Inbound Marketing" width={1920} height={1080} className="hidden md:block" />
-            <Image src="/EMPLOYER-BRANDING-MOBILE.png" alt="Inbound Marketing" width={1920} height={1080} className="block md:hidden" />
+            <div className="flex items-center justify-center">
+              <Image src="/EMPLOYER-BRANDING.png" alt="Inbound Marketing" width={1920} height={1080} className="hidden md:block" />
+              <Image src="/EMPLOYER-BRANDING-MOBILE.png" alt="Inbound Marketing" width={1920} height={1080} className="block md:hidden" />
+            </div>
             <div className="flex w-full justify-center items-center gap-4 mt-8 relative z-40">
               <Button color="blue" onClick={() => openModal("saiba-mais", "blue", "employer")}>
                 SAIBA MAIS
