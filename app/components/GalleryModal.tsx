@@ -49,7 +49,7 @@ export const GalleryModal = ({ isOpen, onClose, data }: GalleryModalProps) => {
   return (
     <div className={`fixed inset-0 z-50 flex items-center justify-center bg-black/50 md:bg-black/50 backdrop-blur-sm ${isClosing ? "animate-fadeOut" : "animate-fadeIn"}`}>
       <div
-        className={`relative w-full h-full md:w-[90%] lg:w-[80%] md:h-auto md:rounded-2xl shadow-2xl overflow-hidden bg-white md:max-h-[85vh] flex flex-col ${isClosing ? "animate-scaleOut" : "animate-scaleIn"}`}
+        className={`relative w-full h-full md:w-[90%] lg:w-[80%] md:h-[85vh] md:rounded-2xl shadow-2xl overflow-hidden bg-white flex flex-col ${isClosing ? "animate-scaleOut" : "animate-scaleIn"}`}
       >
         {/* Header com botão de fechar */}
         <div className="flex items-start justify-end pt-4 px-4 shrink-0">
@@ -71,12 +71,12 @@ export const GalleryModal = ({ isOpen, onClose, data }: GalleryModalProps) => {
         </div>
 
         {/* Container com scroll e gradiente */}
-        <div className="relative flex-1 overflow-hidden">
+        <div className="relative flex-1 overflow-hidden m-4">
           <div className="h-full overflow-y-auto px-8 lg:px-12 pb-8 scrollbar-hide">
             {/* Grid de imagens estilo masonry */}
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
               {data.images.map((image, index) => (
-                <div key={index} className={`relative overflow-hidden rounded-lg shadow-md hover:scale-105 transition-transform duration-300 ${index % 5 === 0 ? "row-span-2" : ""}`}>
+                <div key={index} className={`relative overflow-hidden rounded-lg shadow-md hover:scale-90 transition-transform duration-700 ${index % 5 === 0 ? "row-span-2" : ""}`}>
                   <Image src={image.src} alt={image.alt} width={image.width || 300} height={image.height || 300} className="w-full h-full object-cover" />
                 </div>
               ))}
