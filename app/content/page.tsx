@@ -20,11 +20,13 @@ export default function Content() {
   const [phoneValue, setPhoneValue] = React.useState("");
   const [emailError, setEmailError] = React.useState("");
   const [showGalleryModal, setShowGalleryModal] = React.useState(false);
+  const [showSolutions, setShowSolutions] = React.useState(false);
 
-  const openModal = (key: string, color: "blue" | "gray" | "yellow", section: string) => {
+  const openModal = (key: string, color: "blue" | "gray" | "yellow", section: string, showSolutionsParam: boolean = false) => {
     setModalData(modalDataMap[key]);
     setModalColor(color);
     setActiveSection(section);
+    setShowSolutions(showSolutionsParam);
   };
 
   const openGalleryModal = (color: "blue" | "gray" | "yellow", section: string) => {
@@ -187,17 +189,17 @@ export default function Content() {
               <Image src="/INBOUND-MARKETING-MOBILE.png" alt="Inbound Marketing" width={1920} height={1080} className="block md:hidden" />
             </div>
             <div className="flex flex-col md:flex-row w-full justify-center items-center gap-4 mt-8 relative z-40 px-4 md:px-0">
-              <Button color="blue" onClick={() => openModal("treinamento", "blue", "inbound")}>
+              <Button color="blue" onClick={() => openModal("treinamento", "blue", "inbound", false)}>
                 TREINAMENTO
               </Button>
-              <Button color="yellow" onClick={() => openModal("cultura", "yellow", "inbound")}>
+              <Button color="yellow" onClick={() => openModal("cultura", "yellow", "inbound", true)}>
                 CULTURA
               </Button>
-              <Button color="gray" onClick={() => openModal("proposito", "gray", "inbound")}>
+              <Button color="gray" onClick={() => openModal("proposito", "gray", "inbound", true)}>
                 PROPÓSITO
               </Button>
             </div>
-            {modalData && activeSection === "inbound" && <Modal isOpen={true} onClose={closeModal} data={modalData} color={modalColor} />}
+            {modalData && activeSection === "inbound" && <Modal isOpen={true} onClose={closeModal} data={modalData} color={modalColor} showSolutions={showSolutions} />}
           </div>
         </section>
         <section className="flex justify-center">
@@ -207,17 +209,17 @@ export default function Content() {
               <Image src="/ENDOMARKETING-MOBILE.png" alt="Inbound Marketing" width={1920} height={1080} className="block md:hidden" />
             </div>
             <div className="flex flex-col md:flex-row w-full justify-center items-center gap-4 mt-8 relative z-40 px-4 md:px-0">
-              <Button color="blue" onClick={() => openModal("treinamento", "blue", "endomarketing")}>
+              <Button color="blue" onClick={() => openModal("treinamento", "blue", "endomarketing", false)}>
                 TREINAMENTO
               </Button>
-              <Button color="yellow" onClick={() => openModal("cultura", "yellow", "endomarketing")}>
+              <Button color="yellow" onClick={() => openModal("cultura", "yellow", "endomarketing", true)}>
                 CULTURA
               </Button>
-              <Button color="gray" onClick={() => openModal("proposito", "gray", "endomarketing")}>
+              <Button color="gray" onClick={() => openModal("proposito", "gray", "endomarketing", true)}>
                 PROPÓSITO
               </Button>
             </div>
-            {modalData && activeSection === "endomarketing" && <Modal isOpen={true} onClose={closeModal} data={modalData} color={modalColor} />}
+            {modalData && activeSection === "endomarketing" && <Modal isOpen={true} onClose={closeModal} data={modalData} color={modalColor} showSolutions={showSolutions} />}
           </div>
         </section>
         <section className="flex justify-center">

@@ -8,9 +8,10 @@ interface ModalProps {
   onClose: () => void;
   data: ModalData;
   color: "blue" | "gray" | "yellow";
+  showSolutions?: boolean;
 }
 
-export const Modal = ({ isOpen, onClose, data, color }: ModalProps) => {
+export const Modal = ({ isOpen, onClose, data, color, showSolutions = false }: ModalProps) => {
   const [carouselFilter, setCarouselFilter] = useState<string>(data.tabs[0]?.id || "");
   const [prevDataId, setPrevDataId] = useState<string | undefined>(undefined);
   const [isClosing, setIsClosing] = useState(false);
@@ -82,19 +83,21 @@ export const Modal = ({ isOpen, onClose, data, color }: ModalProps) => {
                 <h2 className="text-3xl lg:text-4xl font-bold mb-4 text-gray-900">{data.title}</h2>
                 <p className="text-gray-700 mb-6 leading-relaxed text-sm">{data.description}</p>
 
-                <div className="mb-6 mt-3">
-                  <p className="font-semibold mb-3 text-gray-900 ">Soluções Indicadas:</p>
-                  <ul className="space-y-2">
-                    {data.solutions?.map((solution, index) => (
-                      <li key={index} className="flex items-start gap-2 text-base md:md:max-w-130">
-                        <span className="text-gray-600 mt-1">•</span>
-                        <span className="text-gray-700">
-                          <strong>{data.solutionStrong?.[index]}</strong> {solution}
-                        </span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
+                {showSolutions && (
+                  <div className="mb-6 mt-3">
+                    <p className="font-semibold mb-3 text-gray-900 ">Soluções Indicadas:</p>
+                    <ul className="space-y-2">
+                      {data.solutions?.map((solution, index) => (
+                        <li key={index} className="flex items-start gap-2 text-base md:md:max-w-130">
+                          <span className="text-gray-600 mt-1">•</span>
+                          <span className="text-gray-700">
+                            <strong>{data.solutionStrong?.[index]}</strong> {solution}
+                          </span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
                 <div className="mb-6">
                   <p className="font-semibold mb-3 text-gray-900">Benefícios:</p>
                   <ul className="space-y-2">
