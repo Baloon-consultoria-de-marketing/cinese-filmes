@@ -8,11 +8,35 @@ import { Footer } from "./components/Footer";
 export default function Home() {
   return (
     <>
+      <style jsx>{`
+        main {
+          scroll-snap-type: y mandatory;
+          scroll-behavior: smooth;
+          scroll-padding: 0;
+          -webkit-overflow-scrolling: touch;
+        }
+        main::-webkit-scrollbar {
+          width: 0;
+        }
+        section {
+          scroll-snap-align: start;
+          scroll-snap-stop: normal;
+        }
+        video {
+          will-change: transform;
+          transform: translateZ(0);
+        }
+        @media (prefers-reduced-motion: no-preference) {
+          * {
+            scroll-behavior: smooth !important;
+          }
+        }
+      `}</style>
       <Header />
-      <main className="w-full mb-10">
+      <main className="w-full h-screen overflow-y-scroll">
         {/* Seção 1 */}
         <section id="section-1" className="relative w-full md:aspect-video aspect-9/16 md:h-auto h-screen overflow-hidden">
-          <video className="w-full h-full object-cover" autoPlay loop muted playsInline preload="auto">
+          <video className="w-full h-full object-cover" autoPlay loop muted playsInline preload="metadata">
             {/* O caminho deve começar sempre com / e NÃO incluir a palavra 'public' */}
             <source src="/teste.mp4" type="video/mp4" />
           </video>
@@ -23,7 +47,7 @@ export default function Home() {
 
         {/* Seção 2 */}
         <section id="section-2" className="relative w-full md:aspect-video aspect-9/16 md:h-auto h-screen overflow-hidden">
-          <video className="w-full h-full object-cover" autoPlay loop muted playsInline preload="auto">
+          <video className="w-full h-full object-cover" autoPlay loop muted playsInline preload="metadata">
             <source src="/teste.mp4" type="video/mp4" />
           </video>
           <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/20 px-4">
@@ -37,7 +61,7 @@ export default function Home() {
 
         {/* Seção 3 */}
         <section id="section-3" className="relative w-full md:aspect-video aspect-9/16 md:h-auto h-screen overflow-hidden">
-          <video className="w-full h-full object-cover" autoPlay loop muted playsInline preload="auto">
+          <video className="w-full h-full object-cover" autoPlay loop muted playsInline preload="metadata">
             <source src="/teste.mp4" type="video/mp4" />
           </video>
           <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/20 px-4">
