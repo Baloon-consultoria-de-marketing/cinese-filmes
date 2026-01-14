@@ -190,10 +190,10 @@ export default function Content() {
               <Button color="blue" onClick={() => openModal("treinamento", "blue", "inbound")}>
                 TREINAMENTO
               </Button>
-              <Button color="gray" onClick={() => openModal("cultura", "gray", "inbound")}>
+              <Button color="yellow" onClick={() => openModal("cultura", "yellow", "inbound")}>
                 CULTURA
               </Button>
-              <Button color="yellow" onClick={() => openModal("proposito", "yellow", "inbound")}>
+              <Button color="gray" onClick={() => openModal("proposito", "gray", "inbound")}>
                 PROPÓSITO
               </Button>
             </div>
@@ -210,10 +210,10 @@ export default function Content() {
               <Button color="blue" onClick={() => openModal("treinamento", "blue", "endomarketing")}>
                 TREINAMENTO
               </Button>
-              <Button color="gray" onClick={() => openModal("cultura", "gray", "endomarketing")}>
+              <Button color="yellow" onClick={() => openModal("cultura", "yellow", "endomarketing")}>
                 CULTURA
               </Button>
-              <Button color="yellow" onClick={() => openModal("proposito", "yellow", "endomarketing")}>
+              <Button color="gray" onClick={() => openModal("proposito", "gray", "endomarketing")}>
                 PROPÓSITO
               </Button>
             </div>

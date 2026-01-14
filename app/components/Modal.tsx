@@ -75,13 +75,26 @@ export const Modal = ({ isOpen, onClose, data, color }: ModalProps) => {
 
           {/* Conteúdo principal */}
           <div className="p-4 md:p-8 lg:p-12">
-            <div className="flex flex-col lg:flex-row gap-8">
+            <div className="flex flex-col lg:flex-row">
               {/* Lado esquerdo - Texto */}
               <div className="flex-1">
                 <p className="text-xs font-semibold text-gray-600 mb-2 uppercase tracking-wider">{data.category}</p>
                 <h2 className="text-3xl lg:text-4xl font-bold mb-4 text-gray-900">{data.title}</h2>
                 <p className="text-gray-700 mb-6 leading-relaxed text-sm">{data.description}</p>
 
+                <div className="mb-6 mt-3">
+                  <p className="font-semibold mb-3 text-gray-900 ">Soluções Indicadas:</p>
+                  <ul className="space-y-2">
+                    {data.solutions?.map((solution, index) => (
+                      <li key={index} className="flex items-start gap-2 text-base md:md:max-w-130">
+                        <span className="text-gray-600 mt-1">•</span>
+                        <span className="text-gray-700">
+                          <strong>{data.solutionStrong?.[index]}</strong> {solution}
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
                 <div className="mb-6">
                   <p className="font-semibold mb-3 text-gray-900">Benefícios:</p>
                   <ul className="space-y-2">
@@ -107,7 +120,7 @@ export const Modal = ({ isOpen, onClose, data, color }: ModalProps) => {
 
             {/* Carrossel de soluções */}
             <div className="">
-              <h3 className="text-xl font-bold mb-6 text-gray-900">Soluções Indicadas</h3>
+              <h3 className="text-xl font-bold mb-6 mt-6 md:mt-0 text-gray-900">Soluções Indicadas</h3>
 
               {/* Toggle Reels/Shorts */}
               <div className="inline-flex gap-1 mb-6 bg-white/30 rounded-lg p-1">
@@ -136,7 +149,7 @@ export const Modal = ({ isOpen, onClose, data, color }: ModalProps) => {
                       }}
                     >
                       <div className="relative mb-3 rounded-xl overflow-hidden bg-gray-200 aspect-video shadow-md">
-                        <video className="w-full h-full object-cover" src={data.videoSrc} muted playsInline />
+                        <video className="w-full h-full object-cover" src={item.thumbnail} muted playsInline />
                         <div className="absolute bottom-2 right-2 bg-black/80 text-white text-xs px-2 py-1 rounded font-semibold">{item.duration}</div>
                       </div>
                       <p className="text-sm font-bold mb-1 text-gray-900">{item.title}</p>

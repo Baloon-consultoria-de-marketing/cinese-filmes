@@ -7,7 +7,7 @@ interface HeaderProps {
 
 export const Header = ({ fullWidth = false }: HeaderProps) => {
   return (
-    <header className={`fixed top-0 z-50 transition-colors duration-300 ${fullWidth ? "left-0 w-full p-0 m-0 rounded-none bg-white" : "ml-8 mt-8 p-4 w-57.5 rounded-full hover:bg-white group"}`}>
+    <header className={`fixed top-0 z-50 transition-colors duration-300 ${fullWidth ? "left-0 w-full p-0 m-0 rounded-none bg-white" : "ml-2 mt-2 p-4 w-57.5 rounded-full hover:bg-white group"}`}>
       <nav className={`flex items-center gap-4 ${fullWidth ? "pl-8 py-4" : ""}`}>
         <Link href="/">
           <Image src="/favicon.ico" alt="Logo" width={30} height={30} className={fullWidth ? "" : "brightness-0 invert transition-all duration-300 group-hover:brightness-100 group-hover:invert-0"} />
