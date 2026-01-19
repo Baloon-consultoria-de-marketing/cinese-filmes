@@ -10,6 +10,9 @@ export default function Home() {
   const [activeSection, setActiveSection] = useState(0);
   const isScrolling = useRef(false);
 
+  // Ref para guardar a posição inicial do toque
+  const touchStartY = useRef(0);
+
   const sections = useMemo(() => ["section-1", "section-2", "section-3", "section-footer"], []);
 
   const scrollToIndex = useCallback(
@@ -32,9 +35,9 @@ export default function Home() {
   );
 
   useEffect(() => {
+    // --- Lógica Desktop (Mouse Wheel) ---
     const handleWheel = (e: WheelEvent) => {
       if (isScrolling.current) return;
-
       if (e.deltaY > 0) {
         scrollToIndex(activeSection + 1);
       } else {
@@ -42,10 +45,51 @@ export default function Home() {
       }
     };
 
+    // --- Lógica Mobile (Touch Swipe) ---
+    const handleTouchStart = (e: TouchEvent) => {
+      touchStartY.current = e.touches[0].clientY;
+    };
+
+    // NOVO: Impede o comportamento nativo (scroll elástico e pull-to-refresh)
+    const handleTouchMove = (e: TouchEvent) => {
+      // e.preventDefault() aqui é CRUCIAL para impedir o reload da página
+      // ao tentar subir além do topo.
+      if (e.cancelable) {
+        e.preventDefault();
+      }
+    };
+
+    const handleTouchEnd = (e: TouchEvent) => {
+      if (isScrolling.current) return;
+
+      const touchEndY = e.changedTouches[0].clientY;
+      const deltaY = touchStartY.current - touchEndY;
+
+      // Limite de sensibilidade (50px)
+      const threshold = 50;
+
+      if (Math.abs(deltaY) > threshold) {
+        if (deltaY > 0) {
+          // Arrastou para cima -> Próxima seção
+          scrollToIndex(activeSection + 1);
+        } else {
+          // Arrastou para baixo -> Seção anterior
+          scrollToIndex(activeSection - 1);
+        }
+      }
+    };
+
+    // Adiciona os listeners com { passive: false } para permitir o preventDefault
     window.addEventListener("wheel", handleWheel, { passive: false });
+    window.addEventListener("touchstart", handleTouchStart, { passive: false });
+    window.addEventListener("touchmove", handleTouchMove, { passive: false }); // Novo Listener
+    window.addEventListener("touchend", handleTouchEnd, { passive: false });
 
     return () => {
       window.removeEventListener("wheel", handleWheel);
+      window.removeEventListener("touchstart", handleTouchStart);
+      window.removeEventListener("touchmove", handleTouchMove);
+      window.removeEventListener("touchend", handleTouchEnd);
     };
   }, [activeSection, scrollToIndex]);
 
@@ -57,6 +101,11 @@ export default function Home() {
           margin: 0;
           padding: 0;
           overflow: hidden;
+          /* CSS Moderno para impedir pull-to-refresh */
+          overscroll-behavior-y: none;
+          overscroll-behavior: none;
+          /* Impede gestos de zoom/pan nativos */
+          touch-action: none; 
         }
         #root {
           display: flex;
