@@ -9,8 +9,6 @@ import { Footer } from "./components/Footer";
 export default function Home() {
   const [activeSection, setActiveSection] = useState(0);
   const isScrolling = useRef(false);
-  const touchStartRef = useRef(0);
-  const activeSectionRef = useRef(0);
 
   const sections = useMemo(() => ["section-1", "section-2", "section-3", "section-footer"], []);
 
@@ -21,7 +19,6 @@ export default function Home() {
       const element = document.getElementById(sections[index]);
       if (element) {
         isScrolling.current = true;
-        activeSectionRef.current = index;
         setActiveSection(index);
 
         element.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -38,47 +35,19 @@ export default function Home() {
     const handleWheel = (e: WheelEvent) => {
       if (isScrolling.current) return;
 
-      e.preventDefault();
-
       if (e.deltaY > 0) {
-        scrollToIndex(activeSectionRef.current + 1);
-      } else if (activeSectionRef.current > 0) {
-        scrollToIndex(activeSectionRef.current - 1);
-      }
-    };
-
-    const handleTouchStart = (e: TouchEvent) => {
-      touchStartRef.current = e.touches[0].clientY;
-    };
-
-    const handleTouchEnd = (e: TouchEvent) => {
-      if (isScrolling.current) return;
-
-      const touchEnd = e.changedTouches[0].clientY;
-      const difference = touchStartRef.current - touchEnd;
-      const threshold = 50;
-
-      if (Math.abs(difference) > threshold) {
-        if (difference > 0) {
-          // Swipe up (desce)
-          scrollToIndex(activeSectionRef.current + 1);
-        } else if (activeSectionRef.current > 0) {
-          // Swipe down (sobe)
-          scrollToIndex(activeSectionRef.current - 1);
-        }
+        scrollToIndex(activeSection + 1);
+      } else {
+        scrollToIndex(activeSection - 1);
       }
     };
 
     window.addEventListener("wheel", handleWheel, { passive: false });
-    window.addEventListener("touchstart", handleTouchStart, { passive: true });
-    window.addEventListener("touchend", handleTouchEnd, { passive: true });
 
     return () => {
       window.removeEventListener("wheel", handleWheel);
-      window.removeEventListener("touchstart", handleTouchStart);
-      window.removeEventListener("touchend", handleTouchEnd);
     };
-  }, [scrollToIndex]);
+  }, [activeSection, scrollToIndex]);
 
   return (
     <>
