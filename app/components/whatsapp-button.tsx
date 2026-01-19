@@ -70,11 +70,11 @@ export const WhatsappButton: React.FC<WhatsappButtonProps> = ({
         style={{
           ...positionStyles[position],
           animation: "pulse 2.5s ease infinite",
-          width: "60px",
-          height: "60px",
+          width: "70px",
+          height: "70px",
         }}
       >
-        <Image className="rounded-full" src="/whatsappButton.png" alt="WhatsApp" width={60} height={60} />
+        <Image className="rounded-full" src="/whatsappButton.png" alt="WhatsApp" width={80} height={80} />
       </Link>
     </>
   );

@@ -185,19 +185,30 @@ export default function Content() {
         </section>
         <section className="flex justify-center">
           <div className="w-full">
-            <div className="flex items-center justify-center">
-              <Image src="/INBOUND-MARKETING.png" alt="Inbound Marketing" width={1920} height={1080} className="hidden md:block" />
-              <Image src="/INBOUND-MARKETING-MOBILE.png" alt="Inbound Marketing" width={1920} height={1080} className="block md:hidden" />
+            <div className="relative flex items-center justify-center">
+              <Image src="/INBOUND-MARKETING.png" alt="Inbound Marketing" width={1920} height={1080} className="hidden md:block w-full" />
+              <Image src="/INBOUND-MARKETING-MOBILE.png" alt="Inbound Marketing" width={1920} height={1080} className="block md:hidden w-full" />
+              <div className="hidden md:flex absolute bottom-24 flex-col md:flex-row w-full justify-center items-center gap-4 z-40 px-4 md:px-0">
+                <Button color="blue" onClick={() => openModal("treinamento", "blue", "inbound", false)}>
+                  TOPO
+                </Button>
+                <Button color="yellow" onClick={() => openModal("cultura", "yellow", "inbound", true)}>
+                  MEIO
+                </Button>
+                <Button color="gray" onClick={() => openModal("proposito", "gray", "inbound", true)}>
+                  FUNDO
+                </Button>
+              </div>
             </div>
-            <div className="flex flex-col md:flex-row w-full justify-center items-center gap-4 mt-8 relative z-40 px-4 md:px-0">
+            <div className="flex md:hidden flex-col w-full justify-center items-center gap-4 relative z-40 px-4">
               <Button color="blue" onClick={() => openModal("treinamento", "blue", "inbound", false)}>
-                TREINAMENTO
+                TOPO
               </Button>
               <Button color="yellow" onClick={() => openModal("cultura", "yellow", "inbound", true)}>
-                CULTURA
+                MEIO
               </Button>
               <Button color="gray" onClick={() => openModal("proposito", "gray", "inbound", true)}>
-                PROPÓSITO
+                FUNDO
               </Button>
             </div>
             {modalData && activeSection === "inbound" && <Modal isOpen={true} onClose={closeModal} data={modalData} color={modalColor} showSolutions={showSolutions} />}
@@ -205,11 +216,23 @@ export default function Content() {
         </section>
         <section className="flex justify-center">
           <div className="w-full">
-            <div className="flex items-center justify-center">
-              <Image src="/ENDOMARKETING.png" alt="Inbound Marketing" width={1920} height={1080} className="hidden md:block" />
-              <Image src="/ENDOMARKETING-MOBILE.png" alt="Inbound Marketing" width={1920} height={1080} className="block md:hidden" />
+            <div className="relative flex flex-col items-center justify-center">
+              <Image src="/ENDOMARKETING.png" alt="Endomarketing" width={1920} height={1080} className="hidden md:block w-full" />
+              <Image src="/ENDOMARKETING-MOBILE.png" alt="Endomarketing" width={1920} height={1080} className="block md:hidden w-full" />
+              <div className="hidden md:flex absolute bottom-24 flex-col md:flex-row w-full justify-center items-center gap-4 z-40 px-4 md:px-0">
+                <Button color="blue" onClick={() => openModal("treinamento", "blue", "endomarketing", false)}>
+                  TREINAMENTO
+                </Button>
+                <Button color="yellow" onClick={() => openModal("cultura", "yellow", "endomarketing", true)}>
+                  CULTURA
+                </Button>
+                <Button color="gray" onClick={() => openModal("proposito", "gray", "endomarketing", true)}>
+                  PROPÓSITO
+                </Button>
+              </div>
+              {modalData && activeSection === "endomarketing" && <Modal isOpen={true} onClose={closeModal} data={modalData} color={modalColor} showSolutions={showSolutions} />}
             </div>
-            <div className="flex flex-col md:flex-row w-full justify-center items-center gap-4 mt-8 relative z-40 px-4 md:px-0">
+            <div className="flex md:hidden flex-col w-full justify-center items-center gap-4 relative z-40 px-4">
               <Button color="blue" onClick={() => openModal("treinamento", "blue", "endomarketing", false)}>
                 TREINAMENTO
               </Button>
@@ -220,16 +243,20 @@ export default function Content() {
                 PROPÓSITO
               </Button>
             </div>
-            {modalData && activeSection === "endomarketing" && <Modal isOpen={true} onClose={closeModal} data={modalData} color={modalColor} showSolutions={showSolutions} />}
           </div>
         </section>
         <section className="flex justify-center">
           <div className="w-full">
-            <div className="flex items-center justify-center">
-              <Image src="/EMPLOYER-BRANDING.png" alt="Inbound Marketing" width={1920} height={1080} className="hidden md:block" />
-              <Image src="/EMPLOYER-BRANDING-MOBILE.png" alt="Inbound Marketing" width={1920} height={1080} className="block md:hidden" />
+            <div className="relative flex items-center justify-center">
+              <Image src="/EMPLOYER-BRANDING.png" alt="Employer Branding" width={1920} height={1080} className="hidden md:block w-full" />
+              <Image src="/EMPLOYER-BRANDING-MOBILE.png" alt="Employer Branding" width={1920} height={1080} className="block md:hidden w-full" />
+              <div className="hidden md:flex absolute bottom-16 flex-col md:flex-row w-full justify-center items-center gap-4 z-40 px-4 md:px-0">
+                <Button color="blue" onClick={() => openGalleryModal("blue", "employer")}>
+                  SAIBA MAIS
+                </Button>
+              </div>
             </div>
-            <div className="flex flex-col md:flex-row w-full justify-center items-center gap-4 mt-8 relative z-40 px-4 md:px-0">
+            <div className="flex md:hidden flex-col w-full justify-center items-center gap-4 relative z-40 px-4">
               <Button color="blue" onClick={() => openGalleryModal("blue", "employer")}>
                 SAIBA MAIS
               </Button>
