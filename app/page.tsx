@@ -10,6 +10,7 @@ export default function Home() {
   const [activeSection, setActiveSection] = useState(0);
   const isScrolling = useRef(false);
   const touchStartRef = useRef(0);
+  const mainRef = useRef<HTMLDivElement>(null);
 
   const sections = useMemo(() => ["section-1", "section-2", "section-3", "section-footer"], []);
 
@@ -40,7 +41,7 @@ export default function Home() {
 
       if (e.deltaY > 0) {
         scrollToIndex(activeSection + 1);
-      } else {
+      } else if (activeSection > 0) {
         scrollToIndex(activeSection - 1);
       }
     };
@@ -54,29 +55,49 @@ export default function Home() {
 
       const touchEnd = e.changedTouches[0].clientY;
       const difference = touchStartRef.current - touchEnd;
-      const threshold = 50; // pixels
+      const threshold = 50;
 
       if (Math.abs(difference) > threshold) {
         if (difference > 0) {
-          // Swipe up
           scrollToIndex(activeSection + 1);
-        } else {
-          // Swipe down
+        } else if (activeSection > 0) {
           scrollToIndex(activeSection - 1);
         }
       }
     };
 
+    const handleScroll = () => {
+      if (isScrolling.current || !mainRef.current) return;
+
+      const scrollTop = window.scrollY || document.documentElement.scrollTop;
+      const windowHeight = window.innerHeight;
+
+      let newActiveSection = 0;
+      for (let i = 0; i < sections.length; i++) {
+        const element = document.getElementById(sections[i]);
+        if (element) {
+          const elementTop = element.getBoundingClientRect().top + scrollTop;
+          if (scrollTop >= elementTop - windowHeight / 2) {
+            newActiveSection = i;
+          }
+        }
+      }
+
+      setActiveSection(newActiveSection);
+    };
+
     window.addEventListener("wheel", handleWheel, { passive: false });
     window.addEventListener("touchstart", handleTouchStart, { passive: true });
     window.addEventListener("touchend", handleTouchEnd, { passive: true });
+    window.addEventListener("scroll", handleScroll, { passive: true });
 
     return () => {
       window.removeEventListener("wheel", handleWheel);
       window.removeEventListener("touchstart", handleTouchStart);
       window.removeEventListener("touchend", handleTouchEnd);
+      window.removeEventListener("scroll", handleScroll);
     };
-  }, [activeSection, scrollToIndex]);
+  }, [activeSection, scrollToIndex, sections]);
 
   return (
     <>
@@ -114,7 +135,7 @@ export default function Home() {
 
       <Header />
 
-      <main className="w-full h-screen">
+      <main ref={mainRef} className="w-full h-screen">
         {/* Seção 1 */}
         <section id="section-1" className="relative w-full h-screen overflow-hidden">
           <video className="w-full h-full object-cover" autoPlay loop muted playsInline preload="metadata">
