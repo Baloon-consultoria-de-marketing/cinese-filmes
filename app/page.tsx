@@ -9,6 +9,7 @@ import { Footer } from "./components/Footer";
 export default function Home() {
   const [activeSection, setActiveSection] = useState(0);
   const isScrolling = useRef(false);
+  const touchStartRef = useRef(0);
 
   const sections = useMemo(() => ["section-1", "section-2", "section-3", "section-footer"], []);
 
@@ -35,6 +36,8 @@ export default function Home() {
     const handleWheel = (e: WheelEvent) => {
       if (isScrolling.current) return;
 
+      e.preventDefault();
+
       if (e.deltaY > 0) {
         scrollToIndex(activeSection + 1);
       } else {
@@ -42,10 +45,36 @@ export default function Home() {
       }
     };
 
+    const handleTouchStart = (e: TouchEvent) => {
+      touchStartRef.current = e.touches[0].clientY;
+    };
+
+    const handleTouchEnd = (e: TouchEvent) => {
+      if (isScrolling.current) return;
+
+      const touchEnd = e.changedTouches[0].clientY;
+      const difference = touchStartRef.current - touchEnd;
+      const threshold = 50; // pixels
+
+      if (Math.abs(difference) > threshold) {
+        if (difference > 0) {
+          // Swipe up
+          scrollToIndex(activeSection + 1);
+        } else {
+          // Swipe down
+          scrollToIndex(activeSection - 1);
+        }
+      }
+    };
+
     window.addEventListener("wheel", handleWheel, { passive: false });
+    window.addEventListener("touchstart", handleTouchStart, { passive: true });
+    window.addEventListener("touchend", handleTouchEnd, { passive: true });
 
     return () => {
       window.removeEventListener("wheel", handleWheel);
+      window.removeEventListener("touchstart", handleTouchStart);
+      window.removeEventListener("touchend", handleTouchEnd);
     };
   }, [activeSection, scrollToIndex]);
 
