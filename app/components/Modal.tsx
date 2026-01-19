@@ -62,7 +62,7 @@ export const Modal = ({ isOpen, onClose, data, color, showSolutions = false }: M
 
       {/* Modal */}
       <div className={`fixed md:relative inset-0 md:inset-auto z-50 md:z-30 w-full flex justify-center ${isClosing ? "animate-slideDown" : "animate-slideUp"}`}>
-        <div className={`relative w-full h-full md:w-[80%] md:h-auto md:-mt-8 md:rounded-2xl shadow-2xl overflow-y-auto md:overflow-hidden ${colorMap[color]}`}>
+        <div className={`relative w-full h-full md:w-[80%] md:h-auto md:-mt-30 md:rounded-2xl shadow-2xl overflow-y-auto md:overflow-hidden ${colorMap[color]}`}>
           {/* Header com botão de fechar */}
           <div className="flex items-start justify-end pt-4 px-4">
             <button

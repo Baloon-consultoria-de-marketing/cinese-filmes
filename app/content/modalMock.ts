@@ -20,32 +20,6 @@ export interface ModalData {
   }[];
 }
 
-export interface GalleryModalData {
-  title: string;
-  subtitle: string;
-  images: {
-    src: string;
-    alt: string;
-    width?: number;
-    height?: number;
-  }[];
-}
-
-export const galleryModalData: GalleryModalData = {
-  title: "EVENTOS ETC",
-  subtitle: "Sua reprodução e seu maior programa de beneficiamento veio as melhores talentos.",
-  images: [
-    { src: "/amem.png", alt: "Imagem 1", width: 300, height: 400 },
-    { src: "/amem.png", alt: "Imagem 2", width: 300, height: 300 },
-    { src: "/amem.png", alt: "Imagem 3", width: 300, height: 500 },
-    { src: "/amem.png", alt: "Imagem 4", width: 300, height: 300 },
-    { src: "/amem.png", alt: "Imagem 5", width: 300, height: 400 },
-    { src: "/amem.png", alt: "Imagem 6", width: 300, height: 300 },
-    { src: "/amem.png", alt: "Imagem 7", width: 300, height: 350 },
-    { src: "/amem.png", alt: "Imagem 8", width: 300, height: 300 },
-  ],
-};
-
 export const modalDataMapInbound: Record<string, ModalData> = {
   treinamento: {
     category: "EFICIÊNCIA, PADRONIZAÇÃO E ENGAJAMENTO",
@@ -180,37 +154,6 @@ export const modalDataMapInbound: Record<string, ModalData> = {
       },
     ],
   },
-  "saiba-mais": {
-    category: "EMPLOYER BRANDING",
-    title: "CONTEÚDOS INSTITUCIONAIS",
-    description: "Materiais estratégicos para fortalecer a imagem da sua empresa no mercado e atrair os melhores talentos.",
-    benefits: ["Atração de talentos qualificados.", "Fortalecimento da reputação corporativa.", "Aumento da visibilidade da marca."],
-    videoSrc: "/videoHorizontal.mp4",
-    tabs: [
-      { id: "apresentacao", label: "Apresentação" },
-      { id: "cases", label: "Cases" },
-    ],
-    carouselItems: [
-      {
-        type: "apresentacao",
-        thumbnail: "/videoHorizontal.mp4",
-        duration: "4:31",
-        description: "Apresente sua empresa de forma profissional.",
-      },
-      {
-        type: "cases",
-        thumbnail: "/videoHorizontal.mp4",
-        duration: "5:01",
-        description: "Conte a história da sua marca.",
-      },
-      {
-        type: "apresentacao",
-        thumbnail: "/videoHorizontal.mp4",
-        duration: "2:44",
-        description: "Conheça nossa equipe.",
-      },
-    ],
-  },
 };
 
 export const modalsDataMapEndomarketing: Record<string, ModalData> = {
@@ -330,6 +273,47 @@ export const modalsDataMapEndomarketing: Record<string, ModalData> = {
       },
       {
         type: "videocases",
+        thumbnail: "/videoHorizontal.mp4",
+        duration: "5:01",
+        description: "Quem não instrui o cliente em sua jornada de compra, acaba perdendo ele para o concorrente.",
+      },
+    ],
+  },
+};
+
+export const modalsDataMapEmployer: Record<string, ModalData> = {
+  marcaEmpregadora: {
+    category: "CULTURA, ENGAJAMENTO, TALENTOS",
+    title: "MARCA EMPREGADORA",
+    description: "Objetivo: Construir e fortalecer a percepção da empresa como um excelente lugar para se trabalhar.",
+    benefits: ["Aumentar o engajamento interno.", "Retenção de talentos.", "Atração de talentos qualificados.", "Difundir valores e cultura da organização."],
+    videoSrc: "/videoHorizontal.mp4",
+    tabs: [
+      { id: "branded", label: "Branded Content" },
+      { id: "recrutamento", label: "Recrutamento" },
+      { id: "campanhas", label: "Campanhas" },
+    ],
+    carouselItems: [
+      {
+        type: "branded",
+        thumbnail: "/videoHorizontal.mp4",
+        duration: "4:31",
+        description: "Quem não instrui o cliente em sua jornada de compra, acaba perdendo ele para o concorrente.",
+      },
+      {
+        type: "recrutamento",
+        thumbnail: "/videoHorizontal.mp4",
+        duration: "5:01",
+        description: "Quem não instrui o cliente em sua jornada de compra, acaba perdendo ele para o concorrente.",
+      },
+      {
+        type: "campanhas",
+        thumbnail: "/videoHorizontal.mp4",
+        duration: "2:41",
+        description: "Quem não instrui o cliente em sua jornada de compra, acaba perdendo ele para o concorrente.",
+      },
+      {
+        type: "branded",
         thumbnail: "/videoHorizontal.mp4",
         duration: "5:01",
         description: "Quem não instrui o cliente em sua jornada de compra, acaba perdendo ele para o concorrente.",

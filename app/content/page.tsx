@@ -8,8 +8,7 @@ import { mockImages } from "./mockImages";
 import React from "react";
 import { Button } from "../components/Button";
 import { Modal } from "../components/Modal";
-import { GalleryModal } from "../components/GalleryModal";
-import { modalDataMapInbound, modalsDataMapEndomarketing, ModalData, galleryModalData } from "./modalMock";
+import { modalDataMapInbound, modalsDataMapEndomarketing, modalsDataMapEmployer, ModalData } from "./modalMock";
 import Swal from "sweetalert2";
 
 export default function Content() {
@@ -19,27 +18,27 @@ export default function Content() {
   const [modalColor, setModalColor] = React.useState<"blue" | "gray" | "yellow">("blue");
   const [phoneValue, setPhoneValue] = React.useState("");
   const [emailError, setEmailError] = React.useState("");
-  const [showGalleryModal, setShowGalleryModal] = React.useState(false);
   const [showSolutions, setShowSolutions] = React.useState(false);
 
   const openModal = (key: string, color: "blue" | "gray" | "yellow", section: string, showSolutionsParam: boolean = false) => {
-    const modalMap = section === "endomarketing" ? modalsDataMapEndomarketing : modalDataMapInbound;
+    let modalMap;
+    if (section === "endomarketing") {
+      modalMap = modalsDataMapEndomarketing;
+    } else if (section === "employer") {
+      modalMap = modalsDataMapEmployer;
+    } else {
+      modalMap = modalDataMapInbound;
+    }
+
     setModalData(modalMap[key]);
     setModalColor(color);
     setActiveSection(section);
     setShowSolutions(showSolutionsParam);
   };
 
-  const openGalleryModal = (color: "blue" | "gray" | "yellow", section: string) => {
-    setModalColor(color);
-    setActiveSection(section);
-    setShowGalleryModal(true);
-  };
-
   const closeModal = () => {
     setActiveSection(null);
     setModalData(null);
-    setShowGalleryModal(false);
   };
 
   const formatPhone = (value: string) => {
@@ -153,7 +152,7 @@ export default function Content() {
   return (
     <>
       <Header fullWidth={true} />
-      <main className="w-full mb-10">
+      <main className="w-full">
         <section className="relative w-full aspect-video overflow-hidden">
           <video className="w-full h-full object-cover" autoPlay loop muted playsInline preload="auto">
             {/* O caminho deve começar sempre com / e NÃO incluir a palavra 'public' e possuir apenas um nome */}
@@ -184,7 +183,7 @@ export default function Content() {
           </div>
         </section>
         <section className="flex justify-center">
-          <div className="w-full">
+          <div className={`w-full transition-shadow duration-300 ${modalData && activeSection === "inbound" ? "shadow-[0px_4px_4px_0px_rgba(0,0,0,0.1)]" : ""}`}>
             <div className="relative flex items-center justify-center">
               <Image src="/INBOUND-MARKETING.png" alt="Inbound Marketing" width={1920} height={1080} className="hidden md:block w-full" />
               <Image src="/INBOUND-MARKETING-MOBILE.png" alt="Inbound Marketing" width={1920} height={1080} className="block md:hidden w-full" />
@@ -200,6 +199,7 @@ export default function Content() {
                 </Button>
               </div>
             </div>
+            {modalData && activeSection === "inbound" && <Modal isOpen={!!modalData} onClose={closeModal} data={modalData} color={modalColor} showSolutions={showSolutions} />}
             <div className="flex md:hidden flex-col w-full justify-center items-center gap-4 relative z-40 px-4">
               <Button color="blue" onClick={() => openModal("treinamento", "blue", "inbound", false)}>
                 TOPO
@@ -211,11 +211,10 @@ export default function Content() {
                 FUNDO
               </Button>
             </div>
-            {modalData && activeSection === "inbound" && <Modal isOpen={true} onClose={closeModal} data={modalData} color={modalColor} showSolutions={showSolutions} />}
           </div>
         </section>
         <section className="flex justify-center">
-          <div className="w-full">
+          <div className={`w-full transition-shadow duration-300 ${modalData && activeSection === "endomarketing" ? "shadow-[0px_4px_4px_0px_rgba(0,0,0,0.1)]" : ""}`}>
             <div className="relative flex flex-col items-center justify-center">
               <Image src="/ENDOMARKETING.png" alt="Endomarketing" width={1920} height={1080} className="hidden md:block w-full" />
               <Image src="/ENDOMARKETING-MOBILE.png" alt="Endomarketing" width={1920} height={1080} className="block md:hidden w-full" />
@@ -230,8 +229,8 @@ export default function Content() {
                   PROPÓSITO
                 </Button>
               </div>
-              {modalData && activeSection === "endomarketing" && <Modal isOpen={true} onClose={closeModal} data={modalData} color={modalColor} showSolutions={showSolutions} />}
             </div>
+            {modalData && activeSection === "endomarketing" && <Modal isOpen={!!modalData} onClose={closeModal} data={modalData} color={modalColor} showSolutions={showSolutions} />}
             <div className="flex md:hidden flex-col w-full justify-center items-center gap-4 relative z-40 px-4">
               <Button color="blue" onClick={() => openModal("treinamento", "blue", "endomarketing", false)}>
                 TREINAMENTO
@@ -250,18 +249,18 @@ export default function Content() {
             <div className="relative flex items-center justify-center">
               <Image src="/EMPLOYER-BRANDING.png" alt="Employer Branding" width={1920} height={1080} className="hidden md:block w-full" />
               <Image src="/EMPLOYER-BRANDING-MOBILE.png" alt="Employer Branding" width={1920} height={1080} className="block md:hidden w-full" />
-              <div className="hidden md:flex absolute bottom-16 flex-col md:flex-row w-full justify-center items-center gap-4 z-40 px-4 md:px-0">
-                <Button color="blue" onClick={() => openGalleryModal("blue", "employer")}>
-                  SAIBA MAIS
+              <div className="hidden md:flex absolute bottom-20 flex-col md:flex-row w-full justify-center items-center gap-4 z-40 px-4 md:px-0">
+                <Button color="blue" onClick={() => openModal("marcaEmpregadora", "blue", "employer", false)}>
+                  MARCA EMPREGADORA
                 </Button>
               </div>
             </div>
             <div className="flex md:hidden flex-col w-full justify-center items-center gap-4 relative z-40 px-4">
-              <Button color="blue" onClick={() => openGalleryModal("blue", "employer")}>
-                SAIBA MAIS
+              <Button color="blue" onClick={() => openModal("marcaEmpregadora", "blue", "employer", false)}>
+                MARCA EMPREGADORA
               </Button>
             </div>
-            {showGalleryModal && activeSection === "employer" && <GalleryModal isOpen={true} onClose={closeModal} data={galleryModalData} />}
+            {modalData && activeSection === "employer" && <Modal isOpen={!!modalData} onClose={closeModal} data={modalData} color={modalColor} showSolutions={showSolutions} />}
           </div>
         </section>
         <section className="flex mt-8 flex-col items-center rounded-xl lg:flex-row gap-8 lg:gap-12 px-12 py-16 max-w-7xl mx-auto" style={{ boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.15)" }}>
@@ -320,6 +319,7 @@ export default function Content() {
         </section>
         <WhatsappButton />
       </main>
+
       <Footer />
     </>
   );
