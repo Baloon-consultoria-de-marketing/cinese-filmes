@@ -8,15 +8,12 @@ import { Footer } from "./components/Footer";
 
 export default function Home() {
   const [activeSection, setActiveSection] = useState(0);
-  const isScrolling = useRef(false); // Trava para impedir múltiplos scrolls rápidos
+  const isScrolling = useRef(false);
 
-  // Definição das seções para controle lógico
-  const sections = useMemo(() => ["section-1", "section-2", "section-3"], []);
+  const sections = useMemo(() => ["section-1", "section-2", "section-3", "section-footer"], []);
 
-  // Função centralizada de navegação
   const scrollToIndex = useCallback(
     (index: number) => {
-      // Verificações de segurança (limites do array)
       if (index < 0 || index >= sections.length) return;
 
       const element = document.getElementById(sections[index]);
@@ -24,10 +21,8 @@ export default function Home() {
         isScrolling.current = true;
         setActiveSection(index);
 
-        // O "smooth" aqui dita a suavidade da animação
         element.scrollIntoView({ behavior: "smooth", block: "start" });
 
-        // Tempo de espera para liberar o próximo scroll (ajustado para a duração da animação)
         setTimeout(() => {
           isScrolling.current = false;
         }, 700);
@@ -36,12 +31,10 @@ export default function Home() {
     [sections],
   );
 
-  // Listener para a roda do mouse
   useEffect(() => {
     const handleWheel = (e: WheelEvent) => {
       if (isScrolling.current) return;
 
-      // Se deltaY > 0, está descendo. Se < 0, está subindo.
       if (e.deltaY > 0) {
         scrollToIndex(activeSection + 1);
       } else {
@@ -54,7 +47,7 @@ export default function Home() {
     return () => {
       window.removeEventListener("wheel", handleWheel);
     };
-  }, [activeSection, scrollToIndex]); // Recria o listener quando a seção ativa muda
+  }, [activeSection, scrollToIndex]);
 
   return (
     <>
@@ -63,7 +56,7 @@ export default function Home() {
           height: 100%;
           margin: 0;
           padding: 0;
-          overflow: hidden; /* IMPORTANTE: Desativa o scroll nativo */
+          overflow: hidden;
         }
         #root {
           display: flex;
@@ -73,13 +66,16 @@ export default function Home() {
         main {
           height: 100vh;
           width: 100%;
-          overflow: hidden; /* JS controla a posição, não o usuário */
+          overflow: hidden;
           position: relative;
         }
         section {
           height: 100vh;
           width: 100%;
-          /* Removemos scroll-snap pois agora é controlado via JS */
+        }
+        section#section-footer {
+          height: auto;
+          min-height: auto;
         }
         video {
           will-change: transform;
@@ -127,10 +123,13 @@ export default function Home() {
             </div>
           </div>
         </section>
-        <Footer />
+
+        {/* Seção Footer */}
+        <section id="section-footer" className="relative w-full h-auto overflow-visible">
+          <Footer />
+        </section>
       </main>
 
-      {/* Passamos as props de controle para o nav */}
       <SectionNav sections={sections} activeSection={activeSection} onNavigate={scrollToIndex} />
 
       <WhatsappButton />

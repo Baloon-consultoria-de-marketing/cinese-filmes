@@ -1,7 +1,5 @@
 import type { Metadata } from "next";
 import { Inter, Raleway, Roboto } from "next/font/google";
-import { Header } from "./components/Header";
-import { Footer } from "./components/Footer";
 import "./globals.css";
 
 // Configuração da Inter
