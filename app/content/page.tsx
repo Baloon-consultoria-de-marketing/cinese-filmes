@@ -5,7 +5,7 @@ import { Header } from "../components/Header";
 import { WhatsappButton } from "../components/whatsapp-button";
 import Image from "next/image";
 import { mockImages } from "./mockImages";
-import React, { useEffect, useRef, useCallback, useMemo } from "react";
+import React from "react";
 import { Button } from "../components/Button";
 import { Modal } from "../components/Modal";
 import { modalDataMapInbound, modalsDataMapEndomarketing, modalsDataMapEmployer, ModalData } from "./modalMock";
@@ -217,7 +217,7 @@ export default function Content() {
               <Image src="/INBOUND-MARKETING.png" alt="Inbound Marketing" width={1920} height={1080} className="hidden md:block w-full h-full object-contain" />
               <Image src="/INBOUND-MARKETING-MOBILE.png" alt="Inbound Marketing" width={1920} height={1080} className="block md:hidden w-full h-full object-contain" />
               <div className="hidden md:flex absolute bottom-24 flex-col md:flex-row w-full justify-center items-center gap-4 z-40 px-4 md:px-0">
-                <Button color="blue" onClick={() => openModal("treinamento", "blue", "inbound", false)}>
+                <Button color="blue" onClick={() => openModal("treinamento", "blue", "inbound", true)}>
                   TOPO
                 </Button>
                 <Button color="yellow" onClick={() => openModal("cultura", "yellow", "inbound", true)}>

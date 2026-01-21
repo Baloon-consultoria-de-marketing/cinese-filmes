@@ -25,7 +25,7 @@ export const Footer = () => {
           <div className="flex flex-col gap-2 ">
             <p className="font-raleway font-bold text-base uppercase tracking-[0.2em] text-black self-start">Whatsapp</p>
             <div className="font-inter text-base flex flex-col gap-1 self-start">
-              <p className="whitespace-nowrap text-black text-right">São Paulo | +55 (11) 9 8247-7229</p>
+              <p className="whitespace-nowrap text-black">São Paulo | +55 (11) 9 8247-7229</p>
               <p className="whitespace-nowrap text-black">Florianópolis | +55 (48) 9 9115-1793</p>
             </div>
           </div>

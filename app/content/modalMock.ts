@@ -22,14 +22,16 @@ export interface ModalData {
 
 export const modalDataMapInbound: Record<string, ModalData> = {
   treinamento: {
-    category: "EFICIÊNCIA, PADRONIZAÇÃO E ENGAJAMENTO",
-    title: "EAD VÍDEOS DE TREINAMENTO",
-    description: "Centralização de treinamentos e formações em um canal de fácil acesso, reduzindo custos e promovendo padronização de informações.",
-    benefits: ["Formação de gerações de colaboradores.", "Comunicação clara das diretrizes corporativas.", "Redução de custos com treinamentos presenciais."],
+    category: "TOPO DE FUNIL",
+    title: "ATRAÇÃO",
+    solutionStrong: ["Reels e Shorts:", ""],
+    solutions: ["Videos curtos, criativos e dinamicos que utilizam tendências para engajamento.", "Tiktok - Instagram - YouTube"],
+    description: "Objetivo: Atrair a atenção do público-alvo, gerando interesse inicial.",
+    benefits: ["Aumento do alcance da marca.", "Criação de uma primeira impressão forte e memorável.", "Atração de leads qualificados para avançar o funil."],
     videoSrc: "/videoHorizontal.mp4",
     tabs: [
-      { id: "reels", label: "Reels" },
-      { id: "shorts", label: "Shorts" },
+      { id: "reels", label: "Reels/Shorts" },
+      { id: "videos", label: "Videos institucionais" },
     ],
     carouselItems: [
       {
@@ -39,13 +41,13 @@ export const modalDataMapInbound: Record<string, ModalData> = {
         description: "Quem não instrui o cliente em sua jornada de compra, acaba perdendo ele para o concorrente.",
       },
       {
-        type: "shorts",
+        type: "videos",
         thumbnail: "/videoHorizontal.mp4",
         duration: "5:01",
         description: "Quem não instrui o cliente em sua jornada de compra, acaba perdendo ele para o concorrente.",
       },
       {
-        type: "shorts",
+        type: "videos",
         thumbnail: "/videoHorizontal.mp4",
         duration: "5:01",
         description: "Quem não instrui o cliente em sua jornada de compra, acaba perdendo ele para o concorrente.",

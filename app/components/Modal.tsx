@@ -75,7 +75,7 @@ export const Modal = ({ isOpen, onClose, data, color, showSolutions = false }: M
           </div>
 
           {/* Conteúdo principal */}
-          <div className="p-4 md:p-8 lg:p-12">
+          <div className="p-4 md:p-8 lg:p-10">
             <div className="flex flex-col lg:flex-row">
               {/* Lado esquerdo - Texto */}
               <div className="flex-1">
@@ -85,11 +85,11 @@ export const Modal = ({ isOpen, onClose, data, color, showSolutions = false }: M
 
                 {showSolutions && (
                   <div className="mb-6 mt-3">
-                    <p className="font-semibold mb-3 text-gray-900 ">Soluções Indicadas:</p>
-                    <ul className="space-y-2">
+                    <p className="font-semibold mb-3 -ml-3 text-gray-900 ">&bull; &nbsp;Soluções Indicadas:</p>
+                    <ul className="">
                       {data.solutions?.map((solution, index) => (
                         <li key={index} className="flex items-start gap-2 text-base md:md:max-w-130">
-                          <span className="text-gray-600 mt-1">•</span>
+                          <span className="text-gray-600 ">•</span>
                           <span className="text-gray-700">
                             <strong>{data.solutionStrong?.[index]}</strong> {solution}
                           </span>
@@ -99,11 +99,11 @@ export const Modal = ({ isOpen, onClose, data, color, showSolutions = false }: M
                   </div>
                 )}
                 <div className="mb-6">
-                  <p className="font-semibold mb-3 text-gray-900">Benefícios:</p>
+                  <p className="font-semibold mb-3 -ml-3 text-gray-900">&bull; &nbsp;Benefícios:</p>
                   <ul className="space-y-2">
                     {data.benefits.map((benefit, index) => (
                       <li key={index} className="flex items-start gap-2 text-sm">
-                        <span className="text-gray-600 mt-1">•</span>
+                        <span className="text-gray-600 ">•</span>
                         <span className="text-gray-700">{benefit}</span>
                       </li>
                     ))}
@@ -112,8 +112,8 @@ export const Modal = ({ isOpen, onClose, data, color, showSolutions = false }: M
               </div>
 
               {/* Lado direito - Vídeo */}
-              <div className="flex-1">
-                <div className="relative mx-auto" style={{ aspectRatio: "9/16", maxHeight: "478px", maxWidth: "290px" }}>
+              <div className="flex-1 ">
+                <div className="relative mx-auto" style={{ aspectRatio: "9/16", maxHeight: "400px", maxWidth: "290px" }}>
                   <video className="w-full h-full object-cover rounded-xl shadow-lg" autoPlay loop muted playsInline>
                     <source src={data.videoSrc} type="video/mp4" />
                   </video>
