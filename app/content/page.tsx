@@ -34,6 +34,11 @@ export default function Content() {
     setModalColor(color);
     setActiveSection(section);
     setShowSolutions(showSolutionsParam);
+
+    // Previne scroll automático ao abrir modal
+    setTimeout(() => {
+      window.scrollTo(0, window.scrollY);
+    }, 0);
   };
 
   const closeModal = () => {
@@ -154,8 +159,26 @@ export default function Content() {
           overflow: auto;
           overscroll-behavior: auto;
           touch-action: auto;
+          scroll-behavior: auto;
+        }
+        
+        /* Previne scroll quando modal está aberto */
+        body.modal-open {
+          overflow: hidden;
         }
       `}</style>
+
+      {/* Adicione este useEffect para gerenciar body.overflow */}
+      {React.useMemo(() => {
+        if (typeof window !== "undefined") {
+          if (modalData && activeSection) {
+            document.body.classList.add("modal-open");
+          } else {
+            document.body.classList.remove("modal-open");
+          }
+        }
+        return null;
+      }, [modalData, activeSection])}
 
       <Header isVisible={true} />
       <main className="w-full">
