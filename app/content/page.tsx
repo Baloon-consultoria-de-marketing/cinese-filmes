@@ -19,80 +19,6 @@ export default function Content() {
   const [phoneValue, setPhoneValue] = React.useState("");
   const [emailError, setEmailError] = React.useState("");
   const [showSolutions, setShowSolutions] = React.useState(false);
-  const [currentSectionIndex, setCurrentSectionIndex] = React.useState(0);
-  const isScrolling = useRef(false);
-  const touchStartY = useRef(0);
-
-  const sections = useMemo(() => ["section-hero", "section-hub", "section-inbound", "section-endomarketing", "section-employer", "section-contact"], []);
-
-  const scrollToIndex = useCallback(
-    (index: number) => {
-      if (index < 0 || index >= sections.length) return;
-
-      const element = document.getElementById(sections[index]);
-      if (element) {
-        isScrolling.current = true;
-        setCurrentSectionIndex(index);
-
-        element.scrollIntoView({ behavior: "smooth", block: "start" });
-
-        setTimeout(() => {
-          isScrolling.current = false;
-        }, 700);
-      }
-    },
-    [sections],
-  );
-
-  useEffect(() => {
-    const handleWheel = (e: WheelEvent) => {
-      if (isScrolling.current) return;
-      e.preventDefault();
-      if (e.deltaY > 0) {
-        scrollToIndex(currentSectionIndex + 1);
-      } else {
-        scrollToIndex(currentSectionIndex - 1);
-      }
-    };
-
-    const handleTouchStart = (e: TouchEvent) => {
-      touchStartY.current = e.touches[0].clientY;
-    };
-
-    const handleTouchMove = (e: TouchEvent) => {
-      if (e.cancelable) {
-        e.preventDefault();
-      }
-    };
-
-    const handleTouchEnd = (e: TouchEvent) => {
-      if (isScrolling.current) return;
-
-      const touchEndY = e.changedTouches[0].clientY;
-      const deltaY = touchStartY.current - touchEndY;
-      const threshold = 50;
-
-      if (Math.abs(deltaY) > threshold) {
-        if (deltaY > 0) {
-          scrollToIndex(currentSectionIndex + 1);
-        } else {
-          scrollToIndex(currentSectionIndex - 1);
-        }
-      }
-    };
-
-    window.addEventListener("wheel", handleWheel, { passive: false });
-    window.addEventListener("touchstart", handleTouchStart, { passive: false });
-    window.addEventListener("touchmove", handleTouchMove, { passive: false });
-    window.addEventListener("touchend", handleTouchEnd, { passive: false });
-
-    return () => {
-      window.removeEventListener("wheel", handleWheel);
-      window.removeEventListener("touchstart", handleTouchStart);
-      window.removeEventListener("touchmove", handleTouchMove);
-      window.removeEventListener("touchend", handleTouchEnd);
-    };
-  }, [currentSectionIndex, scrollToIndex]);
 
   const openModal = (key: string, color: "blue" | "gray" | "yellow", section: string, showSolutionsParam: boolean = false) => {
     let modalMap;
@@ -116,15 +42,11 @@ export default function Content() {
   };
 
   const formatPhone = (value: string) => {
-    // Remove tudo que não é dígito
     const cleaned = value.replace(/\D/g, "");
 
-    // Aplica a máscara
     if (cleaned.length <= 10) {
-      // Formato: (XX) XXXX-XXXX
       return cleaned.replace(/^(\d{2})(\d)/, "($1) $2").replace(/(\d{4})(\d)/, "$1-$2");
     } else {
-      // Formato: (XX) XXXXX-XXXX
       return cleaned
         .replace(/^(\d{2})(\d)/, "($1) $2")
         .replace(/(\d{5})(\d)/, "$1-$2")
@@ -163,7 +85,6 @@ export default function Content() {
     const formElement = e.currentTarget;
     const emailInput = formElement.email as HTMLInputElement;
 
-    // Valida email antes de enviar
     if (!validateEmail(emailInput.value)) {
       Swal.fire({
         title: "Email Inválido",
@@ -230,21 +151,16 @@ export default function Content() {
           height: 100%;
           margin: 0;
           padding: 0;
-          overflow: hidden;
-          overscroll-behavior-y: none;
-          overscroll-behavior: none;
-          touch-action: none;
-        }
-        section {
-          height: 100vh;
-          width: 100%;
+          overflow: auto;
+          overscroll-behavior: auto;
+          touch-action: auto;
         }
       `}</style>
 
       <Header isVisible={true} />
-      <main className="w-full h-screen overflow-hidden">
+      <main className="w-full">
         <section id="section-hero" className="relative w-full h-screen overflow-hidden">
-          <video className="w-full" autoPlay loop muted playsInline preload="auto">
+          <video className="w-full h-full object-cover" autoPlay loop muted playsInline preload="auto">
             <source src="/videoHorizontal.mp4" type="video/mp4" />
           </video>
           <div className="absolute inset-0 flex items-center justify-center bg-black/20">
@@ -252,7 +168,7 @@ export default function Content() {
           </div>
         </section>
 
-        <section id="section-hub" className="flex flex-col lg:flex-row justify-evenly pt-8 px-4 lg:px-8 overflow-y-auto">
+        <section id="section-hub" className="flex flex-col lg:flex-row justify-evenly py-16 px-4 lg:px-8">
           <div className="flex flex-col lg:flex-row gap-8 lg:gap-40 items-center max-w-7xl mx-auto">
             <div className="flex flex-col gap-4 max-w-full lg:max-w-156.25">
               <p className="text-2xl md:text-3xl lg:text-[39px] font-extrabold font-[raleway]">HUB de comunicação corporativa</p>
@@ -272,9 +188,9 @@ export default function Content() {
           </div>
         </section>
 
-        <section id="section-inbound" className="flex justify-center h-screen">
-          <div className={`w-full h-full transition-shadow duration-300 ${modalData && activeSection === "inbound" ? "shadow-[0px_4px_4px_0px_rgba(0,0,0,0.1)]" : ""}`}>
-            <div className="relative flex items-center justify-center w-full h-full">
+        <section id="section-inbound" className="flex justify-center min-h-screen py-12">
+          <div className={`w-full transition-shadow duration-300 ${modalData && activeSection === "inbound" ? "shadow-[0px_4px_4px_0px_rgba(0,0,0,0.1)]" : ""}`}>
+            <div className="relative flex items-center justify-center w-full h-96 md:h-screen">
               <Image src="/INBOUND-MARKETING.png" alt="Inbound Marketing" width={1920} height={1080} className="hidden md:block w-full h-full object-contain" />
               <Image src="/INBOUND-MARKETING-MOBILE.png" alt="Inbound Marketing" width={1920} height={1080} className="block md:hidden w-full h-full object-contain" />
               <div className="hidden md:flex absolute bottom-24 flex-col md:flex-row w-full justify-center items-center gap-4 z-40 px-4 md:px-0">
@@ -290,7 +206,7 @@ export default function Content() {
               </div>
             </div>
             {modalData && activeSection === "inbound" && <Modal isOpen={!!modalData} onClose={closeModal} data={modalData} color={modalColor} showSolutions={showSolutions} />}
-            <div className="flex md:hidden flex-col w-full justify-center items-center gap-4 absolute bottom-8 left-0 right-0 z-40 px-4">
+            <div className="flex md:hidden flex-col w-full justify-center items-center gap-4 py-8 z-40 px-4">
               <Button color="blue" onClick={() => openModal("treinamento", "blue", "inbound", false)}>
                 TOPO
               </Button>
@@ -304,9 +220,9 @@ export default function Content() {
           </div>
         </section>
 
-        <section id="section-endomarketing" className="flex justify-center h-screen">
-          <div className={`w-full h-full transition-shadow duration-300 ${modalData && activeSection === "endomarketing" ? "shadow-[0px_4px_4px_0px_rgba(0,0,0,0.1)]" : ""}`}>
-            <div className="relative flex flex-col items-center justify-center w-full h-full">
+        <section id="section-endomarketing" className="flex justify-center min-h-screen py-12">
+          <div className={`w-full transition-shadow duration-300 ${modalData && activeSection === "endomarketing" ? "shadow-[0px_4px_4px_0px_rgba(0,0,0,0.1)]" : ""}`}>
+            <div className="relative flex flex-col items-center justify-center w-full h-96 md:h-screen">
               <Image src="/ENDOMARKETING.png" alt="Endomarketing" width={1920} height={1080} className="hidden md:block w-full h-full object-contain" />
               <Image src="/ENDOMARKETING-MOBILE.png" alt="Endomarketing" width={1920} height={1080} className="block md:hidden w-full h-full object-contain" />
               <div className="hidden md:flex absolute bottom-24 flex-col md:flex-row w-full justify-center items-center gap-4 z-40 px-4 md:px-0">
@@ -322,7 +238,7 @@ export default function Content() {
               </div>
             </div>
             {modalData && activeSection === "endomarketing" && <Modal isOpen={!!modalData} onClose={closeModal} data={modalData} color={modalColor} showSolutions={showSolutions} />}
-            <div className="flex md:hidden flex-col w-full justify-center items-center gap-4 absolute bottom-8 left-0 right-0 z-40 px-4">
+            <div className="flex md:hidden flex-col w-full justify-center items-center gap-4 py-8 z-40 px-4">
               <Button color="blue" onClick={() => openModal("treinamento", "blue", "endomarketing", false)}>
                 TREINAMENTO
               </Button>
@@ -336,9 +252,9 @@ export default function Content() {
           </div>
         </section>
 
-        <section id="section-employer" className="flex justify-center h-screen">
-          <div className="w-full h-full">
-            <div className="relative flex items-center justify-center w-full h-full">
+        <section id="section-employer" className="flex justify-center min-h-screen py-12">
+          <div className="w-full">
+            <div className="relative flex items-center justify-center w-full h-96 md:h-screen">
               <Image src="/EMPLOYER-BRANDING.png" alt="Employer Branding" width={1920} height={1080} className="hidden md:block w-full h-full object-contain" />
               <Image src="/EMPLOYER-BRANDING-MOBILE.png" alt="Employer Branding" width={1920} height={1080} className="block md:hidden w-full h-full object-contain" />
               <div className="hidden md:flex absolute bottom-20 flex-col md:flex-row w-full justify-center items-center gap-4 z-40 px-4 md:px-0">
@@ -347,7 +263,7 @@ export default function Content() {
                 </Button>
               </div>
             </div>
-            <div className="flex md:hidden flex-col w-full justify-center items-center gap-4 absolute bottom-8 left-0 right-0 z-40 px-4">
+            <div className="flex md:hidden flex-col w-full justify-center items-center gap-4 py-8 z-40 px-4">
               <Button color="blue" onClick={() => openModal("marcaEmpregadora", "blue", "employer", false)}>
                 MARCA EMPREGADORA
               </Button>
@@ -358,7 +274,7 @@ export default function Content() {
 
         <section
           id="section-contact"
-          className="flex mt-8 flex-col items-center rounded-xl lg:flex-row gap-8 lg:gap-12 px-12 py-16 max-w-7xl mx-auto overflow-y-auto"
+          className="flex flex-col items-center rounded-xl lg:flex-row gap-8 lg:gap-12 px-4 md:px-12 py-16 max-w-7xl mx-auto"
           style={{ boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.15)" }}
         >
           <div className="w-full lg:w-1/2">
@@ -391,7 +307,7 @@ export default function Content() {
               <textarea
                 name="message"
                 placeholder="Mensagem"
-                className="w-full p-4 min-h-28 border border-gray-200 rounded-md h-24 resize-none focus:outline-none focus:border-gray-300"
+                className="w-full p-4 min-h-28 border border-gray-200 rounded-md resize-none focus:outline-none focus:border-gray-300"
                 required
               ></textarea>
               <button
