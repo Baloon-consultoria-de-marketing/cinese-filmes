@@ -295,64 +295,66 @@ export default function Content() {
           </div>
         </section>
 
-        <section
-          id="section-contact"
-          className="flex flex-col items-center rounded-xl lg:flex-row gap-8 lg:gap-12 px-4 md:px-12 py-16 max-w-7xl mx-auto"
-          style={{ boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.15)" }}
-        >
-          <div className="w-full lg:w-1/2">
-            <div className="mb-8">
-              <h2 className="text-3xl md:text-4xl font-bold max-w-100 text-gray-900 mb-3">Vamos transformar seu negócio juntos?</h2>
-              <p className="text-gray-600 text-lg max-w-112.5">Fale com a CINESE e descubra novas formas de conectar sua marca ao público.</p>
-            </div>
-            <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-              <input type="text" name="name" placeholder="Nome" className="w-full p-4 border border-gray-200 rounded-md focus:outline-none focus:border-gray-300" required />
-              <input
-                type="tel"
-                name="phone"
-                placeholder="Telefone"
-                value={phoneValue}
-                onChange={handlePhoneChange}
-                className="w-full p-4 border border-gray-200 rounded-md focus:outline-none focus:border-gray-300"
-                required
-              />
-              <div className="w-full">
+        <div className="bg-[#F0F8FB] p-8 lg:p-16">
+          <section
+            id="section-contact"
+            className="flex flex-col items-center rounded-xl lg:flex-row gap-8 lg:gap-12 px-4 md:px-12 py-16 max-w-7xl mx-auto bg-white"
+            style={{ boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.15)" }}
+          >
+            <div className="w-full lg:w-1/2">
+              <div className="mb-8">
+                <h2 className="text-3xl md:text-4xl font-bold max-w-100 text-gray-900 mb-3">Vamos transformar seu negócio juntos?</h2>
+                <p className="text-gray-600 text-lg max-w-112.5">Fale com a CINESE e descubra novas formas de conectar sua marca ao público.</p>
+              </div>
+              <form onSubmit={handleSubmit} className="flex flex-col gap-4 ">
+                <input type="text" name="name" placeholder="Nome" className="w-full p-4 border border-gray-200 rounded-md focus:outline-none focus:border-gray-300" required />
                 <input
-                  type="email"
-                  name="email"
-                  placeholder="Email"
-                  onBlur={handleEmailBlur}
+                  type="tel"
+                  name="phone"
+                  placeholder="Telefone"
+                  value={phoneValue}
+                  onChange={handlePhoneChange}
                   className="w-full p-4 border border-gray-200 rounded-md focus:outline-none focus:border-gray-300"
                   required
                 />
-                {emailError && <p className="text-red-500 text-sm mt-1">{emailError}</p>}
-              </div>
-              <textarea
-                name="message"
-                placeholder="Mensagem"
-                className="w-full p-4 min-h-28 border border-gray-200 rounded-md resize-none focus:outline-none focus:border-gray-300"
-                required
-              ></textarea>
-              <button
-                type="submit"
-                disabled={isSubmitting}
-                className="w-full py-4 bg-[#9DC4D4] text-gray-800 font-semibold rounded-md hover:bg-[#8BB3C3] transition-colors uppercase tracking-wide text-sm cursor-pointer disabled:opacity-50"
-              >
-                {isSubmitting ? "Enviando..." : "Enviar Contato"}
-              </button>
-            </form>
-          </div>
-          <div className="w-full lg:w-1/2">
-            <h2 className="text-3xl md:text-2xl font-bold text-gray-900 mb-8 text-center lg:text-center">Marcas atendidas</h2>
-            <div className="grid grid-cols-4">
-              {mockImages.map((image, index) => (
-                <div key={index} className="flex items-center justify-center">
-                  <Image src={image.src} alt={image.alt} width={30} height={30} className="w-full h-auto object-contain grayscale hover:grayscale-0 transition-all" />
+                <div className="w-full">
+                  <input
+                    type="email"
+                    name="email"
+                    placeholder="Email"
+                    onBlur={handleEmailBlur}
+                    className="w-full p-4 border border-gray-200 rounded-md focus:outline-none focus:border-gray-300"
+                    required
+                  />
+                  {emailError && <p className="text-red-500 text-sm mt-1">{emailError}</p>}
                 </div>
-              ))}
+                <textarea
+                  name="message"
+                  placeholder="Mensagem"
+                  className="w-full p-4 min-h-28 border border-gray-200 rounded-md resize-none focus:outline-none focus:border-gray-300"
+                  required
+                ></textarea>
+                <button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className="w-full py-4 bg-[#9DC4D4] text-gray-800 font-semibold rounded-md hover:bg-[#8BB3C3] transition-colors uppercase tracking-wide text-sm cursor-pointer disabled:opacity-50"
+                >
+                  {isSubmitting ? "Enviando..." : "Enviar Contato"}
+                </button>
+              </form>
             </div>
-          </div>
-        </section>
+            <div className="w-full lg:w-1/2">
+              <h2 className="text-3xl md:text-2xl font-bold text-gray-900 mb-8 text-center lg:text-center">Marcas atendidas</h2>
+              <div className="grid grid-cols-4">
+                {mockImages.map((image, index) => (
+                  <div key={index} className="flex items-center justify-center">
+                    <Image src={image.src} alt={image.alt} width={30} height={30} className="w-full h-auto object-contain grayscale hover:grayscale-0 transition-all" />
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
+        </div>
         <WhatsappButton />
       </main>
 

@@ -3,12 +3,12 @@ import Link from "next/link";
 
 export const Footer = () => {
   return (
-    <footer className="w-full flex flex-col gap-10 pt-12">
+    <footer className="w-full flex flex-col gap-10 pt-12 mt-4">
       {/* Container Principal: Ocupa 100% da largura */}
       <div className="w-full px-6 sm:px-10 md:px-16 lg:px-20">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-4 items-start">
           {/* Coluna 1: Branding e Slogan */}
-          <div className="flex flex-col gap-2">
+          <div className="flex flex-col gap-2 ">
             <p className="font-raleway font-bold text-base uppercase tracking-[0.2em] text-black">CINESE</p>
             <p className="font-inter text-[22px] md:text-lg text-black">&ldquo;Contamos histórias. Criamos conexões.&rdquo;</p>
           </div>
