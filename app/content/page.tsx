@@ -168,6 +168,21 @@ export default function Content() {
         }
       `}</style>
 
+      <style jsx>{`
+  @keyframes scroll-infinite {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(calc(-100% / 2));
+    }
+  }
+  
+  .animate-scroll-infinite {
+    animation: scroll-infinite 40s linear infinite;
+  }
+`}</style>
+
       {/* Adicione este useEffect para gerenciar body.overflow */}
       {React.useMemo(() => {
         if (typeof window !== "undefined") {
@@ -182,7 +197,7 @@ export default function Content() {
 
       <Header isVisible={true} />
       <main className="w-full">
-        <section id="section-hero" className="relative w-full h-screen overflow-hidden">
+        <section className="relative w-full h-screen overflow-hidden">
           <video className="w-full h-full object-cover" autoPlay loop muted playsInline preload="auto">
             <source src="/videoHorizontal.mp4" type="video/mp4" />
           </video>
@@ -190,8 +205,34 @@ export default function Content() {
             <h2 className="text-white text-3xl md:text-4xl lg:text-5xl font-bold text-center px-4 drop-shadow-lg max-w-200">Se você não contar a sua historia Alguém fará isso por você!</h2>
           </div>
         </section>
+        <section className="relative w-full overflow-hidden py-16 bg-white">
+          <p className="flex items-center w-full justify-center font-bold text-xl mb-8 font-[raleway]">EMPRESAS QUE CONFIARAM NO NOSSO TRABALHO</p>
+          {/* Gradientes de esmaecimento */}
+          <div className="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-white to-transparent z-10 pointer-events-none"></div>
+          <div className="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-white to-transparent z-10 pointer-events-none"></div>
 
-        <section id="section-hub" className="flex flex-col lg:flex-row justify-evenly py-16 px-4 lg:px-8">
+          {/* Container do carrossel */}
+          <div className="flex animate-scroll-infinite" style={{ width: "max-content" }}>
+            {/* Primeiro conjunto de imagens */}
+            <div className="flex gap-16 shrink-0">
+              {mockImages.map((image, index) => (
+                <div key={`first-${index}`} className="flex-shrink-0 w-32 h-20 flex items-center justify-center">
+                  <Image src={image.src} alt={image.alt} width={120} height={80} className="max-w-full max-h-full object-contain grayscale hover:grayscale-0 transition-all duration-300" />
+                </div>
+              ))}
+            </div>
+
+            {/* Segundo conjunto (duplicado para loop infinito) */}
+            <div className="flex gap-16 shrink-0">
+              {mockImages.map((image, index) => (
+                <div key={`second-${index}`} className="flex-shrink-0 w-32 h-20 flex items-center justify-center">
+                  <Image src={image.src} alt={image.alt} width={120} height={80} className="max-w-full max-h-full object-contain grayscale hover:grayscale-0 transition-all duration-300" />
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+        <section className="flex flex-col lg:flex-row justify-evenly py-16 px-4 lg:px-8">
           <div className="flex flex-col lg:flex-row gap-8 lg:gap-40 items-center max-w-7xl mx-auto">
             <div className="flex flex-col gap-4 max-w-full lg:max-w-156.25">
               <p className="text-2xl md:text-3xl lg:text-[39px] font-extrabold font-[raleway]">HUB de comunicação corporativa</p>
@@ -211,7 +252,7 @@ export default function Content() {
           </div>
         </section>
 
-        <section id="section-inbound" className="flex justify-center min-h-screen py-12">
+        <section className="flex justify-center min-h-screen py-12">
           <div className={`w-full transition-shadow duration-300 ${modalData && activeSection === "inbound" ? "shadow-[0px_4px_4px_0px_rgba(0,0,0,0.1)]" : ""}`}>
             <div className="relative flex items-center justify-center w-full h-96 md:h-screen">
               <Image src="/INBOUND-MARKETING.png" alt="Inbound Marketing" width={1920} height={1080} className="hidden md:block w-full h-full object-contain" />
@@ -243,7 +284,7 @@ export default function Content() {
           </div>
         </section>
 
-        <section id="section-endomarketing" className="flex justify-center min-h-screen py-12">
+        <section className="flex justify-center min-h-screen py-12">
           <div className={`w-full transition-shadow duration-300 ${modalData && activeSection === "endomarketing" ? "shadow-[0px_4px_4px_0px_rgba(0,0,0,0.1)]" : ""}`}>
             <div className="relative flex flex-col items-center justify-center w-full h-96 md:h-screen">
               <Image src="/ENDOMARKETING.png" alt="Endomarketing" width={1920} height={1080} className="hidden md:block w-full h-full object-contain" />
@@ -275,7 +316,7 @@ export default function Content() {
           </div>
         </section>
 
-        <section id="section-employer" className="flex justify-center min-h-screen py-12">
+        <section className="flex justify-center min-h-screen py-12">
           <div className="w-full">
             <div className="relative flex items-center justify-center w-full h-96 md:h-screen">
               <Image src="/EMPLOYER-BRANDING.png" alt="Employer Branding" width={1920} height={1080} className="hidden md:block w-full h-full object-contain" />
@@ -297,7 +338,6 @@ export default function Content() {
 
         <div className="bg-[#F0F8FB] p-8 lg:p-16">
           <section
-            id="section-contact"
             className="flex flex-col items-center rounded-xl lg:flex-row gap-8 lg:gap-12 px-4 md:px-12 py-16 max-w-7xl mx-auto bg-white"
             style={{ boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.15)" }}
           >
