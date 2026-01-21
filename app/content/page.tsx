@@ -5,7 +5,7 @@ import { Header } from "../components/Header";
 import { WhatsappButton } from "../components/whatsapp-button";
 import Image from "next/image";
 import { mockImages } from "./mockImages";
-import React from "react";
+import React, { useEffect, useRef, useCallback, useMemo } from "react";
 import { Button } from "../components/Button";
 import { Modal } from "../components/Modal";
 import { modalDataMapInbound, modalsDataMapEndomarketing, modalsDataMapEmployer, ModalData } from "./modalMock";
@@ -19,6 +19,80 @@ export default function Content() {
   const [phoneValue, setPhoneValue] = React.useState("");
   const [emailError, setEmailError] = React.useState("");
   const [showSolutions, setShowSolutions] = React.useState(false);
+  const [currentSectionIndex, setCurrentSectionIndex] = React.useState(0);
+  const isScrolling = useRef(false);
+  const touchStartY = useRef(0);
+
+  const sections = useMemo(() => ["section-hero", "section-hub", "section-inbound", "section-endomarketing", "section-employer", "section-contact"], []);
+
+  const scrollToIndex = useCallback(
+    (index: number) => {
+      if (index < 0 || index >= sections.length) return;
+
+      const element = document.getElementById(sections[index]);
+      if (element) {
+        isScrolling.current = true;
+        setCurrentSectionIndex(index);
+
+        element.scrollIntoView({ behavior: "smooth", block: "start" });
+
+        setTimeout(() => {
+          isScrolling.current = false;
+        }, 700);
+      }
+    },
+    [sections],
+  );
+
+  useEffect(() => {
+    const handleWheel = (e: WheelEvent) => {
+      if (isScrolling.current) return;
+      e.preventDefault();
+      if (e.deltaY > 0) {
+        scrollToIndex(currentSectionIndex + 1);
+      } else {
+        scrollToIndex(currentSectionIndex - 1);
+      }
+    };
+
+    const handleTouchStart = (e: TouchEvent) => {
+      touchStartY.current = e.touches[0].clientY;
+    };
+
+    const handleTouchMove = (e: TouchEvent) => {
+      if (e.cancelable) {
+        e.preventDefault();
+      }
+    };
+
+    const handleTouchEnd = (e: TouchEvent) => {
+      if (isScrolling.current) return;
+
+      const touchEndY = e.changedTouches[0].clientY;
+      const deltaY = touchStartY.current - touchEndY;
+      const threshold = 50;
+
+      if (Math.abs(deltaY) > threshold) {
+        if (deltaY > 0) {
+          scrollToIndex(currentSectionIndex + 1);
+        } else {
+          scrollToIndex(currentSectionIndex - 1);
+        }
+      }
+    };
+
+    window.addEventListener("wheel", handleWheel, { passive: false });
+    window.addEventListener("touchstart", handleTouchStart, { passive: false });
+    window.addEventListener("touchmove", handleTouchMove, { passive: false });
+    window.addEventListener("touchend", handleTouchEnd, { passive: false });
+
+    return () => {
+      window.removeEventListener("wheel", handleWheel);
+      window.removeEventListener("touchstart", handleTouchStart);
+      window.removeEventListener("touchmove", handleTouchMove);
+      window.removeEventListener("touchend", handleTouchEnd);
+    };
+  }, [currentSectionIndex, scrollToIndex]);
 
   const openModal = (key: string, color: "blue" | "gray" | "yellow", section: string, showSolutionsParam: boolean = false) => {
     let modalMap;
@@ -151,42 +225,58 @@ export default function Content() {
 
   return (
     <>
-      <Header fullWidth={true} />
-      <main className="w-full">
-        <section className="relative w-full aspect-video overflow-hidden">
-          <video className="w-full h-full object-cover" autoPlay loop muted playsInline preload="auto">
-            {/* O caminho deve começar sempre com / e NÃO incluir a palavra 'public' e possuir apenas um nome */}
+      <style jsx global>{`
+        html, body {
+          height: 100%;
+          margin: 0;
+          padding: 0;
+          overflow: hidden;
+          overscroll-behavior-y: none;
+          overscroll-behavior: none;
+          touch-action: none;
+        }
+        section {
+          height: 100vh;
+          width: 100%;
+        }
+      `}</style>
+
+      <Header isVisible={true} />
+      <main className="w-full h-screen overflow-hidden">
+        <section id="section-hero" className="relative w-full h-screen overflow-hidden">
+          <video className="w-full" autoPlay loop muted playsInline preload="auto">
             <source src="/videoHorizontal.mp4" type="video/mp4" />
           </video>
           <div className="absolute inset-0 flex items-center justify-center bg-black/20">
             <h2 className="text-white text-3xl md:text-4xl lg:text-5xl font-bold text-center px-4 drop-shadow-lg max-w-200">Se você não contar a sua historia Alguém fará isso por você!</h2>
           </div>
         </section>
-        <section className="flex flex-col lg:flex-row justify-evenly pt-8 px-4 lg:px-8">
+
+        <section id="section-hub" className="flex flex-col lg:flex-row justify-evenly pt-8 px-4 lg:px-8 overflow-y-auto">
           <div className="flex flex-col lg:flex-row gap-8 lg:gap-40 items-center max-w-7xl mx-auto">
             <div className="flex flex-col gap-4 max-w-full lg:max-w-156.25">
               <p className="text-2xl md:text-3xl lg:text-[39px] font-extrabold font-[raleway]">HUB de comunicação corporativa</p>
               <p className="text-base md:text-lg font-normal text-justify font-[raleway]">
-                Somos a parceira estratégica na construção de conexões autênticas entre marcas, colaboradores e público-alvo. E como fazemos isso? Com histórias visuais extremamente impactantes.{" "}
+                Somos a parceira estratégica na construção de conexões autênticas entre marcas, colaboradores e público-alvo. E como fazemos isso? Com histórias visuais extremamente impactantes.
               </p>
               <p className="text-base md:text-lg font-normal text-justify font-[raleway]">
                 ​Analisamos seu momento institucional, alinhamos objetivos corporativos e criamos estratégias precisas para que cada campanha atinja seu maior potencial dentro das métricas
-                estabelecidas.Sim somos mais que contadores de histórias, somos o racional e a sua estratégia para que seu conteúdo traga resultado de fato.
+                estabelecidas. Sim somos mais que contadores de histórias, somos o racional e a sua estratégia para que seu conteúdo traga resultado de fato.
               </p>
               <p className="text-base md:text-lg font-normal text-justify font-[raleway]">Nosso coração pulsa em contar histórias que geram resultados reais.</p>
-              <i className="text-center text-sm md:text-base"> &quot;Afinal, todo mundo tem uma boa história, mas poucos sabem contar! &quot;</i>
+              <i className="text-center text-sm md:text-base">&quot;Afinal, todo mundo tem uma boa história, mas poucos sabem contar!&quot;</i>
             </div>
             <video className="w-full lg:w-75 h-auto lg:h-119.5 aspect-9/16 object-cover max-w-md" autoPlay loop muted playsInline preload="auto">
-              {/* O caminho deve começar sempre com / e NÃO incluir a palavra 'public' e possuir apenas um nome */}
               <source src="/videoVertical.mp4" type="video/mp4" />
             </video>
           </div>
         </section>
-        <section className="flex justify-center">
-          <div className={`w-full transition-shadow duration-300 ${modalData && activeSection === "inbound" ? "shadow-[0px_4px_4px_0px_rgba(0,0,0,0.1)]" : ""}`}>
-            <div className="relative flex items-center justify-center">
-              <Image src="/INBOUND-MARKETING.png" alt="Inbound Marketing" width={1920} height={1080} className="hidden md:block w-full" />
-              <Image src="/INBOUND-MARKETING-MOBILE.png" alt="Inbound Marketing" width={1920} height={1080} className="block md:hidden w-full" />
+
+        <section id="section-inbound" className="flex justify-center h-screen">
+          <div className={`w-full h-full transition-shadow duration-300 ${modalData && activeSection === "inbound" ? "shadow-[0px_4px_4px_0px_rgba(0,0,0,0.1)]" : ""}`}>
+            <div className="relative flex items-center justify-center w-full h-full">
+              <Image src="/INBOUND-MARKETING.png" alt="Inbound Marketing" width={1920} height={1080} className="hidden md:block w-full h-full object-contain" />
+              <Image src="/INBOUND-MARKETING-MOBILE.png" alt="Inbound Marketing" width={1920} height={1080} className="block md:hidden w-full h-full object-contain" />
               <div className="hidden md:flex absolute bottom-24 flex-col md:flex-row w-full justify-center items-center gap-4 z-40 px-4 md:px-0">
                 <Button color="blue" onClick={() => openModal("treinamento", "blue", "inbound", false)}>
                   TOPO
@@ -200,7 +290,7 @@ export default function Content() {
               </div>
             </div>
             {modalData && activeSection === "inbound" && <Modal isOpen={!!modalData} onClose={closeModal} data={modalData} color={modalColor} showSolutions={showSolutions} />}
-            <div className="flex md:hidden flex-col w-full justify-center items-center gap-4 relative z-40 px-4">
+            <div className="flex md:hidden flex-col w-full justify-center items-center gap-4 absolute bottom-8 left-0 right-0 z-40 px-4">
               <Button color="blue" onClick={() => openModal("treinamento", "blue", "inbound", false)}>
                 TOPO
               </Button>
@@ -213,11 +303,12 @@ export default function Content() {
             </div>
           </div>
         </section>
-        <section className="flex justify-center">
-          <div className={`w-full transition-shadow duration-300 ${modalData && activeSection === "endomarketing" ? "shadow-[0px_4px_4px_0px_rgba(0,0,0,0.1)]" : ""}`}>
-            <div className="relative flex flex-col items-center justify-center">
-              <Image src="/ENDOMARKETING.png" alt="Endomarketing" width={1920} height={1080} className="hidden md:block w-full" />
-              <Image src="/ENDOMARKETING-MOBILE.png" alt="Endomarketing" width={1920} height={1080} className="block md:hidden w-full" />
+
+        <section id="section-endomarketing" className="flex justify-center h-screen">
+          <div className={`w-full h-full transition-shadow duration-300 ${modalData && activeSection === "endomarketing" ? "shadow-[0px_4px_4px_0px_rgba(0,0,0,0.1)]" : ""}`}>
+            <div className="relative flex flex-col items-center justify-center w-full h-full">
+              <Image src="/ENDOMARKETING.png" alt="Endomarketing" width={1920} height={1080} className="hidden md:block w-full h-full object-contain" />
+              <Image src="/ENDOMARKETING-MOBILE.png" alt="Endomarketing" width={1920} height={1080} className="block md:hidden w-full h-full object-contain" />
               <div className="hidden md:flex absolute bottom-24 flex-col md:flex-row w-full justify-center items-center gap-4 z-40 px-4 md:px-0">
                 <Button color="blue" onClick={() => openModal("treinamento", "blue", "endomarketing", false)}>
                   TREINAMENTO
@@ -231,7 +322,7 @@ export default function Content() {
               </div>
             </div>
             {modalData && activeSection === "endomarketing" && <Modal isOpen={!!modalData} onClose={closeModal} data={modalData} color={modalColor} showSolutions={showSolutions} />}
-            <div className="flex md:hidden flex-col w-full justify-center items-center gap-4 relative z-40 px-4">
+            <div className="flex md:hidden flex-col w-full justify-center items-center gap-4 absolute bottom-8 left-0 right-0 z-40 px-4">
               <Button color="blue" onClick={() => openModal("treinamento", "blue", "endomarketing", false)}>
                 TREINAMENTO
               </Button>
@@ -244,18 +335,19 @@ export default function Content() {
             </div>
           </div>
         </section>
-        <section className="flex justify-center">
-          <div className="w-full">
-            <div className="relative flex items-center justify-center">
-              <Image src="/EMPLOYER-BRANDING.png" alt="Employer Branding" width={1920} height={1080} className="hidden md:block w-full" />
-              <Image src="/EMPLOYER-BRANDING-MOBILE.png" alt="Employer Branding" width={1920} height={1080} className="block md:hidden w-full" />
+
+        <section id="section-employer" className="flex justify-center h-screen">
+          <div className="w-full h-full">
+            <div className="relative flex items-center justify-center w-full h-full">
+              <Image src="/EMPLOYER-BRANDING.png" alt="Employer Branding" width={1920} height={1080} className="hidden md:block w-full h-full object-contain" />
+              <Image src="/EMPLOYER-BRANDING-MOBILE.png" alt="Employer Branding" width={1920} height={1080} className="block md:hidden w-full h-full object-contain" />
               <div className="hidden md:flex absolute bottom-20 flex-col md:flex-row w-full justify-center items-center gap-4 z-40 px-4 md:px-0">
                 <Button color="blue" onClick={() => openModal("marcaEmpregadora", "blue", "employer", false)}>
                   MARCA EMPREGADORA
                 </Button>
               </div>
             </div>
-            <div className="flex md:hidden flex-col w-full justify-center items-center gap-4 relative z-40 px-4">
+            <div className="flex md:hidden flex-col w-full justify-center items-center gap-4 absolute bottom-8 left-0 right-0 z-40 px-4">
               <Button color="blue" onClick={() => openModal("marcaEmpregadora", "blue", "employer", false)}>
                 MARCA EMPREGADORA
               </Button>
@@ -263,7 +355,12 @@ export default function Content() {
             {modalData && activeSection === "employer" && <Modal isOpen={!!modalData} onClose={closeModal} data={modalData} color={modalColor} showSolutions={showSolutions} />}
           </div>
         </section>
-        <section className="flex mt-8 flex-col items-center rounded-xl lg:flex-row gap-8 lg:gap-12 px-12 py-16 max-w-7xl mx-auto" style={{ boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.15)" }}>
+
+        <section
+          id="section-contact"
+          className="flex mt-8 flex-col items-center rounded-xl lg:flex-row gap-8 lg:gap-12 px-12 py-16 max-w-7xl mx-auto overflow-y-auto"
+          style={{ boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.15)" }}
+        >
           <div className="w-full lg:w-1/2">
             <div className="mb-8">
               <h2 className="text-3xl md:text-4xl font-bold max-w-100 text-gray-900 mb-3">Vamos transformar seu negócio juntos?</h2>
