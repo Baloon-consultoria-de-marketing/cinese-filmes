@@ -101,10 +101,8 @@ export default function Home() {
           margin: 0;
           padding: 0;
           overflow: hidden;
-          /* CSS Moderno para impedir pull-to-refresh */
           overscroll-behavior-y: none;
           overscroll-behavior: none;
-          /* Impede gestos de zoom/pan nativos */
           touch-action: none; 
         }
         #root {
@@ -121,25 +119,45 @@ export default function Home() {
         section {
           height: 100vh;
           width: 100%;
+          overflow: hidden;
+          position: relative;
         }
         section#section-footer {
           height: auto;
           min-height: auto;
+          overflow: visible;
         }
-        video {
-          will-change: transform;
-          transform: translateZ(0);
+        .video-container {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          overflow: hidden;
+        }
+        iframe {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          width: 100vw;
+          height: 56.25vw;
+          transform: translate(-50%, -50%);
+          border: none;
+        }
+        @media (max-aspect-ratio: 16/9) {
+          iframe {
+            width: 177.77vh;
+            height: 100vh;
+          }
         }
       `}</style>
-
       <Header />
-
       <main className="w-full h-screen">
         {/* Seção 1 */}
         <section id="section-1" className="relative w-full h-screen overflow-hidden">
-          <video className="w-full h-full object-cover" autoPlay loop muted playsInline preload="metadata">
-            <source src="/videoHorizontal.mp4" type="video/mp4" />
-          </video>
+          <div className="video-container">
+            <iframe src="https://www.youtube.com/embed/RUpfQRCt3Go?autoplay=1&loop=1&playlist=RUpfQRCt3Go&mute=1" allow="autoplay; encrypted-media" allowFullScreen></iframe>
+          </div>
           <div className="absolute inset-0 flex items-center justify-center bg-black/20">
             <h2 className="text-white text-4xl md:text-6xl font-normal text-center px-4 drop-shadow-lg font-[raleway] tracking-widest">CINESE</h2>
           </div>
@@ -147,9 +165,9 @@ export default function Home() {
 
         {/* Seção 2 */}
         <section id="section-2" className="relative w-full h-screen overflow-hidden">
-          <video className="w-full h-full object-cover" autoPlay loop muted playsInline preload="metadata">
-            <source src="/videoVertical.mp4" type="video/mp4" />
-          </video>
+          <div className="video-container">
+            <iframe src="https://www.youtube.com/embed/fb9ao-ww15Q?autoplay=1&loop=1&playlist=fb9ao-ww15Q&mute=1" allow="autoplay; encrypted-media" allowFullScreen></iframe>
+          </div>
           <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/20 px-4">
             <div className="flex flex-col gap-2">
               <p className="text-white font-[raleway] text-lg md:text-2xl mb-2 md:mb-4">#vivo</p>
@@ -161,9 +179,9 @@ export default function Home() {
 
         {/* Seção 3 */}
         <section id="section-3" className="relative w-full h-screen overflow-hidden">
-          <video className="w-full h-full object-cover" autoPlay loop muted playsInline preload="metadata">
-            <source src="/videoVertical.mp4" type="video/mp4" />
-          </video>
+          <div className="video-container">
+            <iframe src="https://www.youtube.com/embed/fb9ao-ww15Q?autoplay=1&loop=1&playlist=fb9ao-ww15Q&mute=1" allow="autoplay; encrypted-media" allowFullScreen></iframe>
+          </div>
           <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/20 px-4">
             <div className="flex flex-col gap-2">
               <p className="text-white font-[raleway] text-lg md:text-2xl mb-2 md:mb-4">#vivo</p>

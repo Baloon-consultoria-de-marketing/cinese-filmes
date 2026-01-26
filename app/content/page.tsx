@@ -34,11 +34,6 @@ export default function Content() {
     setModalColor(color);
     setActiveSection(section);
     setShowSolutions(showSolutionsParam);
-
-    // Previne scroll automático ao abrir modal
-    setTimeout(() => {
-      window.scrollTo(0, window.scrollY);
-    }, 0);
   };
 
   const closeModal = () => {
@@ -149,19 +144,31 @@ export default function Content() {
     }
   };
 
+  React.useEffect(() => {
+    if (typeof window !== "undefined") {
+      const scrollY = window.scrollY;
+
+      if (modalData && activeSection) {
+        document.body.style.overflow = "hidden";
+        document.body.style.paddingRight = window.innerWidth - document.documentElement.clientWidth + "px";
+      } else {
+        document.body.style.overflow = "auto";
+        document.body.style.paddingRight = "0px";
+        if (scrollY > 0) {
+          window.scrollTo(0, scrollY);
+        }
+      }
+    }
+
+    return () => {
+      document.body.style.overflow = "auto";
+      document.body.style.paddingRight = "0px";
+    };
+  }, [modalData, activeSection]);
+
   return (
     <>
       <style jsx global>{`
-        html, body {
-          height: 100%;
-          margin: 0;
-          padding: 0;
-          overflow: auto;
-          overscroll-behavior: auto;
-          touch-action: auto;
-          scroll-behavior: auto;
-        }
-        
         /* Previne scroll quando modal está aberto */
         body.modal-open {
           overflow: hidden;
@@ -181,26 +188,40 @@ export default function Content() {
   .animate-scroll-infinite {
     animation: scroll-infinite 40s linear infinite;
   }
-`}</style>
 
-      {/* Adicione este useEffect para gerenciar body.overflow */}
-      {React.useMemo(() => {
-        if (typeof window !== "undefined") {
-          if (modalData && activeSection) {
-            document.body.classList.add("modal-open");
-          } else {
-            document.body.classList.remove("modal-open");
-          }
-        }
-        return null;
-      }, [modalData, activeSection])}
+  .video-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+  }
+
+  .video-container iframe {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100vw;
+    height: 56.25vw;
+    transform: translate(-50%, -50%);
+    border: none;
+  }
+
+  @media (max-aspect-ratio: 16/9) {
+    .video-container iframe {
+      width: 177.77vh;
+      height: 100vh;
+    }
+  }
+`}</style>
 
       <Header isVisible={true} />
       <main className="w-full">
         <section className="relative w-full h-screen overflow-hidden">
-          <video className="w-full h-full object-cover" autoPlay loop muted playsInline preload="auto">
-            <source src="/videoHorizontal.mp4" type="video/mp4" />
-          </video>
+          <div className="video-container">
+            <iframe src="https://www.youtube.com/embed/RUpfQRCt3Go?autoplay=1&loop=1&playlist=RUpfQRCt3Go&mute=1" allow="autoplay; encrypted-media" allowFullScreen></iframe>
+          </div>
           <div className="absolute inset-0 flex items-center justify-center bg-black/20">
             <h2 className="text-white text-3xl md:text-4xl lg:text-5xl font-bold text-center px-4 drop-shadow-lg max-w-200">Se você não contar a sua historia Alguém fará isso por você!</h2>
           </div>
