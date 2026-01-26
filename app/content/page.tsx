@@ -229,15 +229,15 @@ export default function Content() {
         <section className="relative w-full overflow-hidden py-16 bg-white">
           <p className="flex items-center w-full justify-center font-bold text-sm md:text-xl mb-8 font-[raleway]">EMPRESAS QUE CONFIARAM NO NOSSO TRABALHO</p>
           {/* Gradientes de esmaecimento */}
-          <div className="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-white to-transparent z-10 pointer-events-none"></div>
-          <div className="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-white to-transparent z-10 pointer-events-none"></div>
+          <div className="absolute left-0 top-0 bottom-0 w-32 bg-linear-to-r from-white to-transparent z-10 pointer-events-none"></div>
+          <div className="absolute right-0 top-0 bottom-0 w-32 bg-linear-to-l from-white to-transparent z-10 pointer-events-none"></div>
 
           {/* Container do carrossel */}
           <div className="flex animate-scroll-infinite" style={{ width: "max-content" }}>
             {/* Primeiro conjunto de imagens */}
             <div className="flex gap-16 shrink-0">
               {mockImages.map((image, index) => (
-                <div key={`first-${index}`} className="flex-shrink-0 w-32 h-20 flex items-center justify-center">
+                <div key={`first-${index}`} className="shrink-0 w-32 h-20 flex items-center justify-center">
                   <Image src={image.src} alt={image.alt} width={120} height={80} className="max-w-full max-h-full object-contain grayscale hover:grayscale-0 transition-all duration-300" />
                 </div>
               ))}
@@ -246,7 +246,7 @@ export default function Content() {
             {/* Segundo conjunto (duplicado para loop infinito) */}
             <div className="flex gap-16 shrink-0">
               {mockImages.map((image, index) => (
-                <div key={`second-${index}`} className="flex-shrink-0 w-32 h-20 flex items-center justify-center">
+                <div key={`second-${index}`} className="shrink-0 w-32 h-20 flex items-center justify-center">
                   <Image src={image.src} alt={image.alt} width={120} height={80} className="max-w-full max-h-full object-contain grayscale hover:grayscale-0 transition-all duration-300" />
                 </div>
               ))}
