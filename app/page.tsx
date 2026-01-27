@@ -8,9 +8,8 @@ import { Footer } from "./components/Footer";
 
 export default function Home() {
   const [activeSection, setActiveSection] = useState(0);
+  const [videoPlayer, setVideoPlayer] = useState<{ videoId: string; url: string } | null>(null);
   const isScrolling = useRef(false);
-
-  // Ref para guardar a posição inicial do toque
   const touchStartY = useRef(0);
 
   const sections = useMemo(() => ["section-1", "section-2", "section-3", "section-footer"], []);
@@ -18,14 +17,11 @@ export default function Home() {
   const scrollToIndex = useCallback(
     (index: number) => {
       if (index < 0 || index >= sections.length) return;
-
       const element = document.getElementById(sections[index]);
       if (element) {
         isScrolling.current = true;
         setActiveSection(index);
-
         element.scrollIntoView({ behavior: "smooth", block: "start" });
-
         setTimeout(() => {
           isScrolling.current = false;
         }, 700);
@@ -35,7 +31,6 @@ export default function Home() {
   );
 
   useEffect(() => {
-    // --- Lógica Desktop (Mouse Wheel) ---
     const handleWheel = (e: WheelEvent) => {
       if (isScrolling.current) return;
       if (e.deltaY > 0) {
@@ -45,15 +40,11 @@ export default function Home() {
       }
     };
 
-    // --- Lógica Mobile (Touch Swipe) ---
     const handleTouchStart = (e: TouchEvent) => {
       touchStartY.current = e.touches[0].clientY;
     };
 
-    // NOVO: Impede o comportamento nativo (scroll elástico e pull-to-refresh)
     const handleTouchMove = (e: TouchEvent) => {
-      // e.preventDefault() aqui é CRUCIAL para impedir o reload da página
-      // ao tentar subir além do topo.
       if (e.cancelable) {
         e.preventDefault();
       }
@@ -61,28 +52,22 @@ export default function Home() {
 
     const handleTouchEnd = (e: TouchEvent) => {
       if (isScrolling.current) return;
-
       const touchEndY = e.changedTouches[0].clientY;
       const deltaY = touchStartY.current - touchEndY;
-
-      // Limite de sensibilidade (50px)
       const threshold = 50;
 
       if (Math.abs(deltaY) > threshold) {
         if (deltaY > 0) {
-          // Arrastou para cima -> Próxima seção
           scrollToIndex(activeSection + 1);
         } else {
-          // Arrastou para baixo -> Seção anterior
           scrollToIndex(activeSection - 1);
         }
       }
     };
 
-    // Adiciona os listeners com { passive: false } para permitir o preventDefault
     window.addEventListener("wheel", handleWheel, { passive: false });
     window.addEventListener("touchstart", handleTouchStart, { passive: false });
-    window.addEventListener("touchmove", handleTouchMove, { passive: false }); // Novo Listener
+    window.addEventListener("touchmove", handleTouchMove, { passive: false });
     window.addEventListener("touchend", handleTouchEnd, { passive: false });
 
     return () => {
@@ -92,6 +77,14 @@ export default function Home() {
       window.removeEventListener("touchend", handleTouchEnd);
     };
   }, [activeSection, scrollToIndex]);
+
+  const handleVideoClick = (videoId: string, url: string) => {
+    setVideoPlayer({ videoId, url });
+  };
+
+  const closeVideoPlayer = () => {
+    setVideoPlayer(null);
+  };
 
   return (
     <>
@@ -160,14 +153,109 @@ export default function Home() {
             height: 100vh;
           }
         }
+
+        /* Video Player Modal */
+        .video-player-overlay {
+          position: fixed;
+          inset: 0;
+          background-color: rgba(0, 0, 0, 0.6);
+          backdrop-filter: blur(8px);
+          z-index: 50;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          padding: 20px;
+          animation: fadeInOverlay 0.3s ease-in-out;
+        }
+
+        @keyframes fadeInOverlay {
+          from {
+            opacity: 0;
+          }
+          to {
+            opacity: 1;
+          }
+        }
+
+        .video-player-container {
+          position: relative;
+          width: 80%;
+          height: 80%;
+          max-width: 1200px;
+          animation: slideInPlayer 0.3s ease-in-out;
+        }
+
+        @keyframes slideInPlayer {
+          from {
+            transform: scale(0.9);
+            opacity: 0;
+          }
+          to {
+            transform: scale(1);
+            opacity: 1;
+          }
+        }
+
+        .video-player-container iframe {
+          position: absolute !important;
+          top: 0 !important;
+          left: 0 !important;
+          width: 100% !important;
+          height: 100% !important;
+          transform: none !important;
+          pointer-events: auto !important;
+        }
+
+        .close-button {
+          position: absolute;
+          top: -40px;
+          right: 0;
+          background: white;
+          border: none;
+          width: 36px;
+          height: 36px;
+          border-radius: 50%;
+          cursor: pointer;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 20px;
+          color: #333;
+          transition: all 0.2s ease;
+          z-index: 51;
+          padding: 0;
+          line-height: 1;
+          font-weight: 300;
+        }
+
+        .close-button:hover {
+          background: #f0f0f0;
+          transform: scale(1.1);
+        }
+
+        @media (max-width: 768px) {
+          .video-player-container {
+            width: 95%;
+            height: 95%;
+          }
+
+          .close-button {
+            top: -35px;
+            width: 32px;
+            height: 32px;
+            font-size: 32px;
+            font-weight: 600;
+          }
+        }
       `}</style>
+
       <Header />
       <main className="w-full h-screen">
         {/* Seção 1 */}
         <section id="section-1" className="relative w-full h-screen overflow-hidden">
           <div className="video-container">
             <iframe src="https://www.youtube.com/embed/RUpfQRCt3Go?autoplay=1&loop=1&playlist=RUpfQRCt3Go&mute=1" allow="autoplay; encrypted-media" allowFullScreen></iframe>
-            <div className="video-overlay" onClick={() => window.open("https://www.youtube.com/watch?v=RUpfQRCt3Go", "_blank")}></div>
+            <div className="video-overlay" onClick={() => handleVideoClick("RUpfQRCt3Go", "https://www.youtube.com/watch?v=RUpfQRCt3Go")}></div>
           </div>
           <div className="absolute inset-0 flex items-center justify-center bg-black/20">
             <h2 className="text-white text-4xl md:text-6xl font-normal text-center px-4 drop-shadow-lg font-[raleway] tracking-widest">CINESE</h2>
@@ -178,7 +266,7 @@ export default function Home() {
         <section id="section-2" className="relative w-full h-screen overflow-hidden">
           <div className="video-container">
             <iframe src="https://www.youtube.com/embed/fb9ao-ww15Q?autoplay=1&loop=1&playlist=fb9ao-ww15Q&mute=1" allow="autoplay; encrypted-media" allowFullScreen></iframe>
-            <div className="video-overlay" onClick={() => window.open("https://www.youtube.com/watch?v=fb9ao-ww15Q", "_blank")}></div>
+            <div className="video-overlay" onClick={() => handleVideoClick("fb9ao-ww15Q", "https://www.youtube.com/watch?v=fb9ao-ww15Q")}></div>
           </div>
           <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/20 px-4">
             <div className="flex flex-col gap-2">
@@ -193,7 +281,7 @@ export default function Home() {
         <section id="section-3" className="relative w-full h-screen overflow-hidden">
           <div className="video-container">
             <iframe src="https://www.youtube.com/embed/fb9ao-ww15Q?autoplay=1&loop=1&playlist=fb9ao-ww15Q&mute=1" allow="autoplay; encrypted-media" allowFullScreen></iframe>
-            <div className="video-overlay" onClick={() => window.open("https://www.youtube.com/watch?v=fb9ao-ww15Q", "_blank")}></div>
+            <div className="video-overlay" onClick={() => handleVideoClick("fb9ao-ww15Q", "https://www.youtube.com/watch?v=fb9ao-ww15Q")}></div>
           </div>
           <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/20 px-4">
             <div className="flex flex-col gap-2">
@@ -209,6 +297,18 @@ export default function Home() {
           <Footer />
         </section>
       </main>
+
+      {/* Video Player Modal */}
+      {videoPlayer && (
+        <div className="video-player-overlay" onClick={closeVideoPlayer}>
+          <div className="video-player-container" onClick={(e) => e.stopPropagation()}>
+            <button className="close-button" onClick={closeVideoPlayer}>
+              X
+            </button>
+            <iframe src={`https://www.youtube.com/embed/${videoPlayer.videoId}?autoplay=1`} allow="autoplay; encrypted-media" allowFullScreen></iframe>
+          </div>
+        </div>
+      )}
 
       <SectionNav sections={sections} activeSection={activeSection} onNavigate={scrollToIndex} />
 

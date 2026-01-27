@@ -19,6 +19,7 @@ export default function Content() {
   const [phoneValue, setPhoneValue] = React.useState("");
   const [emailError, setEmailError] = React.useState("");
   const [showSolutions, setShowSolutions] = React.useState(false);
+  const [videoPlayer, setVideoPlayer] = React.useState<{ videoId: string; url: string } | null>(null);
 
   const openModal = (key: string, color: "blue" | "gray" | "yellow", section: string, showSolutionsParam: boolean = false) => {
     let modalMap;
@@ -39,6 +40,14 @@ export default function Content() {
   const closeModal = () => {
     setActiveSection(null);
     setModalData(null);
+  };
+
+  const handleVideoClick = (videoId: string, url: string) => {
+    setVideoPlayer({ videoId, url });
+  };
+
+  const closeVideoPlayer = () => {
+    setVideoPlayer(null);
   };
 
   const formatPhone = (value: string) => {
@@ -173,6 +182,99 @@ export default function Content() {
         body.modal-open {
           overflow: hidden;
         }
+
+        /* Video Player Modal */
+        .video-player-overlay {
+          position: fixed;
+          inset: 0;
+          background-color: rgba(0, 0, 0, 0.6);
+          backdrop-filter: blur(8px);
+          z-index: 50;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          padding: 20px;
+          animation: fadeInOverlay 0.3s ease-in-out;
+        }
+
+        @keyframes fadeInOverlay {
+          from {
+            opacity: 0;
+          }
+          to {
+            opacity: 1;
+          }
+        }
+
+        .video-player-container {
+          position: relative;
+          width: 80%;
+          height: 80%;
+          max-width: 1200px;
+          animation: slideInPlayer 0.3s ease-in-out;
+        }
+
+        @keyframes slideInPlayer {
+          from {
+            transform: scale(0.9);
+            opacity: 0;
+          }
+          to {
+            transform: scale(1);
+            opacity: 1;
+          }
+        }
+
+        .video-player-container iframe {
+          position: absolute !important;
+          top: 0 !important;
+          left: 0 !important;
+          width: 100% !important;
+          height: 100% !important;
+          transform: none !important;
+          pointer-events: auto !important;
+        }
+
+        .close-button {
+          position: absolute;
+          top: -40px;
+          right: 0;
+          background: white;
+          border: none;
+          width: 36px;
+          height: 36px;
+          border-radius: 50%;
+          cursor: pointer;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 20px;
+          color: #333;
+          transition: all 0.2s ease;
+          z-index: 51;
+          padding: 0;
+          line-height: 1;
+          font-weight: 300;
+        }
+
+        .close-button:hover {
+          background: #f0f0f0;
+          transform: scale(1.1);
+        }
+
+        @media (max-width: 768px) {
+          .video-player-container {
+            width: 95%;
+            height: 95%;
+          }
+
+          .close-button {
+            top: -35px;
+            width: 32px;
+            height: 32px;
+            font-size: 18px;
+          }
+        }
       `}</style>
 
       <style jsx>{`
@@ -248,7 +350,7 @@ export default function Content() {
         <section className="relative w-full h-screen overflow-hidden">
           <div className="video-container">
             <iframe src="https://www.youtube.com/embed/RUpfQRCt3Go?autoplay=1&loop=1&playlist=RUpfQRCt3Go&mute=1" allow="autoplay; encrypted-media" allowFullScreen></iframe>
-            <div className="video-overlay" onClick={() => window.open("https://www.youtube.com/watch?v=RUpfQRCt3Go", "_blank")}></div>
+            <div className="video-overlay" onClick={() => handleVideoClick("RUpfQRCt3Go", "https://www.youtube.com/watch?v=RUpfQRCt3Go")}></div>
           </div>
           <div className="absolute inset-0 flex items-center justify-center bg-black/20">
             <h2 className="text-white text-4xl md:text-5xl font-normal text-center px-4 drop-shadow-lg font-[raleway] tracking-widest max-w-[1000px]">
@@ -270,14 +372,7 @@ export default function Content() {
             <div className="flex gap-16 shrink-0">
               {mockImages.map((image, index) => (
                 <div key={`first-${index}`} className="shrink-0 w-32 h-20 flex items-center justify-center">
-                  <Image
-                    src={image.src}
-                    alt={image.alt}
-                    width={240} // Aumentado de 120
-                    height={160} // Aumentado de 80
-                    quality={75} // Adicionar qualidade alta
-                    className="max-w-full max-h-full object-cover grayscale hover:grayscale-0 transition-all duration-300"
-                  />
+                  <Image src={image.src} alt={image.alt} width={240} height={160} quality={75} className="max-w-full max-h-full object-cover grayscale hover:grayscale-0 transition-all duration-300" />
                 </div>
               ))}
             </div>
@@ -286,14 +381,7 @@ export default function Content() {
             <div className="flex gap-16 shrink-0">
               {mockImages.map((image, index) => (
                 <div key={`second-${index}`} className="shrink-0 w-32 h-20 flex items-center justify-center">
-                  <Image
-                    src={image.src}
-                    alt={image.alt}
-                    width={240} // Aumentado de 120
-                    height={160} // Aumentado de 80
-                    quality={75} // Adicionar qualidade alta
-                    className="max-w-full max-h-full object-cover grayscale hover:grayscale-0 transition-all duration-300"
-                  />
+                  <Image src={image.src} alt={image.alt} width={240} height={160} quality={75} className="max-w-full max-h-full object-cover grayscale hover:grayscale-0 transition-all duration-300" />
                 </div>
               ))}
             </div>
@@ -316,7 +404,7 @@ export default function Content() {
             <div className="relative w-full lg:w-75 h-auto lg:h-119.5 aspect-9/16 max-w-md">
               <div className="video-container-short">
                 <iframe src="https://www.youtube.com/embed/cHRPmNrrYeg?autoplay=1&loop=1&playlist=cHRPmNrrYeg&mute=1" allow="autoplay; encrypted-media" allowFullScreen></iframe>
-                <div className="video-overlay" onClick={() => window.open("https://youtube.com/shorts/cHRPmNrrYeg?si=tXocsSBb2omHbDe5", "_blank")}></div>
+                <div className="video-overlay" onClick={() => handleVideoClick("cHRPmNrrYeg", "https://youtube.com/shorts/cHRPmNrrYeg?si=tXocsSBb2omHbDe5")}></div>
               </div>
             </div>
           </div>
@@ -473,6 +561,18 @@ export default function Content() {
         </div>
         <WhatsappButton />
       </main>
+
+      {/* Video Player Modal */}
+      {videoPlayer && (
+        <div className="video-player-overlay" onClick={closeVideoPlayer}>
+          <div className="video-player-container" onClick={(e) => e.stopPropagation()}>
+            <button className="close-button" onClick={closeVideoPlayer}>
+              X
+            </button>
+            <iframe src={`https://www.youtube.com/embed/${videoPlayer.videoId}?autoplay=1`} allow="autoplay; encrypted-media;" allowFullScreen></iframe>
+          </div>
+        </div>
+      )}
 
       <Footer />
     </>

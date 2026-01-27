@@ -118,9 +118,12 @@ export const Modal = ({ isOpen, onClose, data, color, showSolutions = false }: M
               {/* Lado direito - Vídeo */}
               <div className="flex-1 flex items-start justify-center lg:sticky lg:top-8">
                 <div className="relative w-full" style={{ aspectRatio: "9/16", maxHeight: "500px", maxWidth: "320px" }}>
-                  <video className="w-full h-full object-cover rounded-xl shadow-lg" autoPlay loop muted playsInline>
-                    <source src={data.videoSrc} type="video/mp4" />
-                  </video>
+                  <iframe
+                    src={`https://www.youtube.com/embed/${data.videoSrc}?autoplay=1&loop=1&mute=1`}
+                    allow="autoplay; encrypted-media"
+                    allowFullScreen
+                    className="w-full h-full object-cover rounded-xl shadow-lg border-none"
+                  ></iframe>
                 </div>
               </div>
             </div>
