@@ -256,8 +256,10 @@ export default function Content() {
             </h2>
           </div>
         </section>
-        <section className="relative w-full overflow-hidden py-16 bg-white">
+        <section className="flex flex-col items-center justify-center py-12 px-4">
           <p className="flex items-center w-full justify-center font-bold text-sm md:text-xl mb-8 font-[raleway]">EMPRESAS QUE CONFIARAM NO NOSSO TRABALHO</p>
+        </section>
+        <section className="relative w-full overflow-hidden py-16 bg-white">
           {/* Gradientes de esmaecimento */}
           <div className="absolute left-0 top-0 bottom-0 w-32 bg-linear-to-r from-white to-transparent z-10 pointer-events-none"></div>
           <div className="absolute right-0 top-0 bottom-0 w-32 bg-linear-to-l from-white to-transparent z-10 pointer-events-none"></div>
