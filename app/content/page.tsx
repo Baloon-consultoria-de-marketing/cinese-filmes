@@ -238,7 +238,7 @@ export default function Content() {
             <div className="flex gap-16 shrink-0">
               {mockImages.map((image, index) => (
                 <div key={`first-${index}`} className="shrink-0 w-32 h-20 flex items-center justify-center">
-                  <Image src={image.src} alt={image.alt} width={120} height={80} className="max-w-full max-h-full object-contain grayscale hover:grayscale-0 transition-all duration-300" />
+                  <Image src={image.src} alt={image.alt} width={120} height={80} className="max-w-full max object-cover grayscale hover:grayscale-0 transition-all duration-300" />
                 </div>
               ))}
             </div>
@@ -247,7 +247,7 @@ export default function Content() {
             <div className="flex gap-16 shrink-0">
               {mockImages.map((image, index) => (
                 <div key={`second-${index}`} className="shrink-0 w-32 h-20 flex items-center justify-center">
-                  <Image src={image.src} alt={image.alt} width={120} height={80} className="max-w-full max-h-full object-contain grayscale hover:grayscale-0 transition-all duration-300" />
+                  <Image src={image.src} alt={image.alt} width={120} height={80} className="max-w-full max object-cover grayscale hover:grayscale-0 transition-all duration-300" />
                 </div>
               ))}
             </div>
@@ -276,29 +276,31 @@ export default function Content() {
         <section className="flex justify-center min-h-screen py-12">
           <div className={`w-full transition-shadow duration-300 ${modalData && activeSection === "inbound" ? "shadow-[0px_4px_4px_0px_rgba(0,0,0,0.1)]" : ""}`}>
             <div className="relative flex items-center justify-center w-full h-96 md:h-screen">
-              <Image src="/INBOUND-MARKETING.png" alt="Inbound Marketing" width={1920} height={1080} className="hidden md:block w-full h-full object-contain" />
-              <Image src="/INBOUND-MARKETING-MOBILE.png" alt="Inbound Marketing" width={1920} height={1080} className="block md:hidden w-full h-full object-contain" />
+              <Image src="/INBOUND-MARKETING.png" alt="Inbound Marketing" width={1920} height={1080} className="hidden md:block w-full object-cover" />
+              <Image src="/INBOUND-MARKETING-MOBILE.png" alt="Inbound Marketing" width={1920} height={1080} className="block md:hidden w-full object-cover" />
               <div className="hidden md:flex absolute bottom-24 flex-col md:flex-row w-full justify-center items-center gap-4 z-40 px-4 md:px-0">
-                <Button color="blue" onClick={() => openModal("treinamento", "blue", "inbound", true)}>
+                {/* buttons desktop */}
+                <Button color="blue" onClick={() => openModal("topo", "blue", "inbound", true)}>
                   TOPO
                 </Button>
-                <Button color="yellow" onClick={() => openModal("cultura", "yellow", "inbound", true)}>
+                <Button color="yellow" onClick={() => openModal("meio", "yellow", "inbound", true)}>
                   MEIO
                 </Button>
-                <Button color="gray" onClick={() => openModal("proposito", "gray", "inbound", true)}>
+                <Button color="gray" onClick={() => openModal("fundo", "gray", "inbound", true)}>
                   FUNDO
                 </Button>
               </div>
             </div>
             {modalData && activeSection === "inbound" && <Modal isOpen={!!modalData} onClose={closeModal} data={modalData} color={modalColor} showSolutions={showSolutions} />}
             <div className="flex md:hidden flex-col w-full justify-center items-center gap-4 py-8 z-40 px-4">
-              <Button color="blue" onClick={() => openModal("treinamento", "blue", "inbound", false)}>
+              {/* buttons mobile */}
+              <Button color="blue" onClick={() => openModal("topo", "blue", "inbound", false)}>
                 TOPO
               </Button>
-              <Button color="yellow" onClick={() => openModal("cultura", "yellow", "inbound", true)}>
+              <Button color="yellow" onClick={() => openModal("meio", "yellow", "inbound", true)}>
                 MEIO
               </Button>
-              <Button color="gray" onClick={() => openModal("proposito", "gray", "inbound", true)}>
+              <Button color="gray" onClick={() => openModal("fundo", "gray", "inbound", true)}>
                 FUNDO
               </Button>
             </div>
@@ -308,29 +310,31 @@ export default function Content() {
         <section className="flex justify-center min-h-screen py-12">
           <div className={`w-full transition-shadow duration-300 ${modalData && activeSection === "endomarketing" ? "shadow-[0px_4px_4px_0px_rgba(0,0,0,0.1)]" : ""}`}>
             <div className="relative flex flex-col items-center justify-center w-full h-96 md:h-screen">
-              <Image src="/ENDOMARKETING.png" alt="Endomarketing" width={1920} height={1080} className="hidden md:block w-full h-full object-contain" />
-              <Image src="/ENDOMARKETING-MOBILE.png" alt="Endomarketing" width={1920} height={1080} className="block md:hidden w-full h-full object-contain" />
+              <Image src="/ENDOMARKETING.png" alt="Endomarketing" width={1920} height={1080} className="hidden md:block w-full object-cover" />
+              <Image src="/ENDOMARKETING-MOBILE.png" alt="Endomarketing" width={1920} height={1080} className="block md:hidden w-full object-cover" />
               <div className="hidden md:flex absolute bottom-24 flex-col md:flex-row w-full justify-center items-center gap-4 z-40 px-4 md:px-0">
                 <Button color="blue" onClick={() => openModal("treinamento", "blue", "endomarketing", false)}>
+                  {/* buttons desktop */}
                   TREINAMENTO
                 </Button>
-                <Button color="yellow" onClick={() => openModal("cultura", "yellow", "endomarketing", true)}>
+                <Button color="yellow" onClick={() => openModal("cultura", "yellow", "endomarketing", false)}>
                   CULTURA
                 </Button>
-                <Button color="gray" onClick={() => openModal("proposito", "gray", "endomarketing", true)}>
+                <Button color="gray" onClick={() => openModal("proposito", "gray", "endomarketing", false)}>
                   PROPÓSITO
                 </Button>
               </div>
             </div>
             {modalData && activeSection === "endomarketing" && <Modal isOpen={!!modalData} onClose={closeModal} data={modalData} color={modalColor} showSolutions={showSolutions} />}
             <div className="flex md:hidden flex-col w-full justify-center items-center gap-4 py-8 z-40 px-4">
+              {/* buttons mobile */}
               <Button color="blue" onClick={() => openModal("treinamento", "blue", "endomarketing", false)}>
                 TREINAMENTO
               </Button>
-              <Button color="yellow" onClick={() => openModal("cultura", "yellow", "endomarketing", true)}>
+              <Button color="yellow" onClick={() => openModal("cultura", "yellow", "endomarketing", false)}>
                 CULTURA
               </Button>
-              <Button color="gray" onClick={() => openModal("proposito", "gray", "endomarketing", true)}>
+              <Button color="gray" onClick={() => openModal("proposito", "gray", "endomarketing", false)}>
                 PROPÓSITO
               </Button>
             </div>
@@ -340,15 +344,17 @@ export default function Content() {
         <section className="flex justify-center min-h-screen py-12">
           <div className="w-full">
             <div className="relative flex items-center justify-center w-full h-96 md:h-screen">
-              <Image src="/EMPLOYER-BRANDING.png" alt="Employer Branding" width={1920} height={1080} className="hidden md:block w-full h-full object-contain" />
-              <Image src="/EMPLOYER-BRANDING-MOBILE.png" alt="Employer Branding" width={1920} height={1080} className="block md:hidden w-full h-full object-contain" />
+              <Image src="/EMPLOYER-BRANDING.png" alt="Employer Branding" width={1920} height={1080} className="hidden md:block w-full object-cover" />
+              <Image src="/EMPLOYER-BRANDING-MOBILE.png" alt="Employer Branding" width={1920} height={1080} className="block md:hidden w-full object-cover" />
               <div className="hidden md:flex absolute bottom-20 flex-col md:flex-row w-full justify-center items-center gap-4 z-40 px-4 md:px-0">
+                {/* Button desktop */}
                 <Button color="blue" onClick={() => openModal("marcaEmpregadora", "blue", "employer", false)}>
                   MARCA EMPREGADORA
                 </Button>
               </div>
             </div>
             <div className="flex md:hidden flex-col w-full justify-center items-center gap-4 py-8 z-40 px-4">
+              {/* Button mobile */}
               <Button color="blue" onClick={() => openModal("marcaEmpregadora", "blue", "employer", false)}>
                 MARCA EMPREGADORA
               </Button>
@@ -409,7 +415,7 @@ export default function Content() {
               <div className="grid grid-cols-4">
                 {mockImages.map((image, index) => (
                   <div key={index} className="flex items-center justify-center">
-                    <Image src={image.src} alt={image.alt} width={30} height={30} className="w-full h-auto object-contain grayscale hover:grayscale-0 transition-all" />
+                    <Image src={image.src} alt={image.alt} width={30} height={30} className="w-full object-cover grayscale hover:grayscale-0 transition-all" />
                   </div>
                 ))}
               </div>

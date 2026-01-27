@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import Image from "next/image";
 import { ModalData } from "../content/modalMock";
 
 interface ModalProps {
@@ -55,6 +56,9 @@ export const Modal = ({ isOpen, onClose, data, color, showSolutions = false }: M
     return item.type === carouselFilter;
   });
 
+  // Array de imagens para a galeria (substitua pelos caminhos reais das suas imagens)
+  const galleryImages = ["/amem.png", "/fair-price.png", "/cinese.png", "/amem.png", "/fair-price.png", "/cinese.png", "/amem.png", "/fair-price.png"];
+
   return (
     <>
       {/* Overlay apenas no mobile */}
@@ -62,7 +66,7 @@ export const Modal = ({ isOpen, onClose, data, color, showSolutions = false }: M
 
       {/* Modal */}
       <div className={`fixed md:relative inset-0 md:inset-auto z-50 md:z-30 w-full flex justify-center ${isClosing ? "animate-slideDown" : "animate-slideUp"}`}>
-        <div className={`relative w-full h-full md:w-[80%] md:h-auto md:-mt-30 md:rounded-2xl shadow-2xl overflow-y-auto md:overflow-hidden ${colorMap[color]}`}>
+        <div className={`relative w-full h-full md:w-[75%] md:h-auto md:-mt-30 md:rounded-2xl shadow-2xl overflow-y-auto md:overflow-hidden ${colorMap[color]}`}>
           {/* Header com botão de fechar */}
           <div className="flex items-start justify-end pt-4 px-4">
             <button
@@ -75,16 +79,16 @@ export const Modal = ({ isOpen, onClose, data, color, showSolutions = false }: M
           </div>
 
           {/* Conteúdo principal */}
-          <div className="p-4 md:p-8 lg:p-10">
+          <div className="p-4 md:p-8 ">
             <div className="flex flex-col lg:flex-row">
               {/* Lado esquerdo - Texto */}
-              <div className="flex-1">
+              <div className="lg:w-[50%]">
                 <p className="text-xs font-semibold text-gray-600 mb-2 uppercase tracking-wider">{data.category}</p>
                 <h2 className="text-3xl lg:text-4xl font-bold mb-4 text-gray-900">{data.title}</h2>
                 <p className="text-gray-700 mb-6 leading-relaxed text-sm">{data.description}</p>
 
                 {showSolutions && (
-                  <div className="mb-6 mt-3">
+                  <div className="mb-6 mt-3 ml-6">
                     <p className="font-semibold mb-3 -ml-3 text-gray-900 ">&bull; &nbsp;Soluções Indicadas:</p>
                     <ul className="">
                       {data.solutions?.map((solution, index) => (
@@ -98,11 +102,11 @@ export const Modal = ({ isOpen, onClose, data, color, showSolutions = false }: M
                     </ul>
                   </div>
                 )}
-                <div className="mb-6">
+                <div className="mb-6 ml-6">
                   <p className="font-semibold mb-3 -ml-3 text-gray-900">&bull; &nbsp;Benefícios:</p>
-                  <ul className="space-y-2">
+                  <ul className="space-y-1">
                     {data.benefits.map((benefit, index) => (
-                      <li key={index} className="flex items-start gap-2 text-sm">
+                      <li key={index} className="flex items-start gap-2 text-base">
                         <span className="text-gray-600 ">•</span>
                         <span className="text-gray-700">{benefit}</span>
                       </li>
@@ -112,9 +116,9 @@ export const Modal = ({ isOpen, onClose, data, color, showSolutions = false }: M
               </div>
 
               {/* Lado direito - Vídeo */}
-              <div className="flex-1 ">
-                <div className="relative mx-auto" style={{ aspectRatio: "9/16", maxHeight: "400px", maxWidth: "290px" }}>
-                  <video className="w-full h-full object-cover rounded-xl shadow-lg" autoPlay loop muted playsInline>
+              <div className="lg:w-[50%]">
+                <div className="relative mx-auto" style={{ aspectRatio: "9/16", maxHeight: "600px", maxWidth: "450px" }}>
+                  <video className="w-max h-full object-cover rounded-xl shadow-lg" autoPlay loop muted playsInline>
                     <source src={data.videoSrc} type="video/mp4" />
                   </video>
                 </div>
@@ -122,7 +126,7 @@ export const Modal = ({ isOpen, onClose, data, color, showSolutions = false }: M
             </div>
 
             {/* Carrossel de soluções */}
-            <div className="">
+            <div className="-mt-20">
               <h3 className="text-xl font-bold mb-6 mt-6 md:mt-0 text-gray-900">Soluções Indicadas</h3>
 
               {/* Toggle Reels/Shorts */}
@@ -140,26 +144,40 @@ export const Modal = ({ isOpen, onClose, data, color, showSolutions = false }: M
                 ))}
               </div>
 
-              {/* Carrossel */}
-              <div className="relative">
-                <div className="flex gap-4 overflow-x-auto pb-4 scrollbar-hide snap-x snap-mandatory" key={carouselFilter}>
-                  {filteredCarousel.map((item, index) => (
-                    <div
-                      key={`${carouselFilter}-${index}`}
-                      className="shrink-0 w-64 snap-start transition-all duration-500 ease-in-out"
-                      style={{
-                        animation: "fadeIn 0.5s ease-in-out",
-                      }}
-                    >
-                      <div className="relative mb-3 rounded-xl overflow-hidden bg-gray-200 aspect-video shadow-md">
-                        <video className="w-full h-full object-cover" src={typeof item.thumbnail === "string" ? item.thumbnail : undefined} muted playsInline />
-                        <div className="absolute bottom-2 right-2 bg-black/80 text-white text-xs px-2 py-1 rounded font-semibold">{item.duration}</div>
+              {/* Renderização condicional: Galeria (Campanhas) vs Carrossel (outros) */}
+              {carouselFilter === "campanhas" ? (
+                // Galeria de fotos com Grid 4 colunas e scroll interno
+                <div className="max-h-96 overflow-y-auto pr-2 scrollbar-hide">
+                  <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    {galleryImages.map((image, index) => (
+                      <div key={index} className="relative aspect-square rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300">
+                        <Image src={image} alt={`Galeria ${index + 1}`} fill className="object-cover hover:scale-110 transition-transform duration-300" />
                       </div>
-                      <p className="text-xs text-gray-600 leading-relaxed">{item.description}</p>
-                    </div>
-                  ))}
+                    ))}
+                  </div>
                 </div>
-              </div>
+              ) : (
+                // Carrossel original
+                <div className="relative">
+                  <div className="flex gap-4 overflow-x-auto pb-4 scrollbar-hide snap-x snap-mandatory" key={carouselFilter}>
+                    {filteredCarousel.map((item, index) => (
+                      <div
+                        key={`${carouselFilter}-${index}`}
+                        className="shrink-0 w-64 snap-start transition-all duration-500 ease-in-out"
+                        style={{
+                          animation: "fadeIn 0.5s ease-in-out",
+                        }}
+                      >
+                        <div className="relative mb-3 rounded-xl overflow-hidden bg-gray-200 aspect-video shadow-md">
+                          <video className="w-full h-full object-cover" src={typeof item.thumbnail === "string" ? item.thumbnail : undefined} muted playsInline />
+                          <div className="absolute bottom-2 right-2 bg-black/80 text-white text-xs px-2 py-1 rounded font-semibold">{item.duration}</div>
+                        </div>
+                        <p className="text-xs text-gray-600 leading-relaxed">{item.description}</p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         </div>

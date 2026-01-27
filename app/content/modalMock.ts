@@ -21,7 +21,7 @@ export interface ModalData {
 }
 
 export const modalDataMapInbound: Record<string, ModalData> = {
-  treinamento: {
+  topo: {
     category: "TOPO DE FUNIL",
     title: "ATRAÇÃO",
     solutionStrong: ["Reels e Shorts:", ""],
@@ -66,7 +66,7 @@ export const modalDataMapInbound: Record<string, ModalData> = {
       },
     ],
   },
-  cultura: {
+  meio: {
     category: "MEIO DO FUNIL",
     title: "CONSIDERAÇÃO",
     description: "Obejtivo: Nutrir leads com informações relevantes, mostrando como sua solução resolve problemas específicos.",
@@ -112,7 +112,7 @@ export const modalDataMapInbound: Record<string, ModalData> = {
       },
     ],
   },
-  proposito: {
+  fundo: {
     category: "FUNDO DO FUNIL",
     title: "DECISÃO",
     description: "Objetivo: Converter leads em clientes, incentivando a tomada de decisão com base em confiança e prova social.",
@@ -191,17 +191,10 @@ export const modalsDataMapEndomarketing: Record<string, ModalData> = {
     ],
   },
   cultura: {
-    category: "MEIO DO FUNIL",
-    title: "CONSIDERAÇÃO",
-    description: "Obejtivo: Nutrir leads com informações relevantes, mostrando como sua solução resolve problemas específicos.",
-    solutionStrong: ["Animações Explicativas:", "Video institucional:", "Branded Content:", "Vídeos Explicativos:"],
-    solutions: [
-      " Simplificação de conceitos complexos, mostrando soluções de forma didática e visual",
-      " Video institucional: Reforça a identidade da marca e comunica valores e diferenciais.",
-      "Storytelling opu documentário que emociona e iinforma, criando impacto social.",
-      "Detlaham produtos, serviços ou processos, promovendo tranquilidade e clareza.",
-    ],
-    benefits: ["Melhora o entendimento sobre os serviços ou produtos.", "Fortalece a confiança na marca como solução ideal.", "Posiciona a empresa como autoridade no segmento."],
+    category: "RECONHECIMENTO, ORGULHO E PROPÓSITO",
+    title: "VIDEOS MOTIVACIONAIS",
+    description: "Conteúdos emocionantes que destacam os valores da empresa e reconhecem o impacto dos colaboradores.",
+    benefits: ["Reforço do orgulho de fazer parte da organização.", "Alinhamento da equipe à missão da empresa.", "Criação de um ambiente de trabalho mais positivo e colaborativo."],
     videoSrc: "/videoHorizontal.mp4",
     tabs: [
       { id: "animacoes", label: "Animações Explicativas" },
@@ -237,16 +230,9 @@ export const modalsDataMapEndomarketing: Record<string, ModalData> = {
     ],
   },
   proposito: {
-    category: "FUNDO DO FUNIL",
-    title: "DECISÃO",
-    description:
-      "Objetivo: Converter leads em clientes, incentivando a tomada de decisão com base em confiança e prova social.\n\nSoluções Indicadas:\n• Videocases: Mostram resultados reais e histórias de sucesso, encurtando a jornada de compra.\n• Vídeos Publicitários: Comunicação focada em conversão, com apelo direto e criativo.\n• Campanhas de Retargeting: Vídeos curtos e segmentados para públicos que já demonstraram interesse na marca.",
-    solutionStrong: ["Videocases:", "Vídeos Publicitários:", "Campanhas de Retargeting:"],
-    solutions: [
-      " Mostram resultados reais e histórias de sucesso, encurtando a jornada de compra.",
-      " Comunicação focada em conversão, com apelo direto e criativo.",
-      " Vídeos curtos e segmentados para públicos que já demonstraram interesse na marca.",
-    ],
+    category: "CULTURA ORGANIZACIONAL, PROCESSOS",
+    title: "VIDEOS INFORMATIVOS",
+    description: "Conteúdos informativos que alinham posicionamentos, metas e culturas organizacional para um grande número de colaboradores.",
     benefits: ["Reduz o tempo para fechamento de negócios.", "Prova de confiabilidade com cases reais.", "Geração de clientes satisfeitos e fidelizados."],
     videoSrc: "/videoHorizontal.mp4",
     tabs: [
