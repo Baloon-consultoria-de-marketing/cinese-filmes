@@ -80,9 +80,9 @@ export const Modal = ({ isOpen, onClose, data, color, showSolutions = false }: M
 
           {/* Conteúdo principal */}
           <div className="p-4 md:p-8 ">
-            <div className="flex flex-col lg:flex-row">
+            <div className="flex flex-col lg:flex-row gap-6 lg:gap-8">
               {/* Lado esquerdo - Texto */}
-              <div className="lg:w-[50%]">
+              <div className="flex-1">
                 <p className="text-xs font-semibold text-gray-600 mb-2 uppercase tracking-wider">{data.category}</p>
                 <h2 className="text-3xl lg:text-4xl font-bold mb-4 text-gray-900">{data.title}</h2>
                 <p className="text-gray-700 mb-6 leading-relaxed text-sm">{data.description}</p>
@@ -116,9 +116,9 @@ export const Modal = ({ isOpen, onClose, data, color, showSolutions = false }: M
               </div>
 
               {/* Lado direito - Vídeo */}
-              <div className="lg:w-[50%]">
-                <div className="relative mx-auto" style={{ aspectRatio: "9/16", maxHeight: "600px", maxWidth: "450px" }}>
-                  <video className="w-max h-full object-cover rounded-xl shadow-lg" autoPlay loop muted playsInline>
+              <div className="flex-1 flex items-start justify-center lg:sticky lg:top-8">
+                <div className="relative w-full" style={{ aspectRatio: "9/16", maxHeight: "500px", maxWidth: "320px" }}>
+                  <video className="w-full h-full object-cover rounded-xl shadow-lg" autoPlay loop muted playsInline>
                     <source src={data.videoSrc} type="video/mp4" />
                   </video>
                 </div>
@@ -127,21 +127,41 @@ export const Modal = ({ isOpen, onClose, data, color, showSolutions = false }: M
 
             {/* Carrossel de soluções */}
             <div className="-mt-20">
-              <h3 className="text-xl font-bold mb-6 mt-6 md:mt-0 text-gray-900">Soluções Indicadas</h3>
+              <h3 className="text-xl font-bold mb-6 mt-24 md:mt-12 text-gray-900">Soluções Indicadas</h3>
 
               {/* Toggle Reels/Shorts */}
-              <div className="inline-flex gap-1 mb-6 bg-white/30 rounded-lg p-1">
-                {data.tabs.map((tab) => (
-                  <button
-                    key={tab.id}
-                    onClick={() => setCarouselFilter(tab.id)}
-                    className={`px-4 py-0.5 rounded-lg cursor-pointer font-semibold transition-all duration-300 ease-in-out ${
-                      carouselFilter === tab.id ? "bg-white text-gray-900 shadow-md scale-105" : "bg-transparent text-gray-700 hover:bg-white/30"
-                    }`}
-                  >
-                    {tab.label}
-                  </button>
-                ))}
+              <div className="mb-6">
+                {/* Desktop: inline-flex como antes */}
+                <div className="hidden md:inline-flex gap-1 bg-white/30 rounded-lg p-1">
+                  {data.tabs.map((tab) => (
+                    <button
+                      key={tab.id}
+                      onClick={() => setCarouselFilter(tab.id)}
+                      className={`px-4 py-0.5 rounded-lg cursor-pointer font-semibold transition-all duration-300 ease-in-out ${
+                        carouselFilter === tab.id ? "bg-white text-gray-900 shadow-md scale-105" : "bg-transparent text-gray-700 hover:bg-white/30"
+                      }`}
+                    >
+                      {tab.label}
+                    </button>
+                  ))}
+                </div>
+
+                {/* Mobile: carrossel com scroll horizontal */}
+                <div className="md:hidden overflow-x-auto scrollbar-hide">
+                  <div className="inline-flex gap-1 bg-white/30 rounded-lg p-1">
+                    {data.tabs.map((tab) => (
+                      <button
+                        key={tab.id}
+                        onClick={() => setCarouselFilter(tab.id)}
+                        className={`px-4 py-0.5 rounded-lg cursor-pointer font-semibold transition-all duration-300 ease-in-out whitespace-nowrap ${
+                          carouselFilter === tab.id ? "bg-white text-gray-900 shadow-md scale-105" : "bg-transparent text-gray-700 hover:bg-white/30"
+                        }`}
+                      >
+                        {tab.label}
+                      </button>
+                    ))}
+                  </div>
+                </div>
               </div>
 
               {/* Renderização condicional: Galeria (Campanhas) vs Carrossel (outros) */}
