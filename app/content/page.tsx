@@ -208,11 +208,38 @@ export default function Content() {
     border: none;
   }
 
+  .video-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+    z-index: 10;
+  }
+
   @media (max-aspect-ratio: 16/9) {
     .video-container iframe {
       width: 177.77vh;
       height: 100vh;
     }
+  }
+
+  .video-container-short {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    border-radius: 8px;
+  }
+
+  .video-container-short iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
   }
 `}</style>
 
@@ -221,9 +248,12 @@ export default function Content() {
         <section className="relative w-full h-screen overflow-hidden">
           <div className="video-container">
             <iframe src="https://www.youtube.com/embed/RUpfQRCt3Go?autoplay=1&loop=1&playlist=RUpfQRCt3Go&mute=1" allow="autoplay; encrypted-media" allowFullScreen></iframe>
+            <div className="video-overlay" onClick={() => window.open("https://www.youtube.com/watch?v=RUpfQRCt3Go", "_blank")}></div>
           </div>
           <div className="absolute inset-0 flex items-center justify-center bg-black/20">
-            <h2 className="text-white text-3xl md:text-4xl lg:text-5xl font-bold text-center px-4 drop-shadow-lg max-w-200">Se você não contar a sua historia Alguém fará isso por você!</h2>
+            <h2 className="text-white text-4xl md:text-5xl font-normal text-center px-4 drop-shadow-lg font-[raleway] tracking-widest max-w-[1000px]">
+              Se você não contar a sua historia Alguém fará isso por você!
+            </h2>
           </div>
         </section>
         <section className="relative w-full overflow-hidden py-16 bg-white">
@@ -238,7 +268,14 @@ export default function Content() {
             <div className="flex gap-16 shrink-0">
               {mockImages.map((image, index) => (
                 <div key={`first-${index}`} className="shrink-0 w-32 h-20 flex items-center justify-center">
-                  <Image src={image.src} alt={image.alt} width={120} height={80} className="max-w-full max object-cover grayscale hover:grayscale-0 transition-all duration-300" />
+                  <Image
+                    src={image.src}
+                    alt={image.alt}
+                    width={240} // Aumentado de 120
+                    height={160} // Aumentado de 80
+                    quality={75} // Adicionar qualidade alta
+                    className="max-w-full max-h-full object-cover grayscale hover:grayscale-0 transition-all duration-300"
+                  />
                 </div>
               ))}
             </div>
@@ -247,7 +284,14 @@ export default function Content() {
             <div className="flex gap-16 shrink-0">
               {mockImages.map((image, index) => (
                 <div key={`second-${index}`} className="shrink-0 w-32 h-20 flex items-center justify-center">
-                  <Image src={image.src} alt={image.alt} width={120} height={80} className="max-w-full max object-cover grayscale hover:grayscale-0 transition-all duration-300" />
+                  <Image
+                    src={image.src}
+                    alt={image.alt}
+                    width={240} // Aumentado de 120
+                    height={160} // Aumentado de 80
+                    quality={75} // Adicionar qualidade alta
+                    className="max-w-full max-h-full object-cover grayscale hover:grayscale-0 transition-all duration-300"
+                  />
                 </div>
               ))}
             </div>
@@ -267,9 +311,12 @@ export default function Content() {
               <p className="text-base md:text-lg font-normal text-justify font-[raleway]">Nosso coração pulsa em contar histórias que geram resultados reais.</p>
               <i className="text-center text-sm md:text-base">&quot;Afinal, todo mundo tem uma boa história, mas poucos sabem contar!&quot;</i>
             </div>
-            <video className="w-full lg:w-75 h-auto lg:h-119.5 aspect-9/16 object-cover max-w-md" autoPlay loop muted playsInline preload="auto">
-              <source src="/videoVertical.mp4" type="video/mp4" />
-            </video>
+            <div className="relative w-full lg:w-75 h-auto lg:h-119.5 aspect-9/16 max-w-md">
+              <div className="video-container-short">
+                <iframe src="https://www.youtube.com/embed/cHRPmNrrYeg?autoplay=1&loop=1&playlist=cHRPmNrrYeg&mute=1" allow="autoplay; encrypted-media" allowFullScreen></iframe>
+                <div className="video-overlay" onClick={() => window.open("https://youtube.com/shorts/cHRPmNrrYeg?si=tXocsSBb2omHbDe5", "_blank")}></div>
+              </div>
+            </div>
           </div>
         </section>
 

@@ -143,6 +143,16 @@ export default function Home() {
           height: 56.25vw;
           transform: translate(-50%, -50%);
           border: none;
+          pointer-events: none;
+        }
+        .video-overlay {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          cursor: pointer;
+          z-index: 10;
         }
         @media (max-aspect-ratio: 16/9) {
           iframe {
@@ -157,6 +167,7 @@ export default function Home() {
         <section id="section-1" className="relative w-full h-screen overflow-hidden">
           <div className="video-container">
             <iframe src="https://www.youtube.com/embed/RUpfQRCt3Go?autoplay=1&loop=1&playlist=RUpfQRCt3Go&mute=1" allow="autoplay; encrypted-media" allowFullScreen></iframe>
+            <div className="video-overlay" onClick={() => window.open("https://www.youtube.com/watch?v=RUpfQRCt3Go", "_blank")}></div>
           </div>
           <div className="absolute inset-0 flex items-center justify-center bg-black/20">
             <h2 className="text-white text-4xl md:text-6xl font-normal text-center px-4 drop-shadow-lg font-[raleway] tracking-widest">CINESE</h2>
@@ -167,6 +178,7 @@ export default function Home() {
         <section id="section-2" className="relative w-full h-screen overflow-hidden">
           <div className="video-container">
             <iframe src="https://www.youtube.com/embed/fb9ao-ww15Q?autoplay=1&loop=1&playlist=fb9ao-ww15Q&mute=1" allow="autoplay; encrypted-media" allowFullScreen></iframe>
+            <div className="video-overlay" onClick={() => window.open("https://www.youtube.com/watch?v=fb9ao-ww15Q", "_blank")}></div>
           </div>
           <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/20 px-4">
             <div className="flex flex-col gap-2">
@@ -181,6 +193,7 @@ export default function Home() {
         <section id="section-3" className="relative w-full h-screen overflow-hidden">
           <div className="video-container">
             <iframe src="https://www.youtube.com/embed/fb9ao-ww15Q?autoplay=1&loop=1&playlist=fb9ao-ww15Q&mute=1" allow="autoplay; encrypted-media" allowFullScreen></iframe>
+            <div className="video-overlay" onClick={() => window.open("https://www.youtube.com/watch?v=fb9ao-ww15Q", "_blank")}></div>
           </div>
           <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/20 px-4">
             <div className="flex flex-col gap-2">
