@@ -159,7 +159,6 @@ export default function Content() {
 
       if (modalData && activeSection) {
         document.body.style.overflow = "";
-        document.body.style.paddingRight = window.innerWidth - document.documentElement.clientWidth + "px";
       } else {
         document.body.style.overflow = "auto";
         document.body.style.paddingRight = "0px";
