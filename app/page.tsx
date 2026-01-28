@@ -254,8 +254,8 @@ export default function Home() {
         {/* Seção 1 */}
         <section id="section-1" className="relative w-full h-screen overflow-hidden">
           <div className="video-container">
-            <iframe src="https://www.youtube.com/embed/RUpfQRCt3Go?autoplay=1&loop=1&playlist=RUpfQRCt3Go&mute=1" allow="autoplay; encrypted-media" allowFullScreen></iframe>
-            <div className="video-overlay" onClick={() => handleVideoClick("RUpfQRCt3Go", "https://www.youtube.com/watch?v=RUpfQRCt3Go")}></div>
+            <iframe src="https://www.youtube.com/embed/fb9ao-ww15Q?autoplay=1&loop=1&playlist=fb9ao-ww15Q&mute=1" allow="autoplay; encrypted-media" allowFullScreen></iframe>
+            <div className="video-overlay" onClick={() => handleVideoClick("fb9ao-ww15Q", "https://www.youtube.com/watch?v=fb9ao-ww15Q")}></div>
           </div>
           <div className="absolute inset-0 flex items-center justify-center bg-black/20">
             <h2 className="text-white text-4xl md:text-6xl font-normal text-center px-4 drop-shadow-lg font-[raleway] tracking-widest">CINESE</h2>

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import { ModalData } from "../content/modalMock";
 
@@ -17,6 +17,16 @@ export const Modal = ({ isOpen, onClose, data, color, showSolutions = false }: M
   const [prevDataId, setPrevDataId] = useState<string | undefined>(undefined);
   const [isClosing, setIsClosing] = useState(false);
   const [videoPlayer, setVideoPlayer] = useState<{ videoId: string; url: string } | null>(null);
+  const carouselRef = useRef<HTMLDivElement | null>(null);
+  const [isDesktop, setIsDesktop] = useState(false);
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia("(min-width: 768px)");
+    const handleChange = () => setIsDesktop(mediaQuery.matches);
+    handleChange();
+    mediaQuery.addEventListener("change", handleChange);
+    return () => mediaQuery.removeEventListener("change", handleChange);
+  }, []);
 
   const handleCarouselVideoClick = (videoId: string) => {
     setVideoPlayer({ videoId, url: "" });
@@ -83,8 +93,19 @@ export const Modal = ({ isOpen, onClose, data, color, showSolutions = false }: M
     return item.type === carouselFilter;
   });
 
+  const showCarouselButtons = isDesktop && filteredCarousel.length > 5;
+
   // Array de imagens para a galeria (substitua pelos caminhos reais das suas imagens)
   const galleryImages = ["/amem.png", "/fair-price.png", "/cinese.png", "/amem.png", "/fair-price.png", "/cinese.png", "/amem.png", "/fair-price.png"];
+
+  const scrollCarousel = (direction: "left" | "right") => {
+    if (!carouselRef.current) return;
+    const amount = 300; // ajuste conforme necessário
+    carouselRef.current.scrollBy({
+      left: direction === "left" ? -amount : amount,
+      behavior: "smooth",
+    });
+  };
 
   return (
     <>
@@ -209,17 +230,43 @@ export const Modal = ({ isOpen, onClose, data, color, showSolutions = false }: M
               ) : (
                 // Carrossel original
                 <div className="relative">
-                  <div className="flex gap-4 overflow-x-auto pb-4 scrollbar-hide snap-x snap-mandatory" key={carouselFilter}>
+                  {/* Botões laterais (somente desktop e > 4 vídeos) */}
+                  {showCarouselButtons && (
+                    <>
+                      <button
+                        type="button"
+                        aria-label="Anterior"
+                        onClick={() => scrollCarousel("left")}
+                        className="hidden md:flex items-center justify-center cursor-pointer hover:scale-110 duration-300 absolute left-0 top-20 -translate-x-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/90 shadow-lg text-gray-800 hover:bg-white transition z-20"
+                      >
+                        ‹
+                      </button>
+                      <button
+                        type="button"
+                        aria-label="Próximo"
+                        onClick={() => scrollCarousel("right")}
+                        className="hidden md:flex items-center justify-center cursor-pointer hover:scale-110 duration-300 absolute right-0 top-20 translate-x-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/90 shadow-lg text-gray-800 hover:bg-white transition z-20"
+                      >
+                        ›
+                      </button>
+                    </>
+                  )}
+
+                  <div
+                    ref={carouselRef}
+                    className="relative z-0 flex gap-4 overflow-x-auto overflow-y-hidden pb-4 scrollbar-hide snap-x snap-mandatory w-full md:max-h-72 select-none carousel-smooth"
+                    key={carouselFilter}
+                  >
                     {filteredCarousel.map((item, index) => (
                       <div
                         key={`${carouselFilter}-${index}`}
-                        className="shrink-0 w-64 snap-start transition-all duration-500 ease-in-out"
+                        className="shrink-0 w-60 snap-start transition-all duration-500 ease-in-out"
                         style={{
                           animation: "fadeIn 0.5s ease-in-out",
                         }}
                       >
                         <div
-                          className="relative mb-3 rounded-xl overflow-hidden bg-gray-200 aspect-video shadow-md cursor-pointer"
+                          className="relative mb-3 rounded-xl overflow-hidden bg-gray-200 aspect-video shadow-md cursor-pointer hover:scale-105 duration-300 transition-all object-cover"
                           onClick={() => handleCarouselVideoClick(typeof item.thumbnail === "string" ? item.thumbnail : "")}
                         >
                           <iframe
@@ -298,6 +345,11 @@ export const Modal = ({ isOpen, onClose, data, color, showSolutions = false }: M
         .scrollbar-hide {
           -ms-overflow-style: none;
           scrollbar-width: none;
+        }
+        .carousel-smooth {
+          scroll-behavior: smooth;
+          -webkit-overflow-scrolling: touch;
+          overscroll-behavior-x: contain;
         }
         /* Video Player Modal */
         .video-player-overlay {
