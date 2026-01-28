@@ -158,7 +158,7 @@ export default function Content() {
       const scrollY = window.scrollY;
 
       if (modalData && activeSection) {
-        document.body.style.overflow = "hidden";
+        document.body.style.overflow = "";
         document.body.style.paddingRight = window.innerWidth - document.documentElement.clientWidth + "px";
       } else {
         document.body.style.overflow = "auto";
