@@ -40,18 +40,36 @@ export const Modal = ({ isOpen, onClose, data, color, showSolutions = false }: M
     }, 500);
   };
 
-  // Bloqueia o scroll do body quando o modal está aberto (apenas no mobile)
+  // --- MUDANÇA AQUI: Bloqueio de scroll inteligente ---
   useEffect(() => {
-    if (isOpen && window.innerWidth < 768) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "unset";
-    }
+    // Se o modal não estiver aberto, não fazemos nada
+    if (!isOpen) return;
 
+    const mediaQuery = window.matchMedia("(max-width: 768px)");
+
+    const handleBodyScroll = () => {
+      if (mediaQuery.matches) {
+        // É mobile: Bloqueia o scroll
+        document.body.style.overflow = "hidden";
+      } else {
+        // É desktop: Limpa o estilo inline para usar o padrão do CSS/Navegador
+        document.body.style.overflow = "";
+      }
+    };
+
+    // 1. Executa a verificação ao montar/abrir
+    handleBodyScroll();
+
+    // 2. Adiciona ouvinte para mudanças de tamanho de tela em tempo real
+    mediaQuery.addEventListener("change", handleBodyScroll);
+
+    // Cleanup: Limpa tudo ao fechar o modal
     return () => {
-      document.body.style.overflow = "unset";
+      mediaQuery.removeEventListener("change", handleBodyScroll);
+      document.body.style.overflow = "";
     };
   }, [isOpen]);
+  // ----------------------------------------------------
 
   if (!isOpen && !isClosing) return null;
 
