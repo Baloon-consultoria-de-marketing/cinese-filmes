@@ -28,7 +28,7 @@ export const modalDataMapInbound: Record<string, ModalData> = {
     solutions: ["Videos curtos, criativos e dinamicos que utilizam tendências para engajamento.", "Tiktok - Instagram - YouTube"],
     description: "Objetivo: Atrair a atenção do público-alvo, gerando interesse inicial.",
     benefits: ["Aumento do alcance da marca.", "Criação de uma primeira impressão forte e memorável.", "Atração de leads qualificados para avançar o funil."],
-    videoSrc: "/videoHorizontal.mp4",
+    videoSrc: "cHRPmNrrYeg",
     tabs: [
       { id: "reels", label: "Reels/Shorts" },
       { id: "videos", label: "Videos institucionais" },
@@ -36,33 +36,39 @@ export const modalDataMapInbound: Record<string, ModalData> = {
     carouselItems: [
       {
         type: "reels",
-        thumbnail: "/videoHorizontal.mp4",
-        duration: "4:31",
-        description: "Quem não instrui o cliente em sua jornada de compra, acaba perdendo ele para o concorrente.",
-      },
-      {
-        type: "videos",
-        thumbnail: "/videoHorizontal.mp4",
-        duration: "5:01",
-        description: "Quem não instrui o cliente em sua jornada de compra, acaba perdendo ele para o concorrente.",
-      },
-      {
-        type: "videos",
-        thumbnail: "/videoHorizontal.mp4",
-        duration: "5:01",
-        description: "Quem não instrui o cliente em sua jornada de compra, acaba perdendo ele para o concorrente.",
+        thumbnail: "gFffM31hhl0",
+        duration: "0:26",
+        description: "Fair Price - Como eu não pensei nisso antes?",
       },
       {
         type: "reels",
-        thumbnail: "/videoHorizontal.mp4",
-        duration: "2:44",
-        description: "Quem não instrui o cliente em sua jornada de compra, acaba perdendo ele para o concorrente.",
+        thumbnail: "ee5JWsPKjUU",
+        duration: "0:43",
+        description: "Fair price - Relacionamento Tóxico",
       },
       {
         type: "reels",
-        thumbnail: "/videoHorizontal.mp4",
-        duration: "2:44",
-        description: "Quem não instrui o cliente em sua jornada de compra, acaba perdendo ele para o concorrente.",
+        thumbnail: "4_B0_Vt6WAo",
+        duration: "0:54",
+        description: "Fair Price - Saia da Matrix, receba seu precatório",
+      },
+      {
+        type: "reels",
+        thumbnail: "EuiwrOgB9ak",
+        duration: "0:29",
+        description: "Fair Price - Sexto Sentido",
+      },
+      {
+        type: "videos",
+        thumbnail: "a6f_BVS5cqM",
+        duration: "0:33",
+        description: "BUNZL EPI - TOP OF MIND",
+      },
+      {
+        type: "videos",
+        thumbnail: "cw87nRerJr0",
+        duration: "0:30",
+        description: "Vivo Música - POA",
       },
     ],
   },
@@ -78,7 +84,7 @@ export const modalDataMapInbound: Record<string, ModalData> = {
       "Detlaham produtos, serviços ou processos, promovendo tranquilidade e clareza.",
     ],
     benefits: ["Melhora o entendimento sobre os serviços ou produtos.", "Fortalece a confiança na marca como solução ideal.", "Posiciona a empresa como autoridade no segmento."],
-    videoSrc: "/videoHorizontal.mp4",
+    videoSrc: "cHRPmNrrYeg",
     tabs: [
       { id: "animacoes", label: "Animações Explicativas" },
       { id: "institucional", label: "Vídeo Institucional" },
@@ -123,7 +129,7 @@ export const modalDataMapInbound: Record<string, ModalData> = {
       " Vídeos curtos e segmentados para públicos que já demonstraram interesse na marca.",
     ],
     benefits: ["Reduz o tempo para fechamento de negócios.", "Prova de confiabilidade com cases reais.", "Geração de clientes satisfeitos e fidelizados."],
-    videoSrc: "/videoHorizontal.mp4",
+    videoSrc: "cHRPmNrrYeg",
     tabs: [
       { id: "videocases", label: "Videocases" },
       { id: "publicitarios", label: "Vídeos Publicitários" },
@@ -164,7 +170,7 @@ export const modalsDataMapEndomarketing: Record<string, ModalData> = {
     title: "EAD VÍDEOS DE TREINAMENTO",
     description: "Centralização de treinamentos e formações em um canal de fácil acesso, reduzindo custos e promovendo padronização de informações.",
     benefits: ["Formação de gerações de colaboradores.", "Comunicação clara das diretrizes corporativas.", "Redução de custos com treinamentos presenciais."],
-    videoSrc: "/videoHorizontal.mp4",
+    videoSrc: "cHRPmNrrYeg",
     tabs: [
       { id: "reels", label: "Reels" },
       { id: "shorts", label: "Shorts" },
@@ -195,7 +201,7 @@ export const modalsDataMapEndomarketing: Record<string, ModalData> = {
     title: "VIDEOS MOTIVACIONAIS",
     description: "Conteúdos emocionantes que destacam os valores da empresa e reconhecem o impacto dos colaboradores.",
     benefits: ["Reforço do orgulho de fazer parte da organização.", "Alinhamento da equipe à missão da empresa.", "Criação de um ambiente de trabalho mais positivo e colaborativo."],
-    videoSrc: "/videoHorizontal.mp4",
+    videoSrc: "cHRPmNrrYeg",
     tabs: [
       { id: "animacoes", label: "Animações Explicativas" },
       { id: "institucional", label: "Vídeo Institucional" },
@@ -234,7 +240,7 @@ export const modalsDataMapEndomarketing: Record<string, ModalData> = {
     title: "VIDEOS INFORMATIVOS",
     description: "Conteúdos informativos que alinham posicionamentos, metas e culturas organizacional para um grande número de colaboradores.",
     benefits: ["Reduz o tempo para fechamento de negócios.", "Prova de confiabilidade com cases reais.", "Geração de clientes satisfeitos e fidelizados."],
-    videoSrc: "/videoHorizontal.mp4",
+    videoSrc: "cHRPmNrrYeg",
     tabs: [
       { id: "videocases", label: "Videocases" },
       { id: "publicitarios", label: "Vídeos Publicitários" },
@@ -275,7 +281,7 @@ export const modalsDataMapEmployer: Record<string, ModalData> = {
     title: "MARCA EMPREGADORA",
     description: "Objetivo: Construir e fortalecer a percepção da empresa como um excelente lugar para se trabalhar.",
     benefits: ["Aumentar o engajamento interno.", "Retenção de talentos.", "Atração de talentos qualificados.", "Difundir valores e cultura da organização."],
-    videoSrc: "/videoHorizontal.mp4",
+    videoSrc: "cHRPmNrrYeg",
     tabs: [
       { id: "branded", label: "Branded Content" },
       { id: "recrutamento", label: "Recrutamento" },

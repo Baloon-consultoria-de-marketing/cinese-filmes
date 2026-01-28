@@ -353,7 +353,7 @@ export default function Content() {
             <div className="video-overlay" onClick={() => handleVideoClick("RUpfQRCt3Go", "https://www.youtube.com/watch?v=RUpfQRCt3Go")}></div>
           </div>
           <div className="absolute inset-0 flex items-center justify-center bg-black/20">
-            <h2 className="text-white text-4xl md:text-5xl font-normal text-center px-4 drop-shadow-lg font-[raleway] tracking-widest max-w-[1000px]">
+            <h2 className="text-white text-4xl md:text-5xl font-normal text-center px-4 drop-shadow-lg font-[raleway] tracking-widest max-w-250">
               Se você não contar a sua historia Alguém fará isso por você!
             </h2>
           </div>
@@ -549,7 +549,7 @@ export default function Content() {
             </div>
             <div className="w-full lg:w-1/2">
               <h2 className="text-3xl md:text-2xl font-bold text-gray-900 mb-8 text-center lg:text-center">Marcas atendidas</h2>
-              <div className="grid grid-cols-4">
+              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 lg:gap-6">
                 {mockImages.map((image, index) => (
                   <div key={index} className="flex items-center justify-center">
                     <Image src={image.src} alt={image.alt} width={30} height={30} className="w-full object-cover grayscale hover:grayscale-0 transition-all" />

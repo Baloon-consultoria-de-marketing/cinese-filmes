@@ -16,6 +16,15 @@ export const Modal = ({ isOpen, onClose, data, color, showSolutions = false }: M
   const [carouselFilter, setCarouselFilter] = useState<string>(data.tabs[0]?.id || "");
   const [prevDataId, setPrevDataId] = useState<string | undefined>(undefined);
   const [isClosing, setIsClosing] = useState(false);
+  const [videoPlayer, setVideoPlayer] = useState<{ videoId: string; url: string } | null>(null);
+
+  const handleCarouselVideoClick = (videoId: string) => {
+    setVideoPlayer({ videoId, url: "" });
+  };
+
+  const closeVideoPlayer = () => {
+    setVideoPlayer(null);
+  };
 
   // Reset para a primeira aba quando trocar de modal
   if (data.tabs[0]?.id !== prevDataId) {
@@ -191,11 +200,20 @@ export const Modal = ({ isOpen, onClose, data, color, showSolutions = false }: M
                           animation: "fadeIn 0.5s ease-in-out",
                         }}
                       >
-                        <div className="relative mb-3 rounded-xl overflow-hidden bg-gray-200 aspect-video shadow-md">
-                          <video className="w-full h-full object-cover" src={typeof item.thumbnail === "string" ? item.thumbnail : undefined} muted playsInline />
+                        <div
+                          className="relative mb-3 rounded-xl overflow-hidden bg-gray-200 aspect-video shadow-md cursor-pointer"
+                          onClick={() => handleCarouselVideoClick(typeof item.thumbnail === "string" ? item.thumbnail : "")}
+                        >
+                          <iframe
+                            src={`https://www.youtube.com/embed/${typeof item.thumbnail === "string" ? item.thumbnail : ""}?autoplay=1&loop=1&playlist=${typeof item.thumbnail === "string" ? item.thumbnail : ""}&mute=1`}
+                            allow="autoplay; encrypted-media"
+                            allowFullScreen
+                            className="w-full h-full border-none"
+                            style={{ pointerEvents: "none" }}
+                          ></iframe>
                           <div className="absolute bottom-2 right-2 bg-black/80 text-white text-xs px-2 py-1 rounded font-semibold">{item.duration}</div>
                         </div>
-                        <p className="text-xs text-gray-600 leading-relaxed">{item.description}</p>
+                        <p className="text-md text-gray-600 leading-relaxed">{item.description}</p>
                       </div>
                     ))}
                   </div>
@@ -263,8 +281,102 @@ export const Modal = ({ isOpen, onClose, data, color, showSolutions = false }: M
           -ms-overflow-style: none;
           scrollbar-width: none;
         }
-      `}</style>
+        /* Video Player Modal */
+        .video-player-overlay {
+          position: fixed;
+          inset: 0;
+          background-color: rgba(0, 0, 0, 0.6);
+          backdrop-filter: blur(8px);
+          z-index: 50;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          padding: 20px;
+          animation: fadeInOverlay 0.3s ease-in-out;
+        }
+        @keyframes fadeInOverlay {
+          from {
+            opacity: 0;
+          }
+          to {
+            opacity: 1;
+          }
+        }
+        .video-player-container {
+          position: relative;
+          width: 80%;
+          height: 80%;
+          max-width: 1200px;
+          animation: slideInPlayer 0.3s ease-in-out;
+        }
+        @keyframes slideInPlayer {
+          from {
+            transform: scale(0.9);
+            opacity: 0;
+          }
+          to {
+            transform: scale(1);
+            opacity: 1;
+          }
+        }
+        .video-player-container iframe {
+          position: absolute !important;
+          top: 0 !important;
+          left: 0 !important;
+          width: 100% !important;
+          height: 100% !important;
+          transform: none !important;
+          pointer-events: auto !important;
+        }
+        .close-button {
+          position: absolute;
+          top: -40px;
+          right: 0;
+          background: white;
+          border: none;
+          width: 36px;
+          height: 36px;
+          border-radius: 50%;
+          cursor: pointer;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 20px;
+          color: #333;
+          transition: all 0.2s ease;
+          z-index: 51;
+          padding: 0;
+          line-height: 1;
+          font-weight: 300;
+        }
+        .close-button:hover {
+          background: #f0f0f0;
+          transform: scale(1.1);
+        }
+        @media (max-width: 768px) {
+          .video-player-container {
+            width: 95%;
+            height: 95%;
+          }
+          .close-button {
+            top: -35px;
+            width: 32px;
+            height: 32px;
+            font-size: 18px;
+          }
+        }
+            `}</style>
       </div>
+      {videoPlayer && (
+        <div className="video-player-overlay" onClick={closeVideoPlayer}>
+          <div className="video-player-container" onClick={(e) => e.stopPropagation()}>
+            <button className="close-button" onClick={closeVideoPlayer}>
+              ×
+            </button>
+            <iframe src={`https://www.youtube.com/embed/${videoPlayer.videoId}?autoplay=1&loop=1&playlist=${videoPlayer.videoId}`} allow="autoplay; encrypted-media" allowFullScreen></iframe>
+          </div>
+        </div>
+      )}
     </>
   );
 };
