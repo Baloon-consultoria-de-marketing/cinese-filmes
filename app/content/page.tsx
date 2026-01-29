@@ -409,7 +409,7 @@ export default function Content() {
           </div>
         </section>
 
-        <section className="flex justify-center min-h-screen py-12">
+        <section className="flex justify-center">
           <div className={`w-full transition-shadow duration-300 ${modalData && activeSection === "inbound" ? "shadow-[0px_4px_4px_0px_rgba(0,0,0,0.1)]" : ""}`}>
             <div className="relative flex items-center justify-center w-full h-96 md:h-screen">
               <Image src="/INBOUND-MARKETING.png" alt="Inbound Marketing" width={1920} height={1080} className="hidden md:block w-full object-cover" />
@@ -428,7 +428,7 @@ export default function Content() {
               </div>
             </div>
             {modalData && activeSection === "inbound" && <Modal isOpen={!!modalData} onClose={closeModal} data={modalData} color={modalColor} showSolutions={showSolutions} />}
-            <div className="flex md:hidden flex-col w-full justify-center items-center gap-4 py-8 z-40 px-4">
+            <div className="flex md:hidden flex-col w-full justify-center items-center gap-4 z-40 px-4">
               {/* buttons mobile */}
               <Button color="blue" onClick={() => openModal("topo", "blue", "inbound", false)}>
                 TOPO
@@ -443,7 +443,7 @@ export default function Content() {
           </div>
         </section>
 
-        <section className="flex justify-center min-h-screen py-12">
+        <section className="flex justify-center">
           <div className={`w-full transition-shadow duration-300 ${modalData && activeSection === "endomarketing" ? "shadow-[0px_4px_4px_0px_rgba(0,0,0,0.1)]" : ""}`}>
             <div className="relative flex flex-col items-center justify-center w-full h-96 md:h-screen">
               <Image src="/ENDOMARKETING.png" alt="Endomarketing" width={1920} height={1080} className="hidden md:block w-full object-cover" />
@@ -462,7 +462,7 @@ export default function Content() {
               </div>
             </div>
             {modalData && activeSection === "endomarketing" && <Modal isOpen={!!modalData} onClose={closeModal} data={modalData} color={modalColor} showSolutions={showSolutions} />}
-            <div className="flex md:hidden flex-col w-full justify-center items-center gap-4 py-8 z-40 px-4">
+            <div className="flex md:hidden flex-col w-full justify-center items-center gap-4 z-40 px-4">
               {/* buttons mobile */}
               <Button color="blue" onClick={() => openModal("treinamento", "blue", "endomarketing", false)}>
                 TREINAMENTO
@@ -477,7 +477,7 @@ export default function Content() {
           </div>
         </section>
 
-        <section className="flex justify-center min-h-screen py-12">
+        <section className="flex justify-center">
           <div className="w-full">
             <div className="relative flex items-center justify-center w-full h-96 md:h-screen">
               <Image src="/EMPLOYER-BRANDING.png" alt="Employer Branding" width={1920} height={1080} className="hidden md:block w-full object-cover" />
@@ -489,7 +489,7 @@ export default function Content() {
                 </Button>
               </div>
             </div>
-            <div className="flex md:hidden flex-col w-full justify-center items-center gap-4 py-8 z-40 px-4">
+            <div className="flex md:hidden flex-col w-full justify-center items-center gap-4 z-40 px-4">
               {/* Button mobile */}
               <Button color="blue" onClick={() => openModal("marcaEmpregadora", "blue", "employer", false)}>
                 MARCA EMPREGADORA
