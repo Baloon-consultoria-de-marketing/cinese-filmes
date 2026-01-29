@@ -128,7 +128,7 @@ export const Modal = ({ isOpen, onClose, data, color, showSolutions = false }: M
 
           {/* Conteúdo principal */}
           <div className="p-4 md:p-8 ">
-            <div className="flex flex-col lg:flex-row gap-6 lg:gap-8">
+            <div className="flex flex-col lg:flex-row gap-6 lg:gap-8 pb-8">
               {/* Lado esquerdo - Texto */}
               <div className="flex-1">
                 <p className="text-xs font-semibold text-gray-600 mb-2 uppercase tracking-wider">{data.category}</p>

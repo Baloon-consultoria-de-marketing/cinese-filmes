@@ -31,7 +31,7 @@ export const modalDataMapInbound: Record<string, ModalData> = {
     videoSrc: "cHRPmNrrYeg",
     tabs: [
       { id: "reels", label: "Reels/Shorts" },
-      { id: "videos", label: "Videos institucionais" },
+      { id: "videos", label: "Eventos Corporativos" },
     ],
     carouselItems: [
       {
@@ -70,7 +70,7 @@ export const modalDataMapInbound: Record<string, ModalData> = {
     category: "MEIO DO FUNIL",
     title: "CONSIDERAÇÃO",
     description: "Obejtivo: Nutrir leads com informações relevantes, mostrando como sua solução resolve problemas específicos.",
-    solutionStrong: ["Animações Explicativas:", "Video institucional:", "Branded Content:", "Vídeos Explicativos:"],
+    solutionStrong: ["Animações:", "Video institucional:", "Branded Content:", "Vídeos de Produtos:"],
     solutions: [
       " Simplificação de conceitos complexos, mostrando soluções de forma didática e visual",
       " Video institucional: Reforça a identidade da marca e comunica valores e diferenciais.",
@@ -80,9 +80,9 @@ export const modalDataMapInbound: Record<string, ModalData> = {
     benefits: ["Melhora o entendimento sobre os serviços ou produtos.", "Fortalece a confiança na marca como solução ideal.", "Posiciona a empresa como autoridade no segmento."],
     videoSrc: "cHRPmNrrYeg",
     tabs: [
-      { id: "animacoes", label: "Animações Explicativas" },
+      { id: "animacoes", label: "Animações " },
       { id: "institucional", label: "Vídeo Institucional" },
-      { id: "explicativos", label: "Vídeos Explicativos" },
+      { id: "explicativos", label: "Vídeos de Produtos" },
       { id: "branded", label: "Branded Content" },
     ],
     carouselItems: [

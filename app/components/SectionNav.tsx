@@ -17,7 +17,7 @@ export const SectionNav = ({ sections, activeSection, onNavigate }: SectionNavPr
           aria-label={`Ir para seção ${index + 1}`}
         >
           <div
-            className={`w-3 h-3 rounded-full border-2 transition-all duration-300 
+            className={`w-2 h-2 rounded-full border-2 transition-all duration-300 
             ${activeSection === index ? "bg-white border-white scale-125" : "bg-transparent border-white hover:scale-110"}`}
           />
         </button>
