@@ -165,12 +165,13 @@ export const Modal = ({ isOpen, onClose, data, color, showSolutions = false }: M
 
               {/* Lado direito - Vídeo */}
               <div className="flex-1 flex items-start justify-center lg:sticky lg:top-8">
-                <div className="relative w-full" style={{ aspectRatio: "9/16", maxHeight: "500px", maxWidth: "320px" }}>
+                <div className="relative w-full cursor-pointer" style={{ aspectRatio: "9/16", maxHeight: "500px", maxWidth: "320px" }} onClick={() => handleCarouselVideoClick(data.videoSrc)}>
                   <iframe
                     src={`https://www.youtube.com/embed/${data.videoSrc}?autoplay=1&loop=1&mute=1`}
                     allow="autoplay; encrypted-media"
                     allowFullScreen
                     className="w-full h-full object-cover rounded-xl shadow-lg border-none"
+                    style={{ pointerEvents: "none" }}
                   ></iframe>
                 </div>
               </div>

@@ -248,29 +248,62 @@ export const modalDataMapInbound: Record<string, ModalData> = {
       { id: "retargeting", label: "Campanhas de Retargeting" },
     ],
     carouselItems: [
+      // Videocases videos
       {
         type: "videocases",
-        thumbnail: "/videoHorizontal.mp4",
-        duration: "4:31",
-        description: "Quem não instrui o cliente em sua jornada de compra, acaba perdendo ele para o concorrente.",
+        thumbnail: "0FEuDL2acY4",
+        duration: "2:27",
+        description: "Cloud Target - Case Ypê",
+      },
+      {
+        type: "videocases",
+        thumbnail: "z68FHjbbq_Q",
+        duration: "1:21",
+        description: "Vivo - Videocase Bullla",
+      },
+      {
+        type: "videocases",
+        thumbnail: "KTZUvg4rWzY",
+        duration: "3:00",
+        description: "Plano - Minhas Finanças",
+      },
+      {
+        type: "videocases",
+        thumbnail: "wAWLSDTbCrs",
+        duration: "2:52",
+        description: "NETSHOES | Convocados(São Paulo)",
+      },
+      {
+        type: "videocases",
+        thumbnail: "Yx-DLvomTVk",
+        duration: "3:03",
+        description: "NETSHOES | Convocados(Cuiabá)",
+      },
+      // Publicitarios videos
+      {
+        type: "publicitarios",
+        thumbnail: "Ibpp5trYmps",
+        duration: "0:16",
+        description: "Fair Prica - Campanha JN",
       },
       {
         type: "publicitarios",
-        thumbnail: "/videoHorizontal.mp4",
-        duration: "5:01",
-        description: "Quem não instrui o cliente em sua jornada de compra, acaba perdendo ele para o concorrente.",
+        thumbnail: "ypdenoIfGBs",
+        duration: "0:13",
+        description: "Fair Price - Receba seu precatório",
+      },
+      // Retargeting videos
+      {
+        type: "retargeting",
+        thumbnail: "mSX6upid_8Y",
+        duration: "0:40",
+        description: "Odontorani - Campanha de Retargeting",
       },
       {
         type: "retargeting",
-        thumbnail: "/videoHorizontal.mp4",
-        duration: "2:44",
-        description: "Quem não instrui o cliente em sua jornada de compra, acaba perdendo ele para o concorrente.",
-      },
-      {
-        type: "videocases",
-        thumbnail: "/videoHorizontal.mp4",
-        duration: "5:01",
-        description: "Quem não instrui o cliente em sua jornada de compra, acaba perdendo ele para o concorrente.",
+        thumbnail: "hNMVkY-owH8",
+        duration: "0:13",
+        description: "Fair price - Retargeting",
       },
     ],
   },
