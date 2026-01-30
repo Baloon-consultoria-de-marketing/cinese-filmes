@@ -1,10 +1,13 @@
 "use client";
 
 import { useEffect, useState, useRef, useCallback, useMemo } from "react";
+
 import { WhatsappButton } from "./components/whatsapp-button";
 import { SectionNav } from "./components/SectionNav";
 import { Header } from "./components/Header";
 import { Footer } from "./components/Footer";
+
+import { TiSocialYoutube } from "react-icons/ti";
 import { mockMovies } from "./MockMovies";
 
 export default function Home() {
@@ -129,16 +132,25 @@ export default function Home() {
           height: 100%;
           overflow: hidden;
         }
+        
+        /* CSS ATUALIZADO PARA CORRIGIR BORDAS */
         iframe {
           position: absolute;
           top: 50%;
           left: 50%;
+          /* Garante cobertura total baseada na proporção 16:9 */
           width: 100vw;
-          height: 56.25vw;
-          transform: translate(-50%, -50%);
+          height: 56.25vw; /* 100 * 9 / 16 */
+          min-height: 100vh;
+          min-width: 177.77vh; /* 100 * 16 / 9 */
+          
+          /* O scale(1.3) faz o "zoom" que elimina as bordas pretas do player */
+          transform: translate(-50%, -50%) scale(1.3);
+          
           border: none;
           pointer-events: none;
         }
+
         .video-overlay {
           position: absolute;
           top: 0;
@@ -148,8 +160,10 @@ export default function Home() {
           cursor: pointer;
           z-index: 10;
         }
+        
         @media (max-aspect-ratio: 16/9) {
           iframe {
+            /* Ajuste fino para telas mais altas que largas (mobile) */
             width: 177.77vh;
             height: 100vh;
           }
@@ -197,6 +211,7 @@ export default function Home() {
           }
         }
 
+        /* Importante: Reseta o scale dentro do modal para ver o vídeo inteiro */
         .video-player-container iframe {
           position: absolute !important;
           top: 0 !important;
@@ -204,6 +219,8 @@ export default function Home() {
           width: 100% !important;
           height: 100% !important;
           transform: none !important;
+          min-width: 0 !important;
+          min-height: 0 !important;
           pointer-events: auto !important;
         }
 
@@ -256,11 +273,20 @@ export default function Home() {
         {mockMovies.map((movie) => (
           <section key={movie.id} id={`section-${movie.id}`} className="relative w-full h-screen overflow-hidden">
             <div className="video-container">
-              <iframe src={`https://www.youtube.com/embed/${movie.videoUrl}?autoplay=1&loop=1&playlist=${movie.videoUrl}&mute=1`} allow="autoplay; encrypted-media" allowFullScreen></iframe>
+              {/* URL ATUALIZADA: Parâmetros para limpar a interface e melhorar o loop */}
+              <iframe
+                src={`https://www.youtube.com/embed/${movie.videoUrl}?autoplay=1&loop=1&playlist=${movie.videoUrl}&mute=1&controls=0&showinfo=0&rel=0&iv_load_policy=3&modestbranding=1&playsinline=1`}
+                allow="autoplay; encrypted-media"
+                allowFullScreen
+              ></iframe>
               <div className="video-overlay" onClick={() => handleVideoClick(movie.videoUrl, `https://www.youtube.com/watch?v=${movie.videoUrl}`)}></div>
             </div>
-            <div className="absolute inset-0 flex items-center justify-center bg-black/20">
-              <h2 className="text-white text-4xl md:text-6xl font-normal text-center px-4 drop-shadow-lg font-[raleway] tracking-widest">{movie.title}</h2>
+            <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/20">
+              <div className="relative flex flex-col items-center justify-center">
+                <TiSocialYoutube size={150} color="rgba(255,255,255,0.6)" className="absolute z-0" />
+                <h2 className="text-white text-4xl md:text-4xl font-bold text-center px-4 drop-shadow-lg font-[raleway] tracking-widest relative z-10">{movie.title}</h2>
+                <p className="text-white text-xl md:text-3xl font-light text-center px-4 drop-shadow-lg font-[raleway] tracking-wide relative z-10 mt-4">{movie.brand}</p>
+              </div>
             </div>
           </section>
         ))}

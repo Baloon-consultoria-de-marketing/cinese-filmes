@@ -7,7 +7,7 @@ interface SectionNavProps {
 }
 
 export const SectionNav = ({ sections, activeSection, onNavigate }: SectionNavProps) => {
-  const VISIBLE_COUNT = 7;
+  const VISIBLE_COUNT = 5;
   const ITEM_HEIGHT = 24; // px (altura do item + espaçamento)
 
   const maxStart = Math.max(0, sections.length - VISIBLE_COUNT);
