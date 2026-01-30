@@ -5,6 +5,7 @@ import { WhatsappButton } from "./components/whatsapp-button";
 import { SectionNav } from "./components/SectionNav";
 import { Header } from "./components/Header";
 import { Footer } from "./components/Footer";
+import { mockMovies } from "./MockMovies";
 
 export default function Home() {
   const [activeSection, setActiveSection] = useState(0);
@@ -12,7 +13,7 @@ export default function Home() {
   const isScrolling = useRef(false);
   const touchStartY = useRef(0);
 
-  const sections = useMemo(() => ["section-1", "section-2", "section-3", "section-footer"], []);
+  const sections = useMemo(() => [...mockMovies.map((m) => `section-${m.id}`), "section-footer"], []);
 
   const scrollToIndex = useCallback(
     (index: number) => {
@@ -251,46 +252,18 @@ export default function Home() {
 
       <Header />
       <main className="w-full h-screen">
-        {/* Seção 1 */}
-        <section id="section-1" className="relative w-full h-screen overflow-hidden">
-          <div className="video-container">
-            <iframe src="https://www.youtube.com/embed/fb9ao-ww15Q?autoplay=1&loop=1&playlist=fb9ao-ww15Q&mute=1" allow="autoplay; encrypted-media" allowFullScreen></iframe>
-            <div className="video-overlay" onClick={() => handleVideoClick("fb9ao-ww15Q", "https://www.youtube.com/watch?v=fb9ao-ww15Q")}></div>
-          </div>
-          <div className="absolute inset-0 flex items-center justify-center bg-black/20">
-            <h2 className="text-white text-4xl md:text-6xl font-normal text-center px-4 drop-shadow-lg font-[raleway] tracking-widest">CINESE</h2>
-          </div>
-        </section>
-
-        {/* Seção 2 */}
-        <section id="section-2" className="relative w-full h-screen overflow-hidden">
-          <div className="video-container">
-            <iframe src="https://www.youtube.com/embed/fb9ao-ww15Q?autoplay=1&loop=1&playlist=fb9ao-ww15Q&mute=1" allow="autoplay; encrypted-media" allowFullScreen></iframe>
-            <div className="video-overlay" onClick={() => handleVideoClick("fb9ao-ww15Q", "https://www.youtube.com/watch?v=fb9ao-ww15Q")}></div>
-          </div>
-          <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/20 px-4">
-            <div className="flex flex-col gap-2">
-              <p className="text-white font-[raleway] text-lg md:text-2xl mb-2 md:mb-4">#vivo</p>
-              <h2 className="text-white text-2xl sm:text-5xl md:text-6xl lg:text-7xl font-normal text-center drop-shadow-lg">HISTORINHAS COLORIDAS</h2>
-              <p className="text-white font-[raleway] font-normal text-lg md:text-2xl mt-2 md:mt-4 text-center">Por uma infância sem preconceito</p>
+        {/* Seções dos filmes */}
+        {mockMovies.map((movie) => (
+          <section key={movie.id} id={`section-${movie.id}`} className="relative w-full h-screen overflow-hidden">
+            <div className="video-container">
+              <iframe src={`https://www.youtube.com/embed/${movie.videoUrl}?autoplay=1&loop=1&playlist=${movie.videoUrl}&mute=1`} allow="autoplay; encrypted-media" allowFullScreen></iframe>
+              <div className="video-overlay" onClick={() => handleVideoClick(movie.videoUrl, `https://www.youtube.com/watch?v=${movie.videoUrl}`)}></div>
             </div>
-          </div>
-        </section>
-
-        {/* Seção 3 */}
-        <section id="section-3" className="relative w-full h-screen overflow-hidden">
-          <div className="video-container">
-            <iframe src="https://www.youtube.com/embed/fb9ao-ww15Q?autoplay=1&loop=1&playlist=fb9ao-ww15Q&mute=1" allow="autoplay; encrypted-media" allowFullScreen></iframe>
-            <div className="video-overlay" onClick={() => handleVideoClick("fb9ao-ww15Q", "https://www.youtube.com/watch?v=fb9ao-ww15Q")}></div>
-          </div>
-          <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/20 px-4">
-            <div className="flex flex-col gap-2">
-              <p className="text-white font-[raleway] text-lg md:text-2xl mb-2 md:mb-4">#vivo</p>
-              <h2 className="text-white text-2xl sm:text-5xl md:text-6xl lg:text-7xl font-normal text-center drop-shadow-lg">HISTORINHAS COLORIDAS</h2>
-              <p className="text-white font-[raleway] font-normal text-lg md:text-2xl mt-2 md:mt-4 text-center">Por uma infância sem preconceito</p>
+            <div className="absolute inset-0 flex items-center justify-center bg-black/20">
+              <h2 className="text-white text-4xl md:text-6xl font-normal text-center px-4 drop-shadow-lg font-[raleway] tracking-widest">{movie.title}</h2>
             </div>
-          </div>
-        </section>
+          </section>
+        ))}
 
         {/* Seção Footer */}
         <section id="section-footer" className="relative w-full h-auto overflow-visible">
