@@ -52,7 +52,6 @@ export const Modal = ({ isOpen, onClose, data, color, showSolutions = false }: M
 
   // --- MUDANÇA AQUI: Bloqueio de scroll inteligente ---
   useEffect(() => {
-    // Se o modal não estiver aberto, não fazemos nada
     if (!isOpen) return;
 
     const mediaQuery = window.matchMedia("(max-width: 768px)");
@@ -67,13 +66,9 @@ export const Modal = ({ isOpen, onClose, data, color, showSolutions = false }: M
       }
     };
 
-    // 1. Executa a verificação ao montar/abrir
     handleBodyScroll();
-
-    // 2. Adiciona ouvinte para mudanças de tamanho de tela em tempo real
     mediaQuery.addEventListener("change", handleBodyScroll);
 
-    // Cleanup: Limpa tudo ao fechar o modal
     return () => {
       mediaQuery.removeEventListener("change", handleBodyScroll);
       document.body.style.overflow = "";
@@ -93,7 +88,7 @@ export const Modal = ({ isOpen, onClose, data, color, showSolutions = false }: M
     return item.type === carouselFilter;
   });
 
-  const showCarouselButtons = isDesktop && filteredCarousel.length > 5;
+  const showCarouselButtons = isDesktop && filteredCarousel.length > 4;
 
   // Array de imagens para a galeria (substitua pelos caminhos reais das suas imagens)
   const galleryImages = ["/amem.png", "/fair-price.png", "/cinese.png", "/amem.png", "/fair-price.png", "/cinese.png", "/amem.png", "/fair-price.png"];
@@ -109,14 +104,14 @@ export const Modal = ({ isOpen, onClose, data, color, showSolutions = false }: M
 
   return (
     <>
-      {/* Overlay apenas no mobile */}
-      <div className={`md:hidden fixed inset-0 z-50 bg-black/30 backdrop-blur-sm ${isClosing ? "animate-fadeOut" : "animate-fadeIn"}`} />
+      {/* Overlay */}
+      <div className={`fixed inset-0 z-40 bg-black/30 backdrop-blur-sm ${isClosing ? "animate-fadeOut" : "animate-fadeIn"}`} onClick={handleClose} />
 
-      {/* Modal */}
-      <div className={`fixed md:relative inset-0 md:inset-auto z-50 md:z-30 w-full flex justify-center ${isClosing ? "animate-slideDown" : "animate-slideUp"}`}>
-        <div className={`relative w-full h-full md:w-[75%] md:h-auto md:-mt-30 md:rounded-2xl shadow-2xl overflow-y-auto md:overflow-hidden ${colorMap[color]}`}>
+      {/* Modal - Centralizado */}
+      <div className={`fixed inset-0 z-50 flex items-center justify-center p-4 ${isClosing ? "animate-slideDown" : "animate-slideUp"}`}>
+        <div className={`relative w-full max-w-7xl max-h-[85vh] overflow-y-auto overflow-x-hidden md:rounded-2xl shadow-2xl scrollbar-hide ${colorMap[color]}`}>
           {/* Header com botão de fechar */}
-          <div className="flex items-start justify-end pt-4 px-4">
+          <div className="sticky top-0 flex items-start justify-end pt-4 px-4 bg-inherit z-10">
             <button
               onClick={handleClose}
               className="text-gray-900 hover:text-white text-2xl font-bold w-10 h-10 flex items-center justify-center cursor-pointer rounded-full transition-all duration-300"

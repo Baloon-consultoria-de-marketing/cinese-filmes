@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useState, useRef } from "react";
 import { Footer } from "../components/Footer";
 import { Header } from "../components/Header";
 import { WhatsappButton } from "../components/whatsapp-button";
@@ -12,14 +13,16 @@ import { modalDataMapInbound, modalsDataMapEndomarketing, modalsDataMapEmployer,
 import Swal from "sweetalert2";
 
 export default function Content() {
-  const [isSubmitting, setIsSubmitting] = React.useState(false);
-  const [activeSection, setActiveSection] = React.useState<string | null>(null);
-  const [modalData, setModalData] = React.useState<ModalData | null>(null);
-  const [modalColor, setModalColor] = React.useState<"blue" | "gray" | "yellow">("blue");
-  const [phoneValue, setPhoneValue] = React.useState("");
-  const [emailError, setEmailError] = React.useState("");
-  const [showSolutions, setShowSolutions] = React.useState(false);
-  const [videoPlayer, setVideoPlayer] = React.useState<{ videoId: string; url: string } | null>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [activeSection, setActiveSection] = useState<string | null>(null);
+  const [modalData, setModalData] = useState<ModalData | null>(null);
+  const [modalColor, setModalColor] = useState<"blue" | "gray" | "yellow">("blue");
+  const [phoneValue, setPhoneValue] = useState("");
+  const [emailError, setEmailError] = useState("");
+  const [showSolutions, setShowSolutions] = useState(false);
+  const [videoPlayer, setVideoPlayer] = useState<{ videoId: string; url: string } | null>(null);
+  const isScrolling = useRef(false);
+  const touchStartY = useRef(0);
 
   const openModal = (key: string, color: "blue" | "gray" | "yellow", section: string, showSolutionsParam: boolean = false) => {
     let modalMap;
@@ -153,26 +156,83 @@ export default function Content() {
     }
   };
 
-  React.useEffect(() => {
-    if (typeof window !== "undefined") {
-      const scrollY = window.scrollY;
+  useEffect(() => {
+    const handleWheel = (e: WheelEvent) => {
+      if (isScrolling.current || modalData) return;
 
-      if (modalData && activeSection) {
-        document.body.style.overflow = "";
+      const scrollTop = window.scrollY;
+      const windowHeight = window.innerHeight;
+      const docHeight = document.documentElement.scrollHeight;
+
+      if (e.deltaY > 0) {
+        if (scrollTop + windowHeight < docHeight) {
+          window.scrollBy({ top: windowHeight, behavior: "smooth" });
+          isScrolling.current = true;
+        }
       } else {
-        document.body.style.overflow = "auto";
-        document.body.style.paddingRight = "0px";
-        if (scrollY > 0) {
-          window.scrollTo(0, scrollY);
+        if (scrollTop > 0) {
+          window.scrollBy({ top: -windowHeight, behavior: "smooth" });
+          isScrolling.current = true;
         }
       }
-    }
+
+      setTimeout(() => {
+        isScrolling.current = false;
+      }, 700);
+    };
+
+    const handleTouchStart = (e: TouchEvent) => {
+      touchStartY.current = e.touches[0].clientY;
+    };
+
+    const handleTouchMove = (e: TouchEvent) => {
+      if (modalData && e.cancelable) {
+        e.preventDefault();
+      }
+    };
+
+    const handleTouchEnd = (e: TouchEvent) => {
+      if (isScrolling.current || modalData) return;
+
+      const touchEndY = e.changedTouches[0].clientY;
+      const deltaY = touchStartY.current - touchEndY;
+      const threshold = 50;
+
+      if (Math.abs(deltaY) > threshold) {
+        const scrollTop = window.scrollY;
+        const windowHeight = window.innerHeight;
+        const docHeight = document.documentElement.scrollHeight;
+
+        if (deltaY > 0) {
+          if (scrollTop + windowHeight < docHeight) {
+            window.scrollBy({ top: windowHeight, behavior: "smooth" });
+            isScrolling.current = true;
+          }
+        } else {
+          if (scrollTop > 0) {
+            window.scrollBy({ top: -windowHeight, behavior: "smooth" });
+            isScrolling.current = true;
+          }
+        }
+
+        setTimeout(() => {
+          isScrolling.current = false;
+        }, 700);
+      }
+    };
+
+    window.addEventListener("wheel", handleWheel, { passive: false });
+    window.addEventListener("touchstart", handleTouchStart, { passive: false });
+    window.addEventListener("touchmove", handleTouchMove, { passive: false });
+    window.addEventListener("touchend", handleTouchEnd, { passive: false });
 
     return () => {
-      document.body.style.overflow = "auto";
-      document.body.style.paddingRight = "0px";
+      window.removeEventListener("wheel", handleWheel);
+      window.removeEventListener("touchstart", handleTouchStart);
+      window.removeEventListener("touchmove", handleTouchMove);
+      window.removeEventListener("touchend", handleTouchEnd);
     };
-  }, [modalData, activeSection]);
+  }, [modalData]);
 
   return (
     <>

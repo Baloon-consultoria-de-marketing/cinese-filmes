@@ -7,7 +7,7 @@ interface HeaderProps {
 
 export const Header = ({ isVisible = false }: HeaderProps) => {
   return (
-    <header className={`fixed top-0 z-50 transition-all duration-300 ml-2 mt-2 p-4 rounded-full ${isVisible ? "bg-white" : "hover:bg-white group"}`}>
+    <header className={`fixed top-0 z-50 transition-all duration-300 ml-2 mt-2 p-4 rounded-full ${isVisible ? "bg-transparent" : "hover:bg-white group"}`}>
       <nav className="flex items-center gap-8 px-8">
         <Link href="/">
           <Image
@@ -24,7 +24,9 @@ export const Header = ({ isVisible = false }: HeaderProps) => {
               Filmes
             </Link>
             <span
-              className={`absolute bottom-0 right-0 w-0 h-px transition-all duration-300 group-hover/item:w-full group-hover/item:right-auto group-hover/item:left-0 ${isVisible ? "bg-black" : "bg-white group-hover:bg-black"}`}
+              className={`absolute bottom-0 right-0 w-0 h-px transition-all duration-300 group-hover/item:w-full group-hover/item:right-auto group-hover/item:left-0 ${
+                isVisible ? "bg-black" : "bg-white group-hover:bg-black"
+              }`}
             ></span>
           </li>
           <li className="relative font-medium font-[raleway] text-lg group/item">
@@ -32,7 +34,9 @@ export const Header = ({ isVisible = false }: HeaderProps) => {
               Content
             </Link>
             <span
-              className={`absolute bottom-0 right-0 w-0 h-px transition-all duration-300 group-hover/item:w-full group-hover/item:right-auto group-hover/item:left-0 ${isVisible ? "bg-black" : "bg-white group-hover:bg-black"}`}
+              className={`absolute bottom-0 right-0 w-0 h-px transition-all duration-300 group-hover/item:w-full group-hover/item:right-auto group-hover/item:left-0 ${
+                isVisible ? "bg-black" : "bg-white group-hover:bg-black"
+              }`}
             ></span>
           </li>
         </ul>

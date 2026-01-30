@@ -15,7 +15,7 @@ export const SectionNav = ({ sections, activeSection, onNavigate }: SectionNavPr
   const translateY = -startIndex * ITEM_HEIGHT;
 
   return (
-    <nav className="fixed right-10 top-1/2 -translate-y-1/2 z-40" style={{ height: VISIBLE_COUNT * ITEM_HEIGHT, overflow: "hidden" }}>
+    <nav className="fixed right-2 md:right-10 top-1/2 -translate-y-1/2 z-40" style={{ height: VISIBLE_COUNT * ITEM_HEIGHT, overflow: "hidden" }}>
       <div className="flex flex-col transition-transform duration-300 ease-in-out px-2" style={{ transform: `translateY(${translateY}px)` }}>
         {sections.map((_, index) => (
           <button

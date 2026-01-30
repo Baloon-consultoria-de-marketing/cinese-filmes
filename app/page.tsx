@@ -284,7 +284,7 @@ export default function Home() {
             <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/20">
               <div className="relative flex flex-col items-center justify-center">
                 <TiSocialYoutube size={150} color="rgba(255,255,255,0.6)" className="absolute z-0" />
-                <h2 className="text-white text-4xl md:text-4xl font-bold text-center px-4 drop-shadow-lg font-[raleway] tracking-widest relative z-10">{movie.title}</h2>
+                <h2 className="text-white text-2xl md:text-4xl font-bold text-center px-4 drop-shadow-lg font-[raleway] tracking-widest relative z-10">{movie.title}</h2>
                 <p className="text-white text-xl md:text-3xl font-light text-center px-4 drop-shadow-lg font-[raleway] tracking-wide relative z-10 mt-4">{movie.brand}</p>
               </div>
             </div>
