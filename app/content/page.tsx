@@ -157,6 +157,19 @@ export default function Content() {
   };
 
   useEffect(() => {
+    // Gerencia body overflow quando modal abre/fecha
+    if (modalData) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "unset";
+    }
+
+    return () => {
+      document.body.style.overflow = "unset";
+    };
+  }, [modalData]);
+
+  useEffect(() => {
     const handleWheel = (e: WheelEvent) => {
       if (isScrolling.current || modalData) return;
 
@@ -166,11 +179,13 @@ export default function Content() {
 
       if (e.deltaY > 0) {
         if (scrollTop + windowHeight < docHeight) {
+          e.preventDefault();
           window.scrollBy({ top: windowHeight, behavior: "smooth" });
           isScrolling.current = true;
         }
       } else {
         if (scrollTop > 0) {
+          e.preventDefault();
           window.scrollBy({ top: -windowHeight, behavior: "smooth" });
           isScrolling.current = true;
         }
@@ -186,11 +201,12 @@ export default function Content() {
     };
 
     const handleTouchMove = (e: TouchEvent) => {
-      // Permite scroll dentro do modal
+      if (!modalData) return;
+
       const target = e.target as HTMLElement;
-      const isInsideModal = target.closest('[class*="overflow-y-auto"]') || target.closest('.scrollbar-hide');
+      const isInsideModal = target.closest('[class*="z-50"]');
       
-      if (modalData && !isInsideModal && e.cancelable) {
+      if (!isInsideModal && e.cancelable) {
         e.preventDefault();
       }
     };
@@ -416,7 +432,7 @@ export default function Content() {
             <div className="video-overlay" onClick={() => handleVideoClick("RUpfQRCt3Go", "https://www.youtube.com/watch?v=RUpfQRCt3Go")}></div>
           </div>
           <div className="absolute inset-0 flex items-center justify-center bg-black/20">
-            <i className="text-white text-4xl md:text-3xl font-normal text-center px-4 drop-shadow-lg font-[raleway] tracking-widest max-w-250">
+            <i className="text-white text-xl md:text-3xl font-normal text-center px-4 drop-shadow-lg font-[raleway] tracking-widest md:max-w-250">
               Se você não contar a sua historia <br /> Alguém fará isso por você!
             </i>
           </div>
@@ -495,7 +511,7 @@ export default function Content() {
               </div>
             </div>
             {modalData && activeSection === "inbound" && <Modal isOpen={!!modalData} onClose={closeModal} data={modalData} color={modalColor} showSolutions={showSolutions} showTabs={true} />}
-            <div className="flex md:hidden flex-col w-full justify-center items-center gap-4 z-40 px-4">
+            <div className="flex md:hidden flex-col w-full justify-center items-center gap-4 z-40 px-4 h-96">
               {/* buttons mobile */}
               <Button color="blue" onClick={() => openModal("topo", "blue", "inbound", false)}>
                 TOPO
@@ -529,7 +545,7 @@ export default function Content() {
               </div>
             </div>
             {modalData && activeSection === "endomarketing" && <Modal isOpen={!!modalData} onClose={closeModal} data={modalData} color={modalColor} showSolutions={showSolutions} showTabs={false} />}
-            <div className="flex md:hidden flex-col w-full justify-center items-center gap-4 z-40 px-4">
+            <div className="flex md:hidden flex-col w-full justify-center items-center gap-4 z-40 px-4 h-96">
               {/* buttons mobile */}
               <Button color="blue" onClick={() => openModal("treinamento", "blue", "endomarketing", false)}>
                 TREINAMENTO
@@ -556,7 +572,7 @@ export default function Content() {
                 </Button>
               </div>
             </div>
-            <div className="flex md:hidden flex-col w-full justify-center items-center gap-4 z-40 px-4">
+            <div className="flex md:hidden flex-col w-full justify-center items-center gap-4 z-40 px-4 h-96">
               {/* Button mobile */}
               <Button color="blue" onClick={() => openModal("marcaEmpregadora", "blue", "employer", false)}>
                 MARCA EMPREGADORA
