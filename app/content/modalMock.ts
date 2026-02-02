@@ -11,7 +11,7 @@ export interface ModalData {
   solutions?: string[];
   benefits: string[];
   videoSrc: string;
-  tabs: Tab[];
+  tabs?: Tab[];
   carouselItems: {
     type: string;
     thumbnail: string;

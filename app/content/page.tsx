@@ -490,7 +490,7 @@ export default function Content() {
                 </Button>
               </div>
             </div>
-            {modalData && activeSection === "inbound" && <Modal isOpen={!!modalData} onClose={closeModal} data={modalData} color={modalColor} showSolutions={showSolutions} />}
+            {modalData && activeSection === "inbound" && <Modal isOpen={!!modalData} onClose={closeModal} data={modalData} color={modalColor} showSolutions={showSolutions} showTabs={true} />}
             <div className="flex md:hidden flex-col w-full justify-center items-center gap-4 z-40 px-4">
               {/* buttons mobile */}
               <Button color="blue" onClick={() => openModal("topo", "blue", "inbound", false)}>
@@ -524,7 +524,7 @@ export default function Content() {
                 </Button>
               </div>
             </div>
-            {modalData && activeSection === "endomarketing" && <Modal isOpen={!!modalData} onClose={closeModal} data={modalData} color={modalColor} showSolutions={showSolutions} />}
+            {modalData && activeSection === "endomarketing" && <Modal isOpen={!!modalData} onClose={closeModal} data={modalData} color={modalColor} showSolutions={showSolutions} showTabs={false} />}
             <div className="flex md:hidden flex-col w-full justify-center items-center gap-4 z-40 px-4">
               {/* buttons mobile */}
               <Button color="blue" onClick={() => openModal("treinamento", "blue", "endomarketing", false)}>
@@ -558,7 +558,7 @@ export default function Content() {
                 MARCA EMPREGADORA
               </Button>
             </div>
-            {modalData && activeSection === "employer" && <Modal isOpen={!!modalData} onClose={closeModal} data={modalData} color={modalColor} showSolutions={showSolutions} />}
+            {modalData && activeSection === "employer" && <Modal isOpen={!!modalData} onClose={closeModal} data={modalData} color={modalColor} showSolutions={showSolutions} showTabs={true} />}
           </div>
         </section>
 

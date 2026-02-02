@@ -10,10 +10,11 @@ interface ModalProps {
   data: ModalData;
   color: "blue" | "gray" | "yellow";
   showSolutions?: boolean;
+  showTabs?: boolean;
 }
 
-export const Modal = ({ isOpen, onClose, data, color, showSolutions = false }: ModalProps) => {
-  const [carouselFilter, setCarouselFilter] = useState<string>(data.tabs[0]?.id || "");
+export const Modal = ({ isOpen, onClose, data, color, showSolutions = false, showTabs = false }: ModalProps) => {
+  const [carouselFilter, setCarouselFilter] = useState<string>(data.tabs?.[0]?.id || "");
   const [prevDataId, setPrevDataId] = useState<string | undefined>(undefined);
   const [isClosing, setIsClosing] = useState(false);
   const [videoPlayer, setVideoPlayer] = useState<{ videoId: string; url: string } | null>(null);
@@ -37,9 +38,9 @@ export const Modal = ({ isOpen, onClose, data, color, showSolutions = false }: M
   };
 
   // Reset para a primeira aba quando trocar de modal
-  if (data.tabs[0]?.id !== prevDataId) {
-    setPrevDataId(data.tabs[0]?.id);
-    setCarouselFilter(data.tabs[0]?.id || "");
+  if (data.tabs?.[0]?.id !== prevDataId) {
+    setPrevDataId(data.tabs?.[0]?.id);
+    setCarouselFilter(data.tabs?.[0]?.id || "");
   }
 
   const handleClose = () => {
@@ -109,7 +110,7 @@ export const Modal = ({ isOpen, onClose, data, color, showSolutions = false }: M
 
       {/* Modal - Centralizado */}
       <div className={`fixed inset-0 z-50 flex items-center justify-center p-4 ${isClosing ? "animate-slideDown" : "animate-slideUp"}`}>
-        <div className={`relative w-full max-w-7xl max-h-[85vh] overflow-y-auto overflow-x-hidden md:rounded-2xl shadow-2xl scrollbar-hide ${colorMap[color]}`}>
+        <div className={`relative w-full max-w-7xl max-h-[95vh] overflow-y-auto overflow-x-hidden md:rounded-2xl shadow-2xl scrollbar-hide ${colorMap[color]}`}>
           {/* Header com botão de fechar */}
           <div className="sticky top-0 flex items-start justify-end pt-4 px-4 bg-inherit z-10">
             <button
@@ -122,7 +123,7 @@ export const Modal = ({ isOpen, onClose, data, color, showSolutions = false }: M
           </div>
 
           {/* Conteúdo principal */}
-          <div className="p-4 md:p-8 ">
+          <div className="p-4 px-16 ">
             <div className="flex flex-col lg:flex-row gap-6 lg:gap-8 pb-8">
               {/* Lado esquerdo - Texto */}
               <div className="flex-1">
@@ -177,30 +178,15 @@ export const Modal = ({ isOpen, onClose, data, color, showSolutions = false }: M
               <h3 className="text-xl font-bold mb-6 mt-24 md:mt-12 text-gray-900">Soluções Indicadas</h3>
 
               {/* Toggle Reels/Shorts */}
-              <div className="mb-6">
-                {/* Desktop: inline-flex como antes */}
-                <div className="hidden md:inline-flex gap-1 bg-white/30 rounded-lg p-1">
-                  {data.tabs.map((tab) => (
-                    <button
-                      key={tab.id}
-                      onClick={() => setCarouselFilter(tab.id)}
-                      className={`px-4 py-0.5 rounded-lg cursor-pointer font-semibold transition-all duration-300 ease-in-out ${
-                        carouselFilter === tab.id ? "bg-white text-gray-900 shadow-md scale-105" : "bg-transparent text-gray-700 hover:bg-white/30"
-                      }`}
-                    >
-                      {tab.label}
-                    </button>
-                  ))}
-                </div>
-
-                {/* Mobile: carrossel com scroll horizontal */}
-                <div className="md:hidden overflow-x-auto scrollbar-hide">
-                  <div className="inline-flex gap-1 bg-white/30 rounded-lg p-1">
-                    {data.tabs.map((tab) => (
+              {showTabs && (
+                <div className="mb-6">
+                  {/* Desktop: inline-flex como antes */}
+                  <div className="hidden md:inline-flex gap-1 bg-white/30 rounded-lg p-1">
+                    {data.tabs?.map((tab) => (
                       <button
                         key={tab.id}
                         onClick={() => setCarouselFilter(tab.id)}
-                        className={`px-4 py-0.5 rounded-lg cursor-pointer font-semibold transition-all duration-300 ease-in-out whitespace-nowrap ${
+                        className={`px-4 py-0.5 rounded-lg cursor-pointer font-semibold transition-all duration-300 ease-in-out ${
                           carouselFilter === tab.id ? "bg-white text-gray-900 shadow-md scale-105" : "bg-transparent text-gray-700 hover:bg-white/30"
                         }`}
                       >
@@ -208,8 +194,25 @@ export const Modal = ({ isOpen, onClose, data, color, showSolutions = false }: M
                       </button>
                     ))}
                   </div>
+
+                  {/* Mobile: carrossel com scroll horizontal */}
+                  <div className="md:hidden overflow-x-auto scrollbar-hide">
+                    <div className="inline-flex gap-1 bg-white/30 rounded-lg p-1">
+                      {data.tabs?.map((tab) => (
+                        <button
+                          key={tab.id}
+                          onClick={() => setCarouselFilter(tab.id)}
+                          className={`px-4 py-0.5 rounded-lg cursor-pointer font-semibold transition-all duration-300 ease-in-out whitespace-nowrap ${
+                            carouselFilter === tab.id ? "bg-white text-gray-900 shadow-md scale-105" : "bg-transparent text-gray-700 hover:bg-white/30"
+                          }`}
+                        >
+                          {tab.label}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
                 </div>
-              </div>
+              )}
 
               {/* Renderização condicional: Galeria (Campanhas) vs Carrossel (outros) */}
               {carouselFilter === "campanhas" ? (
