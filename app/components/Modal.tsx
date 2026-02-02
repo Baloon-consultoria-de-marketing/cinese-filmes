@@ -161,12 +161,12 @@ export const Modal = ({ isOpen, onClose, data, color, showSolutions = false, sho
 
               {/* Lado direito - Vídeo */}
               <div className="flex-1 flex items-start justify-center lg:sticky lg:top-8">
-                <div className="relative w-full cursor-pointer" style={{ aspectRatio: "9/16", maxHeight: "500px", maxWidth: "320px" }} onClick={() => handleCarouselVideoClick(data.videoSrc)}>
+                <div className="relative w-full cursor-pointer" style={{ aspectRatio: "9/16", maxHeight: "500px", maxWidth: "280px" }} onClick={() => handleCarouselVideoClick(data.videoSrc)}>
                   <iframe
-                    src={`https://www.youtube.com/embed/${data.videoSrc}?autoplay=1&loop=1&mute=1`}
+                    src={`https://www.youtube.com/embed/${data.videoSrc}?autoplay=1&loop=1&playlist=${data.videoSrc}&mute=1&controls=0&modestbranding=1`}
                     allow="autoplay; encrypted-media"
                     allowFullScreen
-                    className="w-full h-full object-cover rounded-xl shadow-lg border-none"
+                    className="w-full h-full object-cover rounded-xl shadow-lg border-none youtube-iframe"
                     style={{ pointerEvents: "none" }}
                   ></iframe>
                 </div>
@@ -433,6 +433,19 @@ export const Modal = ({ isOpen, onClose, data, color, showSolutions = false, sho
             height: 32px;
             font-size: 18px;
           }
+        }
+        .youtube-iframe {
+          pointer-events: none !important;
+        }
+        .youtube-iframe::after {
+          display: none !important;
+        }
+        iframe[src*="youtube.com"] {
+          pointer-events: none !important;
+        }
+        /* Remove controles do YouTube */
+        .youtube-iframe::-webkit-media-controls {
+          display: none !important;
         }
             `}</style>
       </div>
