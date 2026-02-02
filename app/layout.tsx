@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter, Raleway, Roboto } from "next/font/google";
+import { Inter, Roboto, Raleway } from "next/font/google";
 import "./globals.css";
 
 // Configuração da Inter
@@ -18,7 +18,8 @@ const roboto = Roboto({
 // Configuração da Raleway
 const raleway = Raleway({
   subsets: ["latin"],
-  variable: "--font-raleway", // Define a variável CSS
+  variable: "--font-raleway",
+  weight: ["400", "500", "600", "700"], // Define a variável CSS
 });
 
 export const metadata: Metadata = {

@@ -19,7 +19,7 @@ export const Header = ({ isVisible = false }: HeaderProps) => {
           />
         </Link>
         <ul className="flex items-center gap-8">
-          <li className="relative font-medium font-[raleway] text-lg group/item">
+          <li className="relative font-medium font-[raleway] text-base group/item">
             <Link href="/" className={`transition-colors duration-300 ${isVisible ? "text-black" : "text-white group-hover:text-black"}`}>
               Filmes
             </Link>
@@ -29,7 +29,7 @@ export const Header = ({ isVisible = false }: HeaderProps) => {
               }`}
             ></span>
           </li>
-          <li className="relative font-medium font-[raleway] text-lg group/item">
+          <li className="relative font-medium font-[raleway] text-base group/item">
             <Link href="/content" className={`transition-colors duration-300 ${isVisible ? "text-black" : "text-white group-hover:text-black"}`}>
               Content
             </Link>

@@ -145,7 +145,7 @@ export default function Home() {
           min-width: 177.77vh; /* 100 * 16 / 9 */
           
           /* Aumentado de 1.3 para 1.5 ou 1.6 para cobrir altura vertical */
-          transform: translate(-50%, -50%) scale(1.0);
+          transform: translate(-50%, -50%) scale(1.12);
           
           border: none;
           pointer-events: none;
@@ -293,12 +293,37 @@ export default function Home() {
         }
 
         .movie-overlay {
+          --icon-size: 150px;
           opacity: 0;
           transition: opacity 0.5s ease-in-out;
         }
 
+        @media (max-width: 1024px) {
+          .movie-overlay {
+            --icon-size: 120px;
+          }
+        }
+
+        @media (max-width: 768px) {
+          .movie-overlay {
+            --icon-size: 80px;
+          }
+        }
+
         section:hover .movie-overlay {
           opacity: 1;
+        }
+
+        /* Desabilita o hover effect em mobile */
+        @media (max-width: 768px) {
+          section:hover .movie-overlay {
+            opacity: 0;
+          }
+
+          .movie-overlay {
+            opacity: 1;
+            transition: none;
+          }
         }
       `}</style>
 
@@ -319,7 +344,7 @@ export default function Home() {
             </div>
             <div className="movie-overlay absolute inset-0 flex flex-col items-center justify-center bg-black/20">
               <div className="relative flex flex-col items-center justify-center">
-                {movie.hasIcon && <TiSocialYoutube size={150} color="rgba(255,255,255,0.6)" className="absolute z-0" />}
+                {movie.hasIcon && <TiSocialYoutube style={{ width: "var(--icon-size)", height: "var(--icon-size)" }} color="rgba(255,255,255,0.6)" className="absolute z-0" />}
                 <h2 className="text-white text-2xl md:text-4xl font-bold text-center px-4 drop-shadow-lg font-[raleway] tracking-widest relative z-10 movie-title">{movie.title}</h2>
                 <p className="text-white text-xl md:text-3xl font-light text-center px-4 drop-shadow-lg font-[raleway] tracking-wide relative z-10 ">{movie.brand}</p>
               </div>
