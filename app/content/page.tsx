@@ -186,7 +186,11 @@ export default function Content() {
     };
 
     const handleTouchMove = (e: TouchEvent) => {
-      if (modalData && e.cancelable) {
+      // Permite scroll dentro do modal
+      const target = e.target as HTMLElement;
+      const isInsideModal = target.closest('[class*="overflow-y-auto"]') || target.closest('.scrollbar-hide');
+      
+      if (modalData && !isInsideModal && e.cancelable) {
         e.preventDefault();
       }
     };

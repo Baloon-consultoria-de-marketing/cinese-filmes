@@ -59,11 +59,15 @@ export const Modal = ({ isOpen, onClose, data, color, showSolutions = false, sho
 
     const handleBodyScroll = () => {
       if (mediaQuery.matches) {
-        // É mobile: Bloqueia o scroll
+        // É mobile: Bloqueia o scroll do body, mas permite scroll interno do modal
         document.body.style.overflow = "hidden";
+        document.body.style.position = "fixed";
+        document.body.style.width = "100%";
       } else {
-        // É desktop: Limpa o estilo inline para usar o padrão do CSS/Navegador
+        // É desktop: Limpa o estilo inline
         document.body.style.overflow = "";
+        document.body.style.position = "";
+        document.body.style.width = "";
       }
     };
 
@@ -73,6 +77,8 @@ export const Modal = ({ isOpen, onClose, data, color, showSolutions = false, sho
     return () => {
       mediaQuery.removeEventListener("change", handleBodyScroll);
       document.body.style.overflow = "";
+      document.body.style.position = "";
+      document.body.style.width = "";
     };
   }, [isOpen]);
   // ----------------------------------------------------
@@ -109,8 +115,8 @@ export const Modal = ({ isOpen, onClose, data, color, showSolutions = false, sho
       <div className={`fixed inset-0 z-40 bg-black/30 backdrop-blur-sm ${isClosing ? "animate-fadeOut" : "animate-fadeIn"}`} onClick={handleClose} />
 
       {/* Modal - Centralizado */}
-      <div className={`fixed inset-0 z-50 flex items-center justify-center p-4 ${isClosing ? "animate-slideDown" : "animate-slideUp"}`}>
-        <div className={`relative w-full max-w-7xl max-h-[95vh] overflow-y-auto overflow-x-hidden md:rounded-2xl shadow-2xl scrollbar-hide ${colorMap[color]}`}>
+      <div className={`fixed inset-0 z-50 flex items-center justify-center  ${isClosing ? "animate-slideDown" : "animate-slideUp"}`}>
+        <div className={`relative w-full h-full md:h-auto md:max-w-7xl md:max-h-[95vh] overflow-y-auto overflow-x-hidden md:rounded-2xl shadow-2xl scrollbar-hide ${colorMap[color]}`}>
           {/* Header com botão de fechar */}
           <div className="sticky top-0 flex items-start justify-end pt-4 px-4 bg-inherit z-10">
             <button
@@ -123,7 +129,7 @@ export const Modal = ({ isOpen, onClose, data, color, showSolutions = false, sho
           </div>
 
           {/* Conteúdo principal */}
-          <div className="p-4 px-16 ">
+          <div className="p-4 md:px-16 px-4 ">
             <div className="flex flex-col lg:flex-row gap-6 lg:gap-8 pb-8">
               {/* Lado esquerdo - Texto */}
               <div className="flex-1">
@@ -422,10 +428,11 @@ export const Modal = ({ isOpen, onClose, data, color, showSolutions = false, sho
           background: #f0f0f0;
           transform: scale(1.1);
         }
+        /* Permite scroll no modal mobile */
         @media (max-width: 768px) {
-          .video-player-container {
-            width: 95%;
-            height: 95%;
+          .overflow-y-auto {
+            -webkit-overflow-scrolling: touch;
+            overscroll-behavior: contain;
           }
           .close-button {
             top: -35px;
