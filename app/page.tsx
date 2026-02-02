@@ -145,7 +145,7 @@ export default function Home() {
           min-width: 177.77vh; /* 100 * 16 / 9 */
           
           /* Aumentado de 1.3 para 1.5 ou 1.6 para cobrir altura vertical */
-          transform: translate(-50%, -50%) scale(1.6);
+          transform: translate(-50%, -50%) scale(1.0);
           
           border: none;
           pointer-events: none;
@@ -260,7 +260,12 @@ export default function Home() {
           transform: scale(1.1);
         }
 
-      main section:first-of-type .movie-title {
+        /* CSS para vídeos fullscreen */
+        iframe.fullscreen-video {
+          transform: translate(-50%, -50%) scale(1.7) !important;
+        }
+
+        main section:first-of-type .movie-title {
           font-weight: 500;
           font-size: 80px;
           font-family: 'Raleway', sans-serif;
@@ -305,6 +310,7 @@ export default function Home() {
             <div className="video-container">
               {/* URL ATUALIZADA: Parâmetros para limpar a interface e melhorar o loop */}
               <iframe
+                className={movie.fullscreen ? "fullscreen-video" : ""}
                 src={`https://www.youtube.com/embed/${movie.videoUrl}?autoplay=1&loop=1&playlist=${movie.videoUrl}&mute=1&controls=0&showinfo=0&rel=0&iv_load_policy=3&modestbranding=1&playsinline=1`}
                 allow="autoplay; encrypted-media"
                 allowFullScreen
