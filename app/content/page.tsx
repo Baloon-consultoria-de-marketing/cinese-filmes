@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, useCallback, useMemo } from "react";
 import { Footer } from "../components/Footer";
 import { Header } from "../components/Header";
 import { WhatsappButton } from "../components/whatsapp-button";
@@ -14,7 +14,7 @@ import Swal from "sweetalert2";
 
 export default function Content() {
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [activeSection, setActiveSection] = useState<string | null>(null);
+  const [activeSection, setActiveSection] = useState(0);
   const [modalData, setModalData] = useState<ModalData | null>(null);
   const [modalColor, setModalColor] = useState<"blue" | "gray" | "yellow">("blue");
   const [phoneValue, setPhoneValue] = useState("");
@@ -23,6 +23,27 @@ export default function Content() {
   const [videoPlayer, setVideoPlayer] = useState<{ videoId: string; url: string } | null>(null);
   const isScrolling = useRef(false);
   const touchStartY = useRef(0);
+
+  const sections = useMemo(
+    () => ["section-hero", "section-brands", "section-about", "section-inbound", "section-endomarketing", "section-employer", "section-contact", "section-footer"],
+    [],
+  );
+
+  const scrollToIndex = useCallback(
+    (index: number) => {
+      if (index < 0 || index >= sections.length) return;
+      const element = document.querySelector(`[data-section="${sections[index]}"]`);
+      if (element) {
+        isScrolling.current = true;
+        setActiveSection(index);
+        element.scrollIntoView({ behavior: "smooth", block: "start" });
+        setTimeout(() => {
+          isScrolling.current = false;
+        }, 700);
+      }
+    },
+    [sections],
+  );
 
   const openModal = (key: string, color: "blue" | "gray" | "yellow", section: string, showSolutionsParam: boolean = false) => {
     let modalMap;
@@ -36,12 +57,10 @@ export default function Content() {
 
     setModalData(modalMap[key]);
     setModalColor(color);
-    setActiveSection(section);
     setShowSolutions(showSolutionsParam);
   };
 
   const closeModal = () => {
-    setActiveSection(null);
     setModalData(null);
   };
 
@@ -156,8 +175,8 @@ export default function Content() {
     }
   };
 
+  // Gerencia body overflow quando modal abre/fecha
   useEffect(() => {
-    // Gerencia body overflow quando modal abre/fecha
     if (modalData) {
       document.body.style.overflow = "hidden";
     } else {
@@ -169,31 +188,16 @@ export default function Content() {
     };
   }, [modalData]);
 
+  // Scroll full-page por seções
   useEffect(() => {
     const handleWheel = (e: WheelEvent) => {
       if (isScrolling.current || modalData) return;
 
-      const scrollTop = window.scrollY;
-      const windowHeight = window.innerHeight;
-      const docHeight = document.documentElement.scrollHeight;
-
       if (e.deltaY > 0) {
-        if (scrollTop + windowHeight < docHeight) {
-          e.preventDefault();
-          window.scrollBy({ top: windowHeight, behavior: "smooth" });
-          isScrolling.current = true;
-        }
+        scrollToIndex(activeSection + 1);
       } else {
-        if (scrollTop > 0) {
-          e.preventDefault();
-          window.scrollBy({ top: -windowHeight, behavior: "smooth" });
-          isScrolling.current = true;
-        }
+        scrollToIndex(activeSection - 1);
       }
-
-      setTimeout(() => {
-        isScrolling.current = false;
-      }, 500);
     };
 
     const handleTouchStart = (e: TouchEvent) => {
@@ -205,7 +209,7 @@ export default function Content() {
 
       const target = e.target as HTMLElement;
       const isInsideModal = target.closest('[class*="z-50"]');
-      
+
       if (!isInsideModal && e.cancelable) {
         e.preventDefault();
       }
@@ -219,25 +223,11 @@ export default function Content() {
       const threshold = 50;
 
       if (Math.abs(deltaY) > threshold) {
-        const scrollTop = window.scrollY;
-        const windowHeight = window.innerHeight;
-        const docHeight = document.documentElement.scrollHeight;
-
         if (deltaY > 0) {
-          if (scrollTop + windowHeight < docHeight) {
-            window.scrollBy({ top: windowHeight, behavior: "smooth" });
-            isScrolling.current = true;
-          }
+          scrollToIndex(activeSection + 1);
         } else {
-          if (scrollTop > 0) {
-            window.scrollBy({ top: -windowHeight, behavior: "smooth" });
-            isScrolling.current = true;
-          }
+          scrollToIndex(activeSection - 1);
         }
-
-        setTimeout(() => {
-          isScrolling.current = false;
-        }, 500);
       }
     };
 
@@ -252,14 +242,91 @@ export default function Content() {
       window.removeEventListener("touchmove", handleTouchMove);
       window.removeEventListener("touchend", handleTouchEnd);
     };
-  }, [modalData]);
+  }, [activeSection, scrollToIndex, modalData]);
 
   return (
     <>
       <style jsx global>{`
-        /* Previne scroll quando modal está aberto */
+        html, body {
+          height: 100%;
+          margin: 0;
+          padding: 0;
+          overflow: hidden;
+          overscroll-behavior-y: none;
+          overscroll-behavior: none;
+          touch-action: none;
+        }
+
         body.modal-open {
           overflow: hidden;
+        }
+      `}</style>
+
+      <style jsx>{`
+        @keyframes scroll-infinite {
+          0% {
+            transform: translateX(0);
+          }
+          100% {
+            transform: translateX(calc(-100% / 2));
+          }
+        }
+
+        .animate-scroll-infinite {
+          animation: scroll-infinite 40s linear infinite;
+        }
+
+        .video-container {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          overflow: hidden;
+        }
+
+        .video-container iframe {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          width: 100vw;
+          height: 56.25vw;
+          transform: translate(-50%, -50%);
+          border: none;
+        }
+
+        .video-overlay {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          cursor: pointer;
+          z-index: 10;
+        }
+
+        @media (max-aspect-ratio: 16/9) {
+          .video-container iframe {
+            width: 177.77vh;
+            height: 100vh;
+          }
+        }
+
+        .video-container-short {
+          position: relative;
+          width: 100%;
+          height: 100%;
+          overflow: hidden;
+          border-radius: 8px;
+        }
+
+        .video-container-short iframe {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          border: none;
         }
 
         /* Video Player Modal */
@@ -356,77 +423,9 @@ export default function Content() {
         }
       `}</style>
 
-      <style jsx>{`
-  @keyframes scroll-infinite {
-    0% {
-      transform: translateX(0);
-    }
-    100% {
-      transform: translateX(calc(-100% / 2));
-    }
-  }
-  
-  .animate-scroll-infinite {
-    animation: scroll-infinite 40s linear infinite;
-  }
-
-  .video-container {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-  }
-
-  .video-container iframe {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 100vw;
-    height: 56.25vw;
-    transform: translate(-50%, -50%);
-    border: none;
-  }
-
-  .video-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    cursor: pointer;
-    z-index: 10;
-  }
-
-  @media (max-aspect-ratio: 16/9) {
-    .video-container iframe {
-      width: 177.77vh;
-      height: 100vh;
-    }
-  }
-
-  .video-container-short {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-    border-radius: 8px;
-  }
-
-  .video-container-short iframe {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    border: none;
-  }
-`}</style>
-
       <Header isVisible={true} />
       <main className="w-full">
-        <section className="relative w-full h-screen overflow-hidden">
+        <section data-section="section-hero" className="relative w-full h-screen overflow-hidden">
           <div className="video-container">
             <iframe src="https://www.youtube.com/embed/RUpfQRCt3Go?autoplay=1&loop=1&playlist=RUpfQRCt3Go&mute=1" allow="autoplay; encrypted-media" allowFullScreen></iframe>
             <div className="video-overlay" onClick={() => handleVideoClick("RUpfQRCt3Go", "https://www.youtube.com/watch?v=RUpfQRCt3Go")}></div>
@@ -437,15 +436,12 @@ export default function Content() {
             </i>
           </div>
         </section>
-        <section className="relative w-full overflow-hidden bg-white">
+        <section data-section="section-brands" className="relative w-full overflow-hidden bg-white">
           <p className="flex items-center w-full justify-center font-bold text-sm md:text-xl lg:text-2xl font-[raleway] pt-10 pb-10">MARCAS ATENDIDAS</p>
-          {/* Gradientes de esmaecimento */}
           <div className="absolute left-0 top-0 bottom-0 w-32 bg-linear-to-r from-white to-transparent z-10 pointer-events-none"></div>
           <div className="absolute right-0 top-0 bottom-0 w-32 bg-linear-to-l from-white to-transparent z-10 pointer-events-none"></div>
 
-          {/* Container do carrossel */}
           <div className="flex animate-scroll-infinite" style={{ width: "max-content" }}>
-            {/* Primeiro conjunto de imagens */}
             <div className="flex gap-16 shrink-0">
               {mockImages.map((image, index) => (
                 <div key={`first-${index}`} className="shrink-0 flex items-center justify-center">
@@ -454,7 +450,6 @@ export default function Content() {
               ))}
             </div>
 
-            {/* Segundo conjunto (duplicado para loop infinito) */}
             <div className="flex gap-16 shrink-0">
               {mockImages.map((image, index) => (
                 <div key={`second-${index}`} className="shrink-0 flex items-center justify-center">
@@ -464,8 +459,8 @@ export default function Content() {
             </div>
           </div>
         </section>
-        <section className="flex flex-col lg:flex-row justify-evenly py-16 px-4 lg:px-8">
-          <div className="flex flex-col lg:flex-row gap-8 lg:gap-40 items-center max-w-7xl mx-auto lg:mb-12">
+        <section data-section="section-about" className="flex flex-col lg:flex-row justify-evenly py-16 px-4 lg:px-8">
+          <div className="flex  gap-8 lg:gap-40 items-center max-w-7xl mx-auto lg:mb-12">
             <div className="flex flex-col gap-4 max-w-full lg:max-w-156.25">
               <p className="text-2xl md:text-3xl lg:text-[39px] font-extrabold font-[raleway]">CINESE CONTENT</p>
               <p className="text-base md:text-lg font-normal text-justify font-[raleway]">
@@ -490,13 +485,12 @@ export default function Content() {
           </div>
         </section>
 
-        <section className="flex justify-center">
-          <div className={`w-full transition-shadow duration-300 ${modalData && activeSection === "inbound" ? "shadow-[0px_4px_4px_0px_rgba(0,0,0,0.1)]" : ""}`}>
+        <section data-section="section-inbound" className="flex justify-center">
+          <div className={`w-full transition-shadow duration-300 ${modalData ? "shadow-[0px_4px_4px_0px_rgba(0,0,0,0.1)]" : ""}`}>
             <div className="relative flex items-center justify-center w-full  md:h-full">
               <Image src="/INBOUND-MARKETING.png" alt="Inbound Marketing" width={0} height={0} className="hidden md:block w-full object-cover" />
               <Image src="/INBOUND-MARKETING-MOBILE.png" alt="Inbound Marketing" width={0} height={0} className="block md:hidden w-full object-cover" />
-              <div className="hidden md:flex absolute bottom-24 flex-col md:flex-row w-full justify-center items-center gap-4 z-40 px-4 md:px-0">
-                {/* buttons desktop */}
+              <div className="hidden md:flex absolute bottom-60 flex-col md:flex-row w-full justify-center items-center gap-4 z-40 px-4 md:px-0">
                 <Button color="blue" onClick={() => openModal("topo", "blue", "inbound", true)}>
                   TOPO
                 </Button>
@@ -508,9 +502,8 @@ export default function Content() {
                 </Button>
               </div>
             </div>
-            {modalData && activeSection === "inbound" && <Modal isOpen={!!modalData} onClose={closeModal} data={modalData} color={modalColor} showSolutions={showSolutions} showTabs={true} />}
+            {modalData && <Modal isOpen={!!modalData} onClose={closeModal} data={modalData} color={modalColor} showSolutions={showSolutions} showTabs={true} />}
             <div className="flex md:hidden flex-col w-full justify-center items-center gap-4 z-40 px-4 ">
-              {/* buttons mobile */}
               <Button color="blue" onClick={() => openModal("topo", "blue", "inbound", false)}>
                 TOPO
               </Button>
@@ -524,14 +517,13 @@ export default function Content() {
           </div>
         </section>
 
-        <section className="flex justify-center">
-          <div className={`w-full transition-shadow duration-300 ${modalData && activeSection === "endomarketing" ? "shadow-[0px_4px_4px_0px_rgba(0,0,0,0.1)]" : ""}`}>
+        <section data-section="section-endomarketing" className="flex justify-center">
+          <div className={`w-full transition-shadow duration-300 ${modalData ? "shadow-[0px_4px_4px_0px_rgba(0,0,0,0.1)]" : ""}`}>
             <div className="relative flex flex-col items-center justify-center w-full  md:h-full">
               <Image src="/ENDOMARKETING.png" alt="Endomarketing" width={1920} height={1080} className="hidden md:block w-full object-cover" />
               <Image src="/ENDOMARKETING-MOBILE.png" alt="Endomarketing" width={1920} height={1080} className="block md:hidden w-full object-cover" />
-              <div className="hidden md:flex absolute bottom-24 flex-col md:flex-row w-full justify-center items-center gap-4 z-40 px-4 md:px-0">
+              <div className="hidden md:flex absolute bottom-60 flex-col md:flex-row w-full justify-center items-center gap-4 z-40 px-4 md:px-0">
                 <Button color="blue" onClick={() => openModal("treinamento", "blue", "endomarketing", false)}>
-                  {/* buttons desktop */}
                   TREINAMENTO
                 </Button>
                 <Button color="yellow" onClick={() => openModal("cultura", "yellow", "endomarketing", false)}>
@@ -542,9 +534,8 @@ export default function Content() {
                 </Button>
               </div>
             </div>
-            {modalData && activeSection === "endomarketing" && <Modal isOpen={!!modalData} onClose={closeModal} data={modalData} color={modalColor} showSolutions={showSolutions} showTabs={false} />}
+            {modalData && <Modal isOpen={!!modalData} onClose={closeModal} data={modalData} color={modalColor} showSolutions={showSolutions} showTabs={false} />}
             <div className="flex md:hidden flex-col w-full justify-center items-center gap-4 z-40 px-4 ">
-              {/* buttons mobile */}
               <Button color="blue" onClick={() => openModal("treinamento", "blue", "endomarketing", false)}>
                 TREINAMENTO
               </Button>
@@ -558,31 +549,29 @@ export default function Content() {
           </div>
         </section>
 
-        <section className="flex justify-center">
+        <section data-section="section-employer" className="flex justify-center">
           <div className="w-full">
             <div className="relative flex items-center justify-center w-full  md:h-full">
               <Image src="/EMPLOYER-BRANDING.png" alt="Employer Branding" width={1920} height={1080} className="hidden md:block w-full object-cover" />
               <Image src="/EMPLOYER-BRANDING-MOBILE.png" alt="Employer Branding" width={1920} height={1080} className="block md:hidden w-full object-cover" />
-              <div className="hidden md:flex absolute bottom-20 flex-col md:flex-row w-full justify-center items-center gap-4 z-40 px-4 md:px-0">
-                {/* Button desktop */}
+              <div className="hidden md:flex absolute bottom-52 flex-col md:flex-row w-full justify-center items-center gap-4 z-40 px-4 md:px-0">
                 <Button color="blue" onClick={() => openModal("marcaEmpregadora", "blue", "employer", false)}>
                   MARCA EMPREGADORA
                 </Button>
               </div>
             </div>
             <div className="flex md:hidden flex-col w-full justify-center items-center gap-4 z-40 px-4 ">
-              {/* Button mobile */}
               <Button color="blue" onClick={() => openModal("marcaEmpregadora", "blue", "employer", false)}>
                 MARCA EMPREGADORA
               </Button>
             </div>
-            {modalData && activeSection === "employer" && <Modal isOpen={!!modalData} onClose={closeModal} data={modalData} color={modalColor} showSolutions={showSolutions} showTabs={true} />}
+            {modalData && <Modal isOpen={!!modalData} onClose={closeModal} data={modalData} color={modalColor} showSolutions={showSolutions} showTabs={true} />}
           </div>
         </section>
 
-        <div className="bg-[#F0F8FB] p-8 ">
+        <div data-section="section-contact" className="bg-[#F0F8FB] p-8 ">
           <section
-            className="flex flex-col items-center rounded-xl lg:flex-row gap-8 lg:gap-12 px-4 md:px-12 py-16 max-w-7xl mx-auto bg-white"
+            className="flex items-center rounded-xl lg:flex-row gap-8 lg:gap-12 px-4 md:px-12 py-16 max-w-7xl mx-auto bg-white"
             style={{ boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.15)" }}
           >
             <div className="w-full lg:w-1/2">
@@ -639,10 +628,12 @@ export default function Content() {
             </div>
           </section>
         </div>
+        <section data-section="section-footer" className="relative w-full h-auto overflow-visible">
+          <Footer />
+        </section>
         <WhatsappButton />
       </main>
 
-      {/* Video Player Modal */}
       {videoPlayer && (
         <div className="video-player-overlay" onClick={closeVideoPlayer}>
           <div className="video-player-container" onClick={(e) => e.stopPropagation()}>
@@ -653,8 +644,6 @@ export default function Content() {
           </div>
         </div>
       )}
-
-      <Footer />
     </>
   );
 }
