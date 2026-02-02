@@ -149,6 +149,7 @@ export default function Home() {
           
           border: none;
           pointer-events: none;
+          object-fit: cover;
         }
 
         .video-overlay {
@@ -251,6 +252,18 @@ export default function Home() {
           transform: scale(1.1);
         }
 
+      main section:first-of-type .movie-title {
+          font-weight: 500;
+          font-size: 100px;
+          font-family: 'Raleway', sans-serif;
+        }
+        
+        @media (max-width: 1024px) {
+          main section:first-of-type .movie-title {
+            font-size: 60px;
+          }
+        }
+
         @media (max-width: 768px) {
           .video-player-container {
             width: 95%;
@@ -283,9 +296,9 @@ export default function Home() {
             </div>
             <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/20">
               <div className="relative flex flex-col items-center justify-center">
-                <TiSocialYoutube size={150} color="rgba(255,255,255,0.6)" className="absolute z-0" />
-                <h2 className="text-white text-2xl md:text-4xl font-bold text-center px-4 drop-shadow-lg font-[raleway] tracking-widest relative z-10">{movie.title}</h2>
-                <p className="text-white text-xl md:text-3xl font-light text-center px-4 drop-shadow-lg font-[raleway] tracking-wide relative z-10 mt-4">{movie.brand}</p>
+                {movie.hasIcon && <TiSocialYoutube size={150} color="rgba(255,255,255,0.6)" className="absolute z-0" />}
+                <h2 className="text-white text-2xl md:text-4xl font-bold text-center px-4 drop-shadow-lg font-[raleway] tracking-widest relative z-10 movie-title">{movie.title}</h2>
+                <p className="text-white text-xl md:text-3xl font-light text-center px-4 drop-shadow-lg font-[raleway] tracking-wide relative z-10 ">{movie.brand}</p>
               </div>
             </div>
           </section>
