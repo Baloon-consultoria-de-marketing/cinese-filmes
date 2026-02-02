@@ -144,12 +144,21 @@ export default function Home() {
           min-height: 100vh;
           min-width: 177.77vh; /* 100 * 16 / 9 */
           
-          /* O scale(1.3) faz o "zoom" que elimina as bordas pretas do player */
-          transform: translate(-50%, -50%) scale(1.3);
+          /* Aumentado de 1.3 para 1.5 ou 1.6 para cobrir altura vertical */
+          transform: translate(-50%, -50%) scale(1.6);
           
           border: none;
           pointer-events: none;
           object-fit: cover;
+        }
+
+        @media (max-aspect-ratio: 16/9) {
+          iframe {
+            /* Ajuste fino para telas mais altas que largas (mobile) */
+            width: 177.77vh;
+            height: 100vh;
+            // transform: translate(-50%, -50%) scale(1.6);
+          }
         }
 
         .video-overlay {
@@ -163,9 +172,8 @@ export default function Home() {
         }
         
         @media (max-aspect-ratio: 16/9) {
-          iframe {
-            /* Ajuste fino para telas mais altas que largas (mobile) */
-            width: 177.77vh;
+          .video-overlay {
+            width: 100vh;
             height: 100vh;
           }
         }
@@ -254,7 +262,7 @@ export default function Home() {
 
       main section:first-of-type .movie-title {
           font-weight: 500;
-          font-size: 100px;
+          font-size: 80px;
           font-family: 'Raleway', sans-serif;
         }
         
@@ -278,6 +286,15 @@ export default function Home() {
             font-weight: 600;
           }
         }
+
+        .movie-overlay {
+          opacity: 0;
+          transition: opacity 0.5s ease-in-out;
+        }
+
+        section:hover .movie-overlay {
+          opacity: 1;
+        }
       `}</style>
 
       <Header />
@@ -294,7 +311,7 @@ export default function Home() {
               ></iframe>
               <div className="video-overlay" onClick={() => handleVideoClick(movie.videoUrl, `https://www.youtube.com/watch?v=${movie.videoUrl}`)}></div>
             </div>
-            <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/20">
+            <div className="movie-overlay absolute inset-0 flex flex-col items-center justify-center bg-black/20">
               <div className="relative flex flex-col items-center justify-center">
                 {movie.hasIcon && <TiSocialYoutube size={150} color="rgba(255,255,255,0.6)" className="absolute z-0" />}
                 <h2 className="text-white text-2xl md:text-4xl font-bold text-center px-4 drop-shadow-lg font-[raleway] tracking-widest relative z-10 movie-title">{movie.title}</h2>
