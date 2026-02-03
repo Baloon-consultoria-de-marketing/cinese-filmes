@@ -284,29 +284,29 @@ export default function Content() {
             <div className="absolute left-0 top-0 bottom-0 w-32 bg-linear-to-r from-white to-transparent z-10 pointer-events-none"></div>
             <div className="absolute right-0 top-0 bottom-0 w-32 bg-linear-to-l from-white to-transparent z-10 pointer-events-none"></div>
             <div className="flex animate-scroll-infinite" style={{ width: "max-content" }}>
-              <div className="flex gap-16 shrink-0">
+              <div className="flex gap-8 sm:gap-12 md:gap-16 shrink-0">
                 {mockImages.map((image, index) => (
                   <div key={`first-${index}`} className="shrink-0 flex items-center justify-center">
                     <Image
                       src={image.src}
                       alt={image.alt}
-                      width={200}
-                      height={200}
-                      className="max-w-full max-h-full object-cover grayscale hover:grayscale-0 transition-all duration-300"
+                      width={100}
+                      height={100}
+                      className="w-24 h-24 sm:w-32 sm:h-32 md:w-40 md:h-40 lg:w-48 lg:h-48 object-cover grayscale hover:grayscale-0 transition-all duration-300"
                       quality={90}
                     />
                   </div>
                 ))}
               </div>
-              <div className="flex gap-16 shrink-0">
+              <div className="flex gap-8 sm:gap-12 md:gap-16 shrink-0">
                 {mockImages.map((image, index) => (
                   <div key={`second-${index}`} className="shrink-0 flex items-center justify-center">
                     <Image
                       src={image.src}
                       alt={image.alt}
-                      width={200}
-                      height={200}
-                      className="max-w-full max-h-full object-cover grayscale hover:grayscale-0 transition-all duration-300"
+                      width={100}
+                      height={100}
+                      className="w-24 h-24 sm:w-32 sm:h-32 md:w-40 md:h-40 lg:w-48 lg:h-48 object-cover grayscale hover:grayscale-0 transition-all duration-300"
                       quality={90}
                     />
                   </div>
@@ -315,8 +315,8 @@ export default function Content() {
             </div>
           </div>
           <div className="flex flex-col lg:flex-row justify-evenly py-16 px-4 lg:px-8">
-            <div className="flex gap-8 lg:gap-40 items-center max-w-7xl mx-auto lg:mb-12">
-              <div className="flex flex-col gap-4 max-w-full lg:max-w-156.25">
+            <div className="flex flex-col md:flex-row gap-6 lg:gap-40 items-center max-w-7xl mx-auto lg:mb-12">
+              <div className="flex flex-col gap-2 max-w-full lg:max-w-156.25">
                 <p className="text-2xl md:text-3xl lg:text-[39px] font-extrabold font-[raleway]">CINESE CONTENT</p>
                 <p className="text-base md:text-lg font-normal text-justify font-[raleway]">
                   Somos a parceira estratégica na construção de conexões autênticas entre marcas, colaboradores e público-alvo. E como fazemos isso? Com histórias visuais extremamente impactantes.
@@ -429,7 +429,6 @@ export default function Content() {
         </section>
 
         <div data-section="section-contact" className="bg-[#F0F8FB] p-8 flex items-center">
-          {/* ... Sessão de Contato mantida ... */}
           <section className="flex items-center rounded-xl lg:flex-row gap-8 lg:gap-12 px-4 md:px-12 py-16 max-w-7xl mx-auto bg-white" style={{ boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.15)" }}>
             <div className="w-full lg:w-1/2">
               <div className="mb-8">
@@ -478,7 +477,14 @@ export default function Content() {
               <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 lg:gap-6">
                 {mockImages.map((image, index) => (
                   <div key={index} className="flex items-center justify-center">
-                    <Image src={image.src} alt={image.alt} width={30} height={30} className="w-full object-cover grayscale hover:grayscale-0 transition-all" quality={90} />
+                    <Image
+                      src={image.src}
+                      alt={image.alt}
+                      width={80}
+                      height={80}
+                      className="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 lg:w-28 lg:h-28 object-cover grayscale hover:grayscale-0 transition-all"
+                      quality={90}
+                    />
                   </div>
                 ))}
               </div>
