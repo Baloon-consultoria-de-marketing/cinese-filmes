@@ -17,17 +17,18 @@ export default function Content() {
   const [activeSection, setActiveSection] = useState(0);
   const [modalData, setModalData] = useState<ModalData | null>(null);
   const [modalColor, setModalColor] = useState<"blue" | "gray" | "yellow">("blue");
+
+  // Estados para controle de exibição dentro do Modal
+  const [showSolutions, setShowSolutions] = useState(false);
+  const [showTabs, setShowTabs] = useState(false); // <--- NOVO ESTADO AQUI
+
   const [phoneValue, setPhoneValue] = useState("");
   const [emailError, setEmailError] = useState("");
-  const [showSolutions, setShowSolutions] = useState(false);
   const [videoPlayer, setVideoPlayer] = useState<{ videoId: string; url: string } | null>(null);
   const isScrolling = useRef(false);
   const touchStartY = useRef(0);
 
-  const sections = useMemo(
-    () => ["section-hero", "section-brands", "section-about", "section-inbound", "section-endomarketing", "section-employer", "section-contact", "section-footer"],
-    [],
-  );
+  const sections = useMemo(() => ["section-hero", "section-brands", "section-about", "section-inbound", "section-endomarketing", "section-employer", "section-contact", "section-footer"], []);
 
   const scrollToIndex = useCallback(
     (index: number) => {
@@ -45,7 +46,7 @@ export default function Content() {
     [sections],
   );
 
-  const openModal = (key: string, color: "blue" | "gray" | "yellow", section: string, showSolutionsParam: boolean = false) => {
+  const openModal = (key: string, color: "blue" | "gray" | "yellow", section: string, showSolutionsParam: boolean = false, showTabsParam: boolean = false) => {
     let modalMap;
     if (section === "endomarketing") {
       modalMap = modalsDataMapEndomarketing;
@@ -58,6 +59,7 @@ export default function Content() {
     setModalData(modalMap[key]);
     setModalColor(color);
     setShowSolutions(showSolutionsParam);
+    setShowTabs(showTabsParam); // <--- Atualiza o estado
   };
 
   const closeModal = () => {
@@ -175,19 +177,6 @@ export default function Content() {
     }
   };
 
-  // Gerencia body overflow quando modal abre/fecha
-  useEffect(() => {
-    if (modalData) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "unset";
-    }
-
-    return () => {
-      document.body.style.overflow = "unset";
-    };
-  }, [modalData]);
-
   // Scroll full-page por seções
   useEffect(() => {
     const handleWheel = (e: WheelEvent) => {
@@ -251,176 +240,28 @@ export default function Content() {
           height: 100%;
           margin: 0;
           padding: 0;
-          overflow: hidden;
           overscroll-behavior-y: none;
           overscroll-behavior: none;
           touch-action: none;
         }
-
-        body.modal-open {
-          overflow: hidden;
-        }
       `}</style>
-
       <style jsx>{`
-        @keyframes scroll-infinite {
-          0% {
-            transform: translateX(0);
-          }
-          100% {
-            transform: translateX(calc(-100% / 2));
-          }
-        }
-
-        .animate-scroll-infinite {
-          animation: scroll-infinite 40s linear infinite;
-        }
-
-        .video-container {
-          position: absolute;
-          top: 0;
-          left: 0;
-          width: 100%;
-          height: 100%;
-          overflow: hidden;
-        }
-
-        .video-container iframe {
-          position: absolute;
-          top: 50%;
-          left: 50%;
-          width: 100vw;
-          height: 56.25vw;
-          transform: translate(-50%, -50%);
-          border: none;
-        }
-
-        .video-overlay {
-          position: absolute;
-          top: 0;
-          left: 0;
-          width: 100%;
-          height: 100%;
-          cursor: pointer;
-          z-index: 10;
-        }
-
-        @media (max-aspect-ratio: 16/9) {
-          .video-container iframe {
-            width: 177.77vh;
-            height: 100vh;
-          }
-        }
-
-        .video-container-short {
-          position: relative;
-          width: 100%;
-          height: 100%;
-          overflow: hidden;
-          border-radius: 8px;
-        }
-
-        .video-container-short iframe {
-          position: absolute;
-          top: 0;
-          left: 0;
-          width: 100%;
-          height: 100%;
-          border: none;
-        }
-
-        /* Video Player Modal */
-        .video-player-overlay {
-          position: fixed;
-          inset: 0;
-          background-color: rgba(0, 0, 0, 0.6);
-          backdrop-filter: blur(8px);
-          z-index: 50;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          padding: 20px;
-          animation: fadeInOverlay 0.3s ease-in-out;
-        }
-
-        @keyframes fadeInOverlay {
-          from {
-            opacity: 0;
-          }
-          to {
-            opacity: 1;
-          }
-        }
-
-        .video-player-container {
-          position: relative;
-          width: 80%;
-          height: 80%;
-          max-width: 1200px;
-          animation: slideInPlayer 0.3s ease-in-out;
-        }
-
-        @keyframes slideInPlayer {
-          from {
-            transform: scale(0.9);
-            opacity: 0;
-          }
-          to {
-            transform: scale(1);
-            opacity: 1;
-          }
-        }
-
-        .video-player-container iframe {
-          position: absolute !important;
-          top: 0 !important;
-          left: 0 !important;
-          width: 100% !important;
-          height: 100% !important;
-          transform: none !important;
-          pointer-events: auto !important;
-        }
-
-        .close-button {
-          position: absolute;
-          top: -40px;
-          right: 0;
-          background: white;
-          border: none;
-          width: 36px;
-          height: 36px;
-          border-radius: 50%;
-          cursor: pointer;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          font-size: 20px;
-          color: #333;
-          transition: all 0.2s ease;
-          z-index: 51;
-          padding: 0;
-          line-height: 1;
-          font-weight: 300;
-        }
-
-        .close-button:hover {
-          background: #f0f0f0;
-          transform: scale(1.1);
-        }
-
-        @media (max-width: 768px) {
-          .video-player-container {
-            width: 95%;
-            height: 95%;
-          }
-
-          .close-button {
-            top: -35px;
-            width: 32px;
-            height: 32px;
-            font-size: 18px;
-          }
-        }
+         @keyframes scroll-infinite { 0% { transform: translateX(0); } 100% { transform: translateX(calc(-100% / 2)); } }
+        .animate-scroll-infinite { animation: scroll-infinite 40s linear infinite; }
+        .video-container { position: absolute; top: 0; left: 0; width: 100%; height: 100%; overflow: hidden; }
+        .video-container iframe { position: absolute; top: 50%; left: 50%; width: 100vw; height: 56.25vw; transform: translate(-50%, -50%); border: none; }
+        .video-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; cursor: pointer; z-index: 10; }
+        @media (max-aspect-ratio: 16/9) { .video-container iframe { width: 177.77vh; height: 100vh; } }
+        .video-container-short { position: relative; width: 100%; height: 100%; overflow: hidden; border-radius: 8px; }
+        .video-container-short iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
+        .video-player-overlay { position: fixed; inset: 0; background-color: rgba(0, 0, 0, 0.6); backdrop-filter: blur(8px); z-index: 50; display: flex; align-items: center; justify-content: center; padding: 20px; animation: fadeInOverlay 0.3s ease-in-out; }
+        @keyframes fadeInOverlay { from { opacity: 0; } to { opacity: 1; } }
+        .video-player-container { position: relative; width: 80%; height: 80%; max-width: 1200px; animation: slideInPlayer 0.3s ease-in-out; }
+        @keyframes slideInPlayer { from { transform: scale(0.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+        .video-player-container iframe { position: absolute !important; top: 0 !important; left: 0 !important; width: 100% !important; height: 100% !important; transform: none !important; pointer-events: auto !important; }
+        .close-button { position: absolute; top: -40px; right: 0; background: white; border: none; width: 36px; height: 36px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 20px; color: #333; transition: all 0.2s ease; z-index: 51; padding: 0; line-height: 1; font-weight: 300; }
+        .close-button:hover { background: #f0f0f0; transform: scale(1.1); }
+        @media (max-width: 768px) { .video-player-container { width: 95%; height: 95%; } .close-button { top: -35px; width: 32px; height: 32px; font-size: 18px; } }
       `}</style>
 
       <Header isVisible={true} />
@@ -436,29 +277,29 @@ export default function Content() {
             </i>
           </div>
         </section>
+
         <section data-section="section-brands" className="relative w-full overflow-hidden bg-white">
           <p className="flex items-center w-full justify-center font-bold text-sm md:text-xl lg:text-2xl font-[raleway] pt-10 pb-10">MARCAS ATENDIDAS</p>
           <div className="absolute left-0 top-0 bottom-0 w-32 bg-linear-to-r from-white to-transparent z-10 pointer-events-none"></div>
           <div className="absolute right-0 top-0 bottom-0 w-32 bg-linear-to-l from-white to-transparent z-10 pointer-events-none"></div>
-
           <div className="flex animate-scroll-infinite" style={{ width: "max-content" }}>
             <div className="flex gap-16 shrink-0">
               {mockImages.map((image, index) => (
                 <div key={`first-${index}`} className="shrink-0 flex items-center justify-center">
-                  <Image src={image.src} alt={image.alt} width={200} height={200} className="max-w-full max-h-full object-cover grayscale hover:grayscale-0 transition-all duration-300" quality={90}/>
+                  <Image src={image.src} alt={image.alt} width={200} height={200} className="max-w-full max-h-full object-cover grayscale hover:grayscale-0 transition-all duration-300" quality={90} />
                 </div>
               ))}
             </div>
-
             <div className="flex gap-16 shrink-0">
               {mockImages.map((image, index) => (
                 <div key={`second-${index}`} className="shrink-0 flex items-center justify-center">
-                  <Image src={image.src} alt={image.alt} width={200} height={200} className="max-w-full max-h-full object-cover grayscale hover:grayscale-0 transition-all duration-300" quality={90}/>
+                  <Image src={image.src} alt={image.alt} width={200} height={200} className="max-w-full max-h-full object-cover grayscale hover:grayscale-0 transition-all duration-300" quality={90} />
                 </div>
               ))}
             </div>
           </div>
         </section>
+
         <section data-section="section-about" className="flex flex-col lg:flex-row justify-evenly py-16 px-4 lg:px-8">
           <div className="flex  gap-8 lg:gap-40 items-center max-w-7xl mx-auto lg:mb-12">
             <div className="flex flex-col gap-4 max-w-full lg:max-w-156.25">
@@ -485,95 +326,96 @@ export default function Content() {
           </div>
         </section>
 
+        {/* --- INBOUND MARKETING (Tem Tabs) --- */}
         <section data-section="section-inbound" className="flex justify-center">
           <div className={`w-full transition-shadow duration-300 ${modalData ? "shadow-[0px_4px_4px_0px_rgba(0,0,0,0.1)]" : ""}`}>
             <div className="relative flex items-center justify-center w-full md:h-full">
-              <Image src="/INBOUND-MARKETING.png" alt="Inbound Marketing" width={0} height={0} className="hidden md:block w-full object-cover" quality={90}/>
-              <Image src="/INBOUND-MARKETING-MOBILE.png" alt="Inbound Marketing" width={0} height={0} className="block md:hidden w-full object-cover" quality={90}/>
+              <Image src="/INBOUND-MARKETING.png" alt="Inbound Marketing" width={0} height={0} className="hidden md:block w-full object-cover" quality={90} />
+              <Image src="/INBOUND-MARKETING-MOBILE.png" alt="Inbound Marketing" width={0} height={0} className="block md:hidden w-full object-cover" quality={90} />
               <div className="hidden md:flex absolute bottom-50 flex-col md:flex-row w-full justify-center items-center gap-4 z-40 px-4 md:px-0">
-                <Button color="blue" onClick={() => openModal("topo", "blue", "inbound", true)}>
+                {/* 5º argumento 'true' ativa as tabs */}
+                <Button color="blue" onClick={() => openModal("topo", "blue", "inbound", true, true)}>
                   TOPO
                 </Button>
-                <Button color="yellow" onClick={() => openModal("meio", "yellow", "inbound", true)}>
+                <Button color="yellow" onClick={() => openModal("meio", "yellow", "inbound", true, true)}>
                   MEIO
                 </Button>
-                <Button color="gray" onClick={() => openModal("fundo", "gray", "inbound", true)}>
+                <Button color="gray" onClick={() => openModal("fundo", "gray", "inbound", true, true)}>
                   FUNDO
                 </Button>
               </div>
             </div>
-            {modalData && <Modal isOpen={!!modalData} onClose={closeModal} data={modalData} color={modalColor} showSolutions={showSolutions} showTabs={true} />}
             <div className="flex md:hidden flex-col w-full justify-center items-center gap-4 z-40 px-4 ">
-              <Button color="blue" onClick={() => openModal("topo", "blue", "inbound", false)}>
+              <Button color="blue" onClick={() => openModal("topo", "blue", "inbound", false, true)}>
                 TOPO
               </Button>
-              <Button color="yellow" onClick={() => openModal("meio", "yellow", "inbound", true)}>
+              <Button color="yellow" onClick={() => openModal("meio", "yellow", "inbound", true, true)}>
                 MEIO
               </Button>
-              <Button color="gray" onClick={() => openModal("fundo", "gray", "inbound", true)}>
+              <Button color="gray" onClick={() => openModal("fundo", "gray", "inbound", true, true)}>
                 FUNDO
               </Button>
             </div>
           </div>
         </section>
 
+        {/* --- ENDOMARKETING (NÃO Tem Tabs) --- */}
         <section data-section="section-endomarketing" className="flex justify-center">
           <div className={`w-full transition-shadow duration-300 ${modalData ? "shadow-[0px_4px_4px_0px_rgba(0,0,0,0.1)]" : ""}`}>
             <div className="relative flex flex-col items-center justify-center w-full md:h-full">
-              <Image src="/ENDOMARKETING.png" alt="Endomarketing" width={1920} height={1080} className="hidden md:block w-full object-cover" quality={90}/>
-              <Image src="/ENDOMARKETING-MOBILE.png" alt="Endomarketing" width={1920} height={1080} className="block md:hidden w-full object-cover" quality={90}/>
+              <Image src="/ENDOMARKETING.png" alt="Endomarketing" width={1920} height={1080} className="hidden md:block w-full object-cover" quality={90} />
+              <Image src="/ENDOMARKETING-MOBILE.png" alt="Endomarketing" width={1920} height={1080} className="block md:hidden w-full object-cover" quality={90} />
               <div className="hidden md:flex absolute bottom-50 flex-col md:flex-row w-full justify-center items-center gap-4 z-40 px-4 md:px-0">
-                <Button color="blue" onClick={() => openModal("treinamento", "blue", "endomarketing", false)}>
+                {/* 5º argumento 'false' desativa as tabs */}
+                <Button color="blue" onClick={() => openModal("treinamento", "blue", "endomarketing", false, false)}>
                   TREINAMENTO
                 </Button>
-                <Button color="yellow" onClick={() => openModal("cultura", "yellow", "endomarketing", false)}>
+                <Button color="yellow" onClick={() => openModal("cultura", "yellow", "endomarketing", false, false)}>
                   CULTURA
                 </Button>
-                <Button color="gray" onClick={() => openModal("proposito", "gray", "endomarketing", false)}>
+                <Button color="gray" onClick={() => openModal("proposito", "gray", "endomarketing", false, false)}>
                   PROPÓSITO
                 </Button>
               </div>
             </div>
-            {modalData && <Modal isOpen={!!modalData} onClose={closeModal} data={modalData} color={modalColor} showSolutions={showSolutions} showTabs={false} />}
             <div className="flex md:hidden flex-col w-full justify-center items-center gap-4 z-40 px-4 ">
-              <Button color="blue" onClick={() => openModal("treinamento", "blue", "endomarketing", false)}>
+              <Button color="blue" onClick={() => openModal("treinamento", "blue", "endomarketing", false, false)}>
                 TREINAMENTO
               </Button>
-              <Button color="yellow" onClick={() => openModal("cultura", "yellow", "endomarketing", false)}>
+              <Button color="yellow" onClick={() => openModal("cultura", "yellow", "endomarketing", false, false)}>
                 CULTURA
               </Button>
-              <Button color="gray" onClick={() => openModal("proposito", "gray", "endomarketing", false)}>
+              <Button color="gray" onClick={() => openModal("proposito", "gray", "endomarketing", false, false)}>
                 PROPÓSITO
               </Button>
             </div>
           </div>
         </section>
 
+        {/* --- EMPLOYER BRANDING (Tem Tabs) --- */}
         <section data-section="section-employer" className="flex justify-center">
           <div className="w-full">
             <div className="relative flex items-center justify-center w-full md:h-full">
-              <Image src="/EMPLOYER-BRANDING.png" alt="Employer Branding" width={1920} height={1080} className="hidden md:block w-full object-cover" quality={90}/>
-              <Image src="/EMPLOYER-BRANDING-MOBILE.png" alt="Employer Branding" width={1920} height={1080} className="block md:hidden w-full object-cover" quality={90}/>
+              <Image src="/EMPLOYER-BRANDING.png" alt="Employer Branding" width={1920} height={1080} className="hidden md:block w-full object-cover" quality={90} />
+              <Image src="/EMPLOYER-BRANDING-MOBILE.png" alt="Employer Branding" width={1920} height={1080} className="block md:hidden w-full object-cover" quality={90} />
               <div className="hidden md:flex absolute bottom-52 flex-col md:flex-row w-full justify-center items-center gap-4 z-40 px-4 md:px-0">
-                <Button color="blue" onClick={() => openModal("marcaEmpregadora", "blue", "employer", false)}>
+                {/* 5º argumento 'true' ativa as tabs */}
+                <Button color="blue" onClick={() => openModal("marcaEmpregadora", "blue", "employer", false, true)}>
                   MARCA EMPREGADORA
                 </Button>
               </div>
             </div>
             <div className="flex md:hidden flex-col w-full justify-center items-center gap-4 z-40 px-4 ">
-              <Button color="blue" onClick={() => openModal("marcaEmpregadora", "blue", "employer", false)}>
+              <Button color="blue" onClick={() => openModal("marcaEmpregadora", "blue", "employer", false, true)}>
                 MARCA EMPREGADORA
               </Button>
             </div>
-            {modalData && <Modal isOpen={!!modalData} onClose={closeModal} data={modalData} color={modalColor} showSolutions={showSolutions} showTabs={true} />}
           </div>
         </section>
 
         <div data-section="section-contact" className="bg-[#F0F8FB] p-8 flex items-center">
-          <section
-            className="flex items-center rounded-xl lg:flex-row gap-8 lg:gap-12 px-4 md:px-12 py-16 max-w-7xl mx-auto bg-white"
-            style={{ boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.15)" }}
-          >
+          {/* ... Sessão de Contato mantida ... */}
+          <section className="flex items-center rounded-xl lg:flex-row gap-8 lg:gap-12 px-4 md:px-12 py-16 max-w-7xl mx-auto bg-white" style={{ boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.15)" }}>
             <div className="w-full lg:w-1/2">
               <div className="mb-8">
                 <h2 className="text-3xl md:text-4xl font-bold max-w-100 text-gray-900 mb-3">Vamos transformar seu negócio juntos?</h2>
@@ -621,7 +463,7 @@ export default function Content() {
               <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 lg:gap-6">
                 {mockImages.map((image, index) => (
                   <div key={index} className="flex items-center justify-center">
-                    <Image src={image.src} alt={image.alt} width={30} height={30} className="w-full object-cover grayscale hover:grayscale-0 transition-all" quality={90}/>
+                    <Image src={image.src} alt={image.alt} width={30} height={30} className="w-full object-cover grayscale hover:grayscale-0 transition-all" quality={90} />
                   </div>
                 ))}
               </div>
@@ -633,6 +475,18 @@ export default function Content() {
         </section>
         <WhatsappButton />
       </main>
+
+      {/* --- RENDERIZAÇÃO CORRIGIDA DO MODAL --- */}
+      {modalData && (
+        <Modal
+          isOpen={!!modalData}
+          onClose={closeModal}
+          data={modalData}
+          color={modalColor}
+          showSolutions={showSolutions}
+          showTabs={showTabs} // <--- Usa o estado direto
+        />
+      )}
 
       {videoPlayer && (
         <div className="video-player-overlay" onClick={closeVideoPlayer}>

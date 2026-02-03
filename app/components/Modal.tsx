@@ -20,6 +20,7 @@ export const Modal = ({ isOpen, onClose, data, color, showSolutions = false, sho
   const [videoPlayer, setVideoPlayer] = useState<{ videoId: string; url: string } | null>(null);
   const carouselRef = useRef<HTMLDivElement | null>(null);
   const [isDesktop, setIsDesktop] = useState(false);
+  const scrollPositionRef = useRef(0);
 
   useEffect(() => {
     const mediaQuery = window.matchMedia("(min-width: 768px)");
@@ -37,7 +38,6 @@ export const Modal = ({ isOpen, onClose, data, color, showSolutions = false, sho
     setVideoPlayer(null);
   };
 
-  // Reset para a primeira aba quando trocar de modal
   if (data.tabs?.[0]?.id !== prevDataId) {
     setPrevDataId(data.tabs?.[0]?.id);
     setCarouselFilter(data.tabs?.[0]?.id || "");
@@ -51,23 +51,32 @@ export const Modal = ({ isOpen, onClose, data, color, showSolutions = false, sho
     }, 500);
   };
 
-  // --- MUDANÇA AQUI: Bloqueio de scroll inteligente ---
+  // --- MUDANÇA CRÍTICA AQUI: Lógica de Scroll Corrigida ---
   useEffect(() => {
     if (!isOpen) return;
+
+    // Salva a posição exata de onde o usuário está
+    const scrollY = window.scrollY;
+    scrollPositionRef.current = scrollY;
 
     const mediaQuery = window.matchMedia("(max-width: 768px)");
 
     const handleBodyScroll = () => {
+      // Sempre esconde a barra de rolagem
+      document.body.style.overflow = "hidden";
+
       if (mediaQuery.matches) {
-        // É mobile: Bloqueia o scroll do body, mas permite scroll interno do modal
-        document.body.style.overflow = "hidden";
+        // MOBILE: Usa a técnica de position fixed para evitar bugs do iOS
+        // Isso faz o scroll visualmente pular para 0, então compensamos com 'top'
         document.body.style.position = "fixed";
         document.body.style.width = "100%";
+        document.body.style.top = `-${scrollY}px`;
       } else {
-        // É desktop: Limpa o estilo inline
-        document.body.style.overflow = "";
+        // DESKTOP: NÃO usa position fixed. Apenas overflow hidden.
+        // Isso mantém a página exatamente onde está, sem pular para o topo.
         document.body.style.position = "";
         document.body.style.width = "";
+        document.body.style.top = "";
       }
     };
 
@@ -76,12 +85,21 @@ export const Modal = ({ isOpen, onClose, data, color, showSolutions = false, sho
 
     return () => {
       mediaQuery.removeEventListener("change", handleBodyScroll);
+
+      // Limpa os estilos
       document.body.style.overflow = "";
       document.body.style.position = "";
       document.body.style.width = "";
+      document.body.style.top = "";
+
+      // Restaura a posição APENAS se estivermos no mobile ou se o scroll tiver sido perdido
+      // (No desktop com overflow:hidden o scroll geralmente é preservado, mas garantimos aqui)
+      if (mediaQuery.matches) {
+        window.scrollTo(0, scrollPositionRef.current);
+      }
     };
   }, [isOpen]);
-  // ----------------------------------------------------
+  // -------------------------------------------------------
 
   if (!isOpen && !isClosing) return null;
 
@@ -97,12 +115,11 @@ export const Modal = ({ isOpen, onClose, data, color, showSolutions = false, sho
 
   const showCarouselButtons = isDesktop && filteredCarousel.length > 4;
 
-  // Array de imagens para a galeria (substitua pelos caminhos reais das suas imagens)
   const galleryImages = ["/amem.png", "/fair-price.png", "/cinese.png", "/amem.png", "/fair-price.png", "/cinese.png", "/amem.png", "/fair-price.png"];
 
   const scrollCarousel = (direction: "left" | "right") => {
     if (!carouselRef.current) return;
-    const amount = 300; // ajuste conforme necessário
+    const amount = 300;
     carouselRef.current.scrollBy({
       left: direction === "left" ? -amount : amount,
       behavior: "smooth",
@@ -111,13 +128,10 @@ export const Modal = ({ isOpen, onClose, data, color, showSolutions = false, sho
 
   return (
     <>
-      {/* Overlay */}
       <div className={`fixed inset-0 z-40 bg-black/30 backdrop-blur-sm ${isClosing ? "animate-fadeOut" : "animate-fadeIn"}`} onClick={handleClose} />
 
-      {/* Modal - Centralizado */}
       <div className={`fixed inset-0 z-50 flex items-center justify-center  ${isClosing ? "animate-slideDown" : "animate-slideUp"}`}>
         <div className={`relative w-full h-full md:h-auto md:max-w-7xl md:max-h-[95vh] overflow-y-auto overflow-x-hidden md:rounded-2xl shadow-2xl scrollbar-hide ${colorMap[color]}`}>
-          {/* Header com botão de fechar */}
           <div className="sticky top-0 flex items-start justify-end pt-4 px-4 bg-inherit z-10">
             <button
               onClick={handleClose}
@@ -128,10 +142,8 @@ export const Modal = ({ isOpen, onClose, data, color, showSolutions = false, sho
             </button>
           </div>
 
-          {/* Conteúdo principal */}
           <div className="p-4 md:px-16 px-4 ">
             <div className="flex flex-col lg:flex-row gap-6 lg:gap-8 pb-8">
-              {/* Lado esquerdo - Texto */}
               <div className="flex-1">
                 <p className="text-xs font-semibold text-gray-600 mb-2 uppercase tracking-wider">{data.category}</p>
                 <h2 className="text-3xl lg:text-4xl font-bold mb-4 text-gray-900">{data.title}</h2>
@@ -165,7 +177,6 @@ export const Modal = ({ isOpen, onClose, data, color, showSolutions = false, sho
                 </div>
               </div>
 
-              {/* Lado direito - Vídeo */}
               <div className="flex-1 flex items-start justify-center lg:sticky lg:top-8">
                 <div className="relative w-full cursor-pointer" style={{ aspectRatio: "9/16", maxHeight: "500px", maxWidth: "280px" }} onClick={() => handleCarouselVideoClick(data.videoSrc)}>
                   <iframe
@@ -178,14 +189,11 @@ export const Modal = ({ isOpen, onClose, data, color, showSolutions = false, sho
               </div>
             </div>
 
-            {/* Carrossel de soluções */}
             <div className="-mt-20">
               <h3 className="text-xl font-bold mb-6 mt-24 md:mt-12 text-gray-900">Soluções Indicadas</h3>
 
-              {/* Toggle Reels/Shorts */}
               {showTabs && (
                 <div className="mb-6">
-                  {/* Desktop: inline-flex como antes */}
                   <div className="hidden md:inline-flex gap-1 bg-white/30 rounded-lg p-1">
                     {data.tabs?.map((tab) => (
                       <button
@@ -200,7 +208,6 @@ export const Modal = ({ isOpen, onClose, data, color, showSolutions = false, sho
                     ))}
                   </div>
 
-                  {/* Mobile: carrossel com scroll horizontal */}
                   <div className="md:hidden overflow-x-auto scrollbar-hide">
                     <div className="inline-flex gap-1 bg-white/30 rounded-lg p-1">
                       {data.tabs?.map((tab) => (
@@ -219,9 +226,7 @@ export const Modal = ({ isOpen, onClose, data, color, showSolutions = false, sho
                 </div>
               )}
 
-              {/* Renderização condicional: Galeria (Campanhas) vs Carrossel (outros) */}
               {carouselFilter === "campanhas" ? (
-                // Galeria de fotos com Grid 4 colunas e scroll interno
                 <div className="max-h-96 overflow-y-auto pr-2 scrollbar-hide">
                   <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                     {galleryImages.map((image, index) => (
@@ -232,9 +237,7 @@ export const Modal = ({ isOpen, onClose, data, color, showSolutions = false, sho
                   </div>
                 </div>
               ) : (
-                // Carrossel original
                 <div className="relative">
-                  {/* Botões laterais (somente desktop e > 4 vídeos) */}
                   {showCarouselButtons && (
                     <>
                       <button
@@ -290,169 +293,79 @@ export const Modal = ({ isOpen, onClose, data, color, showSolutions = false, sho
             </div>
           </div>
         </div>
-
+        {/* ... (manter estilos do Modal) ... */}
         <style jsx>{`
-        @keyframes fadeIn {
-          from {
+            /* ... (seus estilos de animação originais) ... */
+            @keyframes fadeIn { 
+            from {
             opacity: 0;
-            transform: translateY(10px);
-          }
-          to {
+             transform: translateY(10px); 
+             }
+             to {
+             opacity: 1;
+             transform: translateY(0); } }
+            @keyframes fadeOut { 
+            from {
             opacity: 1;
-            transform: translateY(0);
-          }
-        }
-        @keyframes fadeOut {
-          from {
-            opacity: 1;
-          }
-          to {
+             
+            }
+            to {
             opacity: 0;
-          }
-        }
-        @keyframes slideUp {
-          from {
+            } }
+            @keyframes slideUp { 
+            from {
             opacity: 0;
-            transform: translateY(30px);
-          }
-          to {
+             transform: translateY(30px); 
+             }
+             to {
+             opacity: 1;
+             transform: translateY(0); } }
+            @keyframes slideDown { 
+            from {
             opacity: 1;
-            transform: translateY(0);
-          }
-        }
-        @keyframes slideDown {
-          from {
-            opacity: 1;
-            transform: translateY(0);
-          }
-          to {
-            opacity: 0;
-            transform: translateY(30px);
-          }
-        }
-        .animate-fadeIn {
-          animation: fadeIn 0.5s ease-in-out;
-        }
-        .animate-fadeOut {
-          animation: fadeOut 0.5s ease-in-out;
-        }
-        .animate-slideUp {
-          animation: slideUp 0.5s ease-in-out;
-        }
-        .animate-slideDown {
-          animation: slideDown 0.5s ease-in-out;
-        }
-        .scrollbar-hide::-webkit-scrollbar {
-          display: none;
-        }
-        .scrollbar-hide {
-          -ms-overflow-style: none;
-          scrollbar-width: none;
-        }
-        .carousel-smooth {
-          scroll-behavior: smooth;
-          -webkit-overflow-scrolling: touch;
-          overscroll-behavior-x: contain;
-        }
-        /* Video Player Modal */
-        .video-player-overlay {
-          position: fixed;
-          inset: 0;
-          background-color: rgba(0, 0, 0, 0.6);
-          backdrop-filter: blur(8px);
-          z-index: 50;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          padding: 20px;
-          animation: fadeInOverlay 0.3s ease-in-out;
-        }
-        @keyframes fadeInOverlay {
-          from {
-            opacity: 0;
-          }
-          to {
-            opacity: 1;
-          }
-        }
-        .video-player-container {
-          position: relative;
-          width: 80%;
-          height: 80%;
-          max-width: 1200px;
-          animation: slideInPlayer 0.3s ease-in-out;
-        }
-        @keyframes slideInPlayer {
-          from {
-            transform: scale(0.9);
-            opacity: 0;
-          }
-          to {
-            transform: scale(1);
-            opacity: 1;
-          }
-        }
-        .video-player-container iframe {
-          position: absolute !important;
-          top: 0 !important;
-          left: 0 !important;
-          width: 100% !important;
-          height: 100% !important;
-          transform: none !important;
-          pointer-events: auto !important;
-        }
-        .close-button {
-          position: absolute;
-          top: -40px;
-          right: 0;
-          background: white;
-          border: none;
-          width: 36px;
-          height: 36px;
-          border-radius: 50%;
-          cursor: pointer;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          font-size: 20px;
-          color: #333;
-          transition: all 0.2s ease;
-          z-index: 51;
-          padding: 0;
-          line-height: 1;
-          font-weight: 300;
-        }
-        .close-button:hover {
-          background: #f0f0f0;
-          transform: scale(1.1);
-        }
-        /* Permite scroll no modal mobile */
-        @media (max-width: 768px) {
-          .overflow-y-auto {
+             transform: translateY(0); 
+             }
+             to {
+             opacity: 0;
+             transform: translateY(30px);
+             }}
+            .animate-fadeIn { 
+              animation: fadeIn 0.5s ease-in-out;
+             }
+            .animate-fadeOut { 
+              animation: fadeOut 0.5s ease-in-out;
+             }
+            .animate-slideUp { 
+              animation: slideUp 0.5s ease-in-out;
+             }
+            .animate-slideDown { 
+              animation: slideDown 0.5s ease-in-out;
+             }
+            .scrollbar-hide::-webkit-scrollbar { 
+              display: none; 
+            }
+            .scrollbar-hide { 
+              -ms-overflow-style: none; 
+              scrollbar-width: none; 
+            }
+            .carousel-smooth { 
+            scroll-behavior: smooth; 
             -webkit-overflow-scrolling: touch;
-            overscroll-behavior: contain;
-          }
-          .close-button {
-            top: -35px;
-            width: 32px;
-            height: 32px;
-            font-size: 18px;
-          }
-        }
-        .youtube-iframe {
-          pointer-events: none !important;
-        }
-        .youtube-iframe::after {
-          display: none !important;
-        }
-        iframe[src*="youtube.com"] {
-          pointer-events: none !important;
-        }
-        /* Remove controles do YouTube */
-        .youtube-iframe::-webkit-media-controls {
-          display: none !important;
-        }
-            `}</style>
+            overscroll-behavior-x: contain; 
+            }
+            .youtube-iframe { 
+              pointer-events: none !important; 
+            }
+            .youtube-iframe::after { 
+              display: none !important; 
+            }
+            iframe[src*="youtube.com"] { 
+            pointer-events: none !important; 
+            }
+            .youtube-iframe::-webkit-media-controls { 
+            display: none !important; 
+            }
+         `}</style>
       </div>
       {videoPlayer && (
         <div className="video-player-overlay" onClick={closeVideoPlayer}>
