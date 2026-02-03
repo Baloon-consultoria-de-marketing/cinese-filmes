@@ -267,17 +267,20 @@ export const Modal = ({ isOpen, onClose, data, color, showSolutions = false, sho
                     {filteredCarousel.map((item, index) => (
                       <div
                         key={`${carouselFilter}-${index}`}
-                        className="shrink-0 w-60 snap-start transition-all duration-500 ease-in-out"
+                        className={`shrink-0 snap-start transition-all duration-500 ease-in-out ${item.format === "reels" ? "w-36 h-64" : "w-60"}`}
                         style={{
                           animation: "fadeIn 0.5s ease-in-out",
+                          aspectRatio: item.format === "reels" ? "9/16" : "16/9",
                         }}
                       >
                         <div
-                          className="relative mb-3 rounded-xl overflow-hidden bg-gray-200 aspect-video shadow-md cursor-pointer hover:scale-105 duration-300 transition-all object-cover"
+                          className={`relative mb-3 rounded-xl overflow-hidden bg-gray-200 shadow-md cursor-pointer hover:scale-105 duration-300 transition-all object-cover ${
+                            item.format === "reels" ? "h-full" : "aspect-video"
+                          }`}
                           onClick={() => handleCarouselVideoClick(typeof item.thumbnail === "string" ? item.thumbnail : "")}
                         >
                           <iframe
-                            src={`https://www.youtube.com/embed/${typeof item.thumbnail === "string" ? item.thumbnail : ""}?autoplay=1&loop=1&playlist=${typeof item.thumbnail === "string" ? item.thumbnail : ""}&mute=1`}
+                            src={`https://www.youtube.com/embed/${typeof item.thumbnail === "string" ? item.thumbnail : ""}?autoplay=1&loop=1&playlist=${typeof item.thumbnail === "string" ? item.thumbnail : ""}&mute=1&controls=0&showinfo=0&rel=0&iv_load_policy=3&modestbranding=1&playsinline=1`}
                             allow="autoplay; encrypted-media"
                             allowFullScreen
                             className="w-full h-full border-none"

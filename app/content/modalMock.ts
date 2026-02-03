@@ -3,6 +3,14 @@ export interface Tab {
   label: string;
 }
 
+export interface CarouselItem {
+  type: string;
+  thumbnail: string;
+  duration: string;
+  description: string;
+  format?: "reels" | "video"; // NOVO: identifica o formato
+}
+
 export interface ModalData {
   category: string;
   title: string;
@@ -12,12 +20,7 @@ export interface ModalData {
   benefits: string[];
   videoSrc: string;
   tabs?: Tab[];
-  carouselItems: {
-    type: string;
-    thumbnail: string;
-    duration: string;
-    description: string;
-  }[];
+  carouselItems: CarouselItem[];
 }
 
 export const modalDataMapInbound: Record<string, ModalData> = {
@@ -39,30 +42,21 @@ export const modalDataMapInbound: Record<string, ModalData> = {
         thumbnail: "gFffM31hhl0",
         duration: "0:26",
         description: "Fair Price - Como eu não pensei nisso antes?",
+        format: "reels",
       },
       {
         type: "reels",
         thumbnail: "ee5JWsPKjUU",
         duration: "0:43",
         description: "Fair price - Relacionamento Tóxico",
-      },
-      {
-        type: "reels",
-        thumbnail: "4_B0_Vt6WAo",
-        duration: "0:54",
-        description: "Fair Price - Saia da Matrix, receba seu precatório",
-      },
-      {
-        type: "reels",
-        thumbnail: "EuiwrOgB9ak",
-        duration: "0:29",
-        description: "Fair Price - Sexto Sentido",
+        format: "reels", // NOVO
       },
       {
         type: "videos",
         thumbnail: "a6f_BVS5cqM",
         duration: "0:33",
         description: "BUNZL EPI - TOP OF MIND",
+        format: "video", // NOVO
       },
     ],
   },
@@ -75,7 +69,7 @@ export const modalDataMapInbound: Record<string, ModalData> = {
       " Simplificação de conceitos complexos, mostrando soluções de forma didática e visual",
       " Video institucional: Reforça a identidade da marca e comunica valores e diferenciais.",
       "Storytelling opu documentário que emociona e iinforma, criando impacto social.",
-      "Detlaham produtos, serviços ou processos, promovendo tranquilidade e clareza.",
+      "Detalham produtos, serviços ou processos, promovendo tranquilidade e clareza.",
     ],
     benefits: ["Melhora o entendimento sobre os serviços ou produtos.", "Fortalece a confiança na marca como solução ideal.", "Posiciona a empresa como autoridade no segmento."],
     videoSrc: "cHRPmNrrYeg",
@@ -92,24 +86,28 @@ export const modalDataMapInbound: Record<string, ModalData> = {
         thumbnail: "l6vFK9gtDI4",
         duration: "1:24",
         description: "Skyone - Portal do Fornecedor",
+        format: "video", // NOVO
       },
       {
         type: "animacoes",
         thumbnail: "_7hfvr27r28",
         duration: "2:24",
         description: "Skyone - Risco Sacado",
+        format: "video", // NOVO
       },
       {
         type: "animacoes",
         thumbnail: "BvCkDnc2pFc",
         duration: "1:26",
         description: "Skyone  Sky Security",
+        format: "video", // NOVO
       },
       {
         type: "animacoes",
         thumbnail: "OLRU9NePZGU",
         duration: "1:00",
         description: "Skyone",
+        format: "video", // NOVO
       },
       // Institucional videos
       {
@@ -117,30 +115,35 @@ export const modalDataMapInbound: Record<string, ModalData> = {
         thumbnail: "CktpWcoAbXU",
         duration: "2:36",
         description: "Manifesto BUNZL EPI",
+        format: "video", // NOVO
       },
       {
         type: "institucional",
         thumbnail: "vDD4QhjJmNE",
         duration: "2:44",
         description: "Institucional Fair Price",
+        format: "video", // NOVO
       },
       {
         type: "institucional",
         thumbnail: "0rjKuwDnoqk",
         duration: "2:36",
         description: "Institucional Colégio Objetivo São Sebastião",
+        format: "video", // NOVO
       },
       {
         type: "institucional",
         thumbnail: "jmC6k5t6ILs",
         duration: "2:13",
         description: "Institucional Colégio Objetivo Salto",
+        format: "video", // NOVO
       },
       {
         type: "institucional",
         thumbnail: "M0kOZTYsdbs",
         duration: "2:27",
         description: "Institucional Colégio Cruzeiro do Sul",
+        format: "video", // NOVO
       },
       // Explicativos videos
       {
@@ -148,42 +151,49 @@ export const modalDataMapInbound: Record<string, ModalData> = {
         thumbnail: "QLbuquAFB6s",
         duration: "1:13",
         description: "A Revolução da Segurança - Mob Controle.",
+        format: "video", // NOVO
       },
       {
         type: "explicativos",
         thumbnail: "p4ECZ7ra1RU",
         duration: "1:19",
         description: "A Revolução da Segurança - Mob Inspeção.",
+        format: "video", // NOVO
       },
       {
         type: "explicativos",
         thumbnail: "KiEAXYEUp18",
         duration: "0:51",
         description: "A Revolução da Segurança - Mob Consulta.",
+        format: "video", // NOVO
       },
       {
         type: "explicativos",
         thumbnail: "WvlCthMu2fw",
         duration: "1:09",
         description: "A Revolução da Segurança - Bepi Service.",
+        format: "video", // NOVO
       },
       {
         type: "explicativos",
         thumbnail: "Nil9rtGdPGY",
         duration: "0:59",
         description: "Fair Price - Como vender seu precatório?",
+        format: "video", // NOVO
       },
       {
         type: "explicativos",
         thumbnail: "-a3AUU9ehSU",
         duration: "0:46",
         description: "Franco Guimarães | O que preciso para um investimento.",
+        format: "video", // NOVO
       },
       {
         type: "explicativos",
         thumbnail: "voTtBqDKTs8",
         duration: "0:23",
         description: "PRA QUEM POSSO VENDER MEU PRECATÓRIO COM SEGURANÇA?",
+        format: "video", // NOVO
       },
       // Branded Content videos
       {
@@ -191,42 +201,49 @@ export const modalDataMapInbound: Record<string, ModalData> = {
         thumbnail: "UnQgzYXY4c0",
         duration: "4:15",
         description: "Além do Guarda Roupa - HBO",
+        format: "video", // NOVO
       },
       {
         type: "branded",
         thumbnail: "jt7VVmUZHtE",
         duration: "2:30",
         description: "VIVO - Histórias de Ouro - Triatlo",
+        format: "video", // NOVO
       },
       {
         type: "branded",
         thumbnail: "OfDME7TyS70",
         duration: "1:55",
         description: "VIVO - Histórias de Ouro - Judô",
+        format: "video", // NOVO
       },
       {
         type: "branded",
         thumbnail: "fNeJzgxSrGA",
         duration: "2:28",
         description: "VIVO - Histórias de Ouro - Maratona",
+        format: "video", // NOVO
       },
       {
         type: "branded",
         thumbnail: "wAWLSDTbCrs",
         duration: "2:52",
         description: "NETSHOES | Convocados(São Paulo)",
+        format: "video", // NOVO
       },
       {
         type: "branded",
         thumbnail: "Yx-DLvomTVk",
         duration: "3:03",
         description: "NETSHOES | Convocados(Cuiabá)",
+        format: "video", // NOVO
       },
       {
         type: "branded",
         thumbnail: "08fXnmLtY-Y",
         duration: "2:41",
         description: "NETSHOES | Convocados(Iraquara)",
+        format: "video", // NOVO
       },
     ],
   },
@@ -254,30 +271,35 @@ export const modalDataMapInbound: Record<string, ModalData> = {
         thumbnail: "0FEuDL2acY4",
         duration: "2:27",
         description: "Cloud Target - Case Ypê",
+        format: "video", // NOVO
       },
       {
         type: "videocases",
         thumbnail: "z68FHjbbq_Q",
         duration: "1:21",
         description: "Vivo - Videocase Bullla",
+        format: "video", // NOVO
       },
       {
         type: "videocases",
         thumbnail: "KTZUvg4rWzY",
         duration: "3:00",
         description: "Plano - Minhas Finanças",
+        format: "video", // NOVO
       },
       {
         type: "videocases",
         thumbnail: "wAWLSDTbCrs",
         duration: "2:52",
         description: "NETSHOES | Convocados(São Paulo)",
+        format: "video", // NOVO
       },
       {
         type: "videocases",
         thumbnail: "Yx-DLvomTVk",
         duration: "3:03",
         description: "NETSHOES | Convocados(Cuiabá)",
+        format: "video", // NOVO
       },
       // Publicitarios videos
       {
@@ -285,12 +307,14 @@ export const modalDataMapInbound: Record<string, ModalData> = {
         thumbnail: "Ibpp5trYmps",
         duration: "0:16",
         description: "Fair Prica - Campanha JN",
+        format: "reels", // NOVO
       },
       {
         type: "publicitarios",
         thumbnail: "ypdenoIfGBs",
         duration: "0:13",
         description: "Fair Price - Receba seu precatório",
+        format: "reels", // NOVO
       },
       // Retargeting videos
       {
@@ -298,12 +322,14 @@ export const modalDataMapInbound: Record<string, ModalData> = {
         thumbnail: "mSX6upid_8Y",
         duration: "0:40",
         description: "Odontorani - Campanha de Retargeting",
+        format: "reels", // NOVO
       },
       {
         type: "retargeting",
         thumbnail: "hNMVkY-owH8",
         duration: "0:13",
         description: "Fair price - Retargeting",
+        format: "reels", // NOVO
       },
     ],
   },
@@ -326,18 +352,21 @@ export const modalsDataMapEndomarketing: Record<string, ModalData> = {
         thumbnail: "/videoHorizontal.mp4",
         duration: "4:31",
         description: "Quem não instrui o cliente em sua jornada de compra, acaba perdendo ele para o concorrente.",
+        format: "video", // NOVO
       },
       {
         type: "shorts",
         thumbnail: "/videoHorizontal.mp4",
         duration: "5:01",
         description: "Quem não instrui o cliente em sua jornada de compra, acaba perdendo ele para o concorrente.",
+        format: "video", // NOVO
       },
       {
         type: "reels",
         thumbnail: "/videoHorizontal.mp4",
         duration: "2:44",
         description: "Quem não instrui o cliente em sua jornada de compra, acaba perdendo ele para o concorrente.",
+        format: "video", // NOVO
       },
     ],
   },
@@ -359,24 +388,28 @@ export const modalsDataMapEndomarketing: Record<string, ModalData> = {
         thumbnail: "/videoHorizontal.mp4",
         duration: "4:31",
         description: "Quem não instrui o cliente em sua jornada de compra, acaba perdendo ele para o concorrente.",
+        format: "video", // NOVO
       },
       {
         type: "institucional",
         thumbnail: "/videoHorizontal.mp4",
         duration: "5:01",
         description: "Quem não instrui o cliente em sua jornada de compra, acaba perdendo ele para o concorrente.",
+        format: "video", // NOVO
       },
       {
         type: "explicativos",
         thumbnail: "/videoHorizontal.mp4",
         duration: "2:44",
         description: "Quem não instrui o cliente em sua jornada de compra, acaba perdendo ele para o concorrente.",
+        format: "video", // NOVO
       },
       {
         type: "branded",
         thumbnail: "/videoHorizontal.mp4",
         duration: "5:01",
         description: "Quem não instrui o cliente em sua jornada de compra, acaba perdendo ele para o concorrente.",
+        format: "video", // NOVO
       },
     ],
   },
@@ -397,24 +430,28 @@ export const modalsDataMapEndomarketing: Record<string, ModalData> = {
         thumbnail: "/videoHorizontal.mp4",
         duration: "4:31",
         description: "Quem não instrui o cliente em sua jornada de compra, acaba perdendo ele para o concorrente.",
+        format: "video", // NOVO
       },
       {
         type: "publicitarios",
         thumbnail: "/videoHorizontal.mp4",
         duration: "5:01",
         description: "Quem não instrui o cliente em sua jornada de compra, acaba perdendo ele para o concorrente.",
+        format: "video", // NOVO
       },
       {
         type: "retargeting",
         thumbnail: "/videoHorizontal.mp4",
         duration: "2:44",
         description: "Quem não instrui o cliente em sua jornada de compra, acaba perdendo ele para o concorrente.",
+        format: "video", // NOVO
       },
       {
         type: "videocases",
         thumbnail: "/videoHorizontal.mp4",
         duration: "5:01",
         description: "Quem não instrui o cliente em sua jornada de compra, acaba perdendo ele para o concorrente.",
+        format: "video", // NOVO
       },
     ],
   },
@@ -438,24 +475,28 @@ export const modalsDataMapEmployer: Record<string, ModalData> = {
         thumbnail: "/videoHorizontal.mp4",
         duration: "4:31",
         description: "Quem não instrui o cliente em sua jornada de compra, acaba perdendo ele para o concorrente.",
+        format: "video", // NOVO
       },
       {
         type: "recrutamento",
         thumbnail: "/videoHorizontal.mp4",
         duration: "5:01",
         description: "Quem não instrui o cliente em sua jornada de compra, acaba perdendo ele para o concorrente.",
+        format: "video", // NOVO
       },
       {
         type: "campanhas",
         thumbnail: "/videoHorizontal.mp4",
         duration: "2:41",
         description: "Quem não instrui o cliente em sua jornada de compra, acaba perdendo ele para o concorrente.",
+        format: "video", // NOVO
       },
       {
         type: "branded",
         thumbnail: "/videoHorizontal.mp4",
         duration: "5:01",
         description: "Quem não instrui o cliente em sua jornada de compra, acaba perdendo ele para o concorrente.",
+        format: "video", // NOVO
       },
     ],
   },

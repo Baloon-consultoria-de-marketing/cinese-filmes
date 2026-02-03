@@ -28,7 +28,7 @@ export default function Content() {
   const isScrolling = useRef(false);
   const touchStartY = useRef(0);
 
-  const sections = useMemo(() => ["section-hero", "section-brands", "section-about", "section-inbound", "section-endomarketing", "section-employer", "section-contact", "section-footer"], []);
+  const sections = useMemo(() => ["section-hero", "section-brands", "section-inbound", "section-endomarketing", "section-employer", "section-contact", "section-footer"], []);
 
   const scrollToIndex = useCallback(
     (index: number) => {
@@ -278,49 +278,64 @@ export default function Content() {
           </div>
         </section>
 
-        <section data-section="section-brands" className="relative w-full overflow-hidden bg-white">
-          <p className="flex items-center w-full justify-center font-bold text-sm md:text-xl lg:text-2xl font-[raleway] pt-10 pb-10">MARCAS ATENDIDAS</p>
-          <div className="absolute left-0 top-0 bottom-0 w-32 bg-linear-to-r from-white to-transparent z-10 pointer-events-none"></div>
-          <div className="absolute right-0 top-0 bottom-0 w-32 bg-linear-to-l from-white to-transparent z-10 pointer-events-none"></div>
-          <div className="flex animate-scroll-infinite" style={{ width: "max-content" }}>
-            <div className="flex gap-16 shrink-0">
-              {mockImages.map((image, index) => (
-                <div key={`first-${index}`} className="shrink-0 flex items-center justify-center">
-                  <Image src={image.src} alt={image.alt} width={200} height={200} className="max-w-full max-h-full object-cover grayscale hover:grayscale-0 transition-all duration-300" quality={90} />
-                </div>
-              ))}
-            </div>
-            <div className="flex gap-16 shrink-0">
-              {mockImages.map((image, index) => (
-                <div key={`second-${index}`} className="shrink-0 flex items-center justify-center">
-                  <Image src={image.src} alt={image.alt} width={200} height={200} className="max-w-full max-h-full object-cover grayscale hover:grayscale-0 transition-all duration-300" quality={90} />
-                </div>
-              ))}
+        <section data-section="section-brands" className="w-full">
+          <div className="relative w-full overflow-hidden bg-white">
+            <p className="flex items-center w-full justify-center font-bold text-sm md:text-xl lg:text-2xl font-[raleway] pt-10 pb-10">MARCAS ATENDIDAS</p>
+            <div className="absolute left-0 top-0 bottom-0 w-32 bg-linear-to-r from-white to-transparent z-10 pointer-events-none"></div>
+            <div className="absolute right-0 top-0 bottom-0 w-32 bg-linear-to-l from-white to-transparent z-10 pointer-events-none"></div>
+            <div className="flex animate-scroll-infinite" style={{ width: "max-content" }}>
+              <div className="flex gap-16 shrink-0">
+                {mockImages.map((image, index) => (
+                  <div key={`first-${index}`} className="shrink-0 flex items-center justify-center">
+                    <Image
+                      src={image.src}
+                      alt={image.alt}
+                      width={200}
+                      height={200}
+                      className="max-w-full max-h-full object-cover grayscale hover:grayscale-0 transition-all duration-300"
+                      quality={90}
+                    />
+                  </div>
+                ))}
+              </div>
+              <div className="flex gap-16 shrink-0">
+                {mockImages.map((image, index) => (
+                  <div key={`second-${index}`} className="shrink-0 flex items-center justify-center">
+                    <Image
+                      src={image.src}
+                      alt={image.alt}
+                      width={200}
+                      height={200}
+                      className="max-w-full max-h-full object-cover grayscale hover:grayscale-0 transition-all duration-300"
+                      quality={90}
+                    />
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
-        </section>
-
-        <section data-section="section-about" className="flex flex-col lg:flex-row justify-evenly py-16 px-4 lg:px-8">
-          <div className="flex  gap-8 lg:gap-40 items-center max-w-7xl mx-auto lg:mb-12">
-            <div className="flex flex-col gap-4 max-w-full lg:max-w-156.25">
-              <p className="text-2xl md:text-3xl lg:text-[39px] font-extrabold font-[raleway]">CINESE CONTENT</p>
-              <p className="text-base md:text-lg font-normal text-justify font-[raleway]">
-                Somos a parceira estratégica na construção de conexões autênticas entre marcas, colaboradores e público-alvo. E como fazemos isso? Com histórias visuais extremamente impactantes.
-              </p>
-              <p className="text-base md:text-lg font-normal text-justify font-[raleway]">
-                ​Analisamos seu momento institucional, alinhamos objetivos corporativos e criamos estratégias precisas para que cada campanha atinja seu maior potencial dentro das métricas
-                estabelecidas. Sim somos mais que contadores de histórias, somos o racional e a sua estratégia para que seu conteúdo traga resultado de fato.
-              </p>
-              <p className="text-base md:text-lg font-normal text-justify font-[raleway]">Nosso coração pulsa em contar histórias que geram resultados reais.</p>
-              <i className="text-center text-sm md:text-base">&quot;Afinal, todo mundo tem uma boa história, mas poucos sabem contar!&quot;</i>
-            </div>
-            <div
-              className="relative w-full lg:w-66.5 h-auto rounded-lg lg:h-118.5 aspect-video max-w-md"
-              style={{ WebkitBoxShadow: "0px 0px 11px 0px #000000", boxShadow: "0px 0px 11px 0px #000000" }}
-            >
-              <div className="video-container-short">
-                <iframe src="https://www.youtube.com/embed/cHRPmNrrYeg?autoplay=1&loop=1&playlist=cHRPmNrrYeg&mute=1" allow="autoplay; encrypted-media" allowFullScreen></iframe>
-                <div className="video-overlay" onClick={() => handleVideoClick("cHRPmNrrYeg", "https://youtube.com/shorts/cHRPmNrrYeg?si=tXocsSBb2omHbDe5")}></div>
+          <div className="flex flex-col lg:flex-row justify-evenly py-16 px-4 lg:px-8">
+            <div className="flex gap-8 lg:gap-40 items-center max-w-7xl mx-auto lg:mb-12">
+              <div className="flex flex-col gap-4 max-w-full lg:max-w-156.25">
+                <p className="text-2xl md:text-3xl lg:text-[39px] font-extrabold font-[raleway]">CINESE CONTENT</p>
+                <p className="text-base md:text-lg font-normal text-justify font-[raleway]">
+                  Somos a parceira estratégica na construção de conexões autênticas entre marcas, colaboradores e público-alvo. E como fazemos isso? Com histórias visuais extremamente impactantes.
+                </p>
+                <p className="text-base md:text-lg font-normal text-justify font-[raleway]">
+                  ​Analisamos seu momento institucional, alinhamos objetivos corporativos e criamos estratégias precisas para que cada campanha atinja seu maior potencial dentro das métricas
+                  estabelecidas. Sim somos mais que contadores de histórias, somos o racional e a sua estratégia para que seu conteúdo traga resultado de fato.
+                </p>
+                <p className="text-base md:text-lg font-normal text-justify font-[raleway]">Nosso coração pulsa em contar histórias que geram resultados reais.</p>
+                <i className="text-center text-sm md:text-base">&quot;Afinal, todo mundo tem uma boa história, mas poucos sabem contar!&quot;</i>
+              </div>
+              <div
+                className="relative w-full lg:w-66.5 h-auto rounded-lg lg:h-118.5 aspect-video max-w-md"
+                style={{ WebkitBoxShadow: "0px 0px 11px 0px #000000", boxShadow: "0px 0px 11px 0px #000000" }}
+              >
+                <div className="video-container-short">
+                  <iframe src="https://www.youtube.com/embed/cHRPmNrrYeg?autoplay=1&loop=1&playlist=cHRPmNrrYeg&mute=1" allow="autoplay; encrypted-media" allowFullScreen></iframe>
+                  <div className="video-overlay" onClick={() => handleVideoClick("cHRPmNrrYeg", "https://youtube.com/shorts/cHRPmNrrYeg?si=tXocsSBb2omHbDe5")}></div>
+                </div>
               </div>
             </div>
           </div>
