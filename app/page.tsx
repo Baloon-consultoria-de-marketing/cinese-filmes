@@ -18,6 +18,26 @@ export default function Home() {
 
   const sections = useMemo(() => [...mockMovies.map((m) => `section-${m.id}`), "section-footer"], []);
 
+  const loadedVideos = useMemo(() => {
+    const newSet = new Set<number>();
+    const movieId = mockMovies[activeSection]?.id;
+    
+    if (movieId) {
+      // Carrega vídeo atual
+      newSet.add(movieId);
+      
+      // Carrega próximo e anterior para smooth scrolling
+      if (activeSection > 0) {
+        newSet.add(mockMovies[activeSection - 1].id);
+      }
+      if (activeSection < mockMovies.length - 1) {
+        newSet.add(mockMovies[activeSection + 1].id);
+      }
+    }
+    
+    return newSet;
+  }, [activeSection]);
+
   const scrollToIndex = useCallback(
     (index: number) => {
       if (index < 0 || index >= sections.length) return;
@@ -333,14 +353,26 @@ export default function Home() {
         {mockMovies.map((movie) => (
           <section key={movie.id} id={`section-${movie.id}`} className="relative w-full h-screen overflow-hidden">
             <div className="video-container">
-              {/* URL ATUALIZADA: Parâmetros para limpar a interface e melhorar o loop */}
-              <iframe
-                className={movie.fullscreen ? "fullscreen-video" : ""}
-                src={`https://www.youtube.com/embed/${movie.videoUrl}?autoplay=1&loop=1&playlist=${movie.videoUrl}&mute=1&controls=0&showinfo=0&rel=0&iv_load_policy=3&modestbranding=1&playsinline=1`}
-                allow="autoplay; encrypted-media"
-                allowFullScreen
-              ></iframe>
-              <div className="video-overlay" onClick={() => handleVideoClick(movie.videoUrl, `https://www.youtube.com/watch?v=${movie.videoUrl}`)}></div>
+              {/* Renderiza iframe apenas se o vídeo foi carregado */}
+              {loadedVideos.has(movie.id) ? (
+                <iframe
+                  className={movie.fullscreen ? "fullscreen-video" : ""}
+                  src={`https://www.youtube.com/embed/${movie.videoUrl}?autoplay=1&loop=1&playlist=${movie.videoUrl}&mute=1&controls=0&showinfo=0&rel=0&iv_load_policy=3&modestbranding=1&playsinline=1`}
+                  allow="autoplay; encrypted-media"
+                  allowFullScreen
+                  title={`Vídeo: ${movie.title}`}
+                  loading="lazy"
+                ></iframe>
+              ) : (
+                <div className="w-full h-full bg-black"></div>
+              )}
+              <div 
+                className="video-overlay" 
+                onClick={() => handleVideoClick(movie.videoUrl, `https://www.youtube.com/watch?v=${movie.videoUrl}`)}
+                role="button"
+                aria-label={`Abrir vídeo: ${movie.title}`}
+                tabIndex={0}
+              ></div>
             </div>
             <div className="movie-overlay absolute inset-0 flex flex-col items-center justify-center bg-black/20">
               <div className="relative flex flex-col items-center justify-center">
