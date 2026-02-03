@@ -445,7 +445,7 @@ export default function Content() {
             <div className="flex gap-16 shrink-0">
               {mockImages.map((image, index) => (
                 <div key={`first-${index}`} className="shrink-0 flex items-center justify-center">
-                  <Image src={image.src} alt={image.alt} width={200} height={200} quality={90} className="max-w-full max-h-full object-cover grayscale hover:grayscale-0 transition-all duration-300" />
+                  <Image src={image.src} alt={image.alt} width={200} height={200} className="max-w-full max-h-full object-cover grayscale hover:grayscale-0 transition-all duration-300" quality={90}/>
                 </div>
               ))}
             </div>
@@ -453,7 +453,7 @@ export default function Content() {
             <div className="flex gap-16 shrink-0">
               {mockImages.map((image, index) => (
                 <div key={`second-${index}`} className="shrink-0 flex items-center justify-center">
-                  <Image src={image.src} alt={image.alt} width={200} height={200} quality={90} className="max-w-full max-h-full object-cover grayscale hover:grayscale-0 transition-all duration-300" />
+                  <Image src={image.src} alt={image.alt} width={200} height={200} className="max-w-full max-h-full object-cover grayscale hover:grayscale-0 transition-all duration-300" quality={90}/>
                 </div>
               ))}
             </div>
@@ -487,10 +487,10 @@ export default function Content() {
 
         <section data-section="section-inbound" className="flex justify-center">
           <div className={`w-full transition-shadow duration-300 ${modalData ? "shadow-[0px_4px_4px_0px_rgba(0,0,0,0.1)]" : ""}`}>
-            <div className="relative flex items-center justify-center w-full  md:h-full">
-              <Image src="/INBOUND-MARKETING.png" alt="Inbound Marketing" width={0} height={0} className="hidden md:block w-full object-cover" />
-              <Image src="/INBOUND-MARKETING-MOBILE.png" alt="Inbound Marketing" width={0} height={0} className="block md:hidden w-full object-cover" />
-              <div className="hidden md:flex absolute bottom-60 flex-col md:flex-row w-full justify-center items-center gap-4 z-40 px-4 md:px-0">
+            <div className="relative flex items-center justify-center w-full md:h-full">
+              <Image src="/INBOUND-MARKETING.png" alt="Inbound Marketing" width={0} height={0} className="hidden md:block w-full object-cover" quality={90}/>
+              <Image src="/INBOUND-MARKETING-MOBILE.png" alt="Inbound Marketing" width={0} height={0} className="block md:hidden w-full object-cover" quality={90}/>
+              <div className="hidden md:flex absolute bottom-50 flex-col md:flex-row w-full justify-center items-center gap-4 z-40 px-4 md:px-0">
                 <Button color="blue" onClick={() => openModal("topo", "blue", "inbound", true)}>
                   TOPO
                 </Button>
@@ -519,10 +519,10 @@ export default function Content() {
 
         <section data-section="section-endomarketing" className="flex justify-center">
           <div className={`w-full transition-shadow duration-300 ${modalData ? "shadow-[0px_4px_4px_0px_rgba(0,0,0,0.1)]" : ""}`}>
-            <div className="relative flex flex-col items-center justify-center w-full  md:h-full">
-              <Image src="/ENDOMARKETING.png" alt="Endomarketing" width={1920} height={1080} className="hidden md:block w-full object-cover" />
-              <Image src="/ENDOMARKETING-MOBILE.png" alt="Endomarketing" width={1920} height={1080} className="block md:hidden w-full object-cover" />
-              <div className="hidden md:flex absolute bottom-60 flex-col md:flex-row w-full justify-center items-center gap-4 z-40 px-4 md:px-0">
+            <div className="relative flex flex-col items-center justify-center w-full md:h-full">
+              <Image src="/ENDOMARKETING.png" alt="Endomarketing" width={1920} height={1080} className="hidden md:block w-full object-cover" quality={90}/>
+              <Image src="/ENDOMARKETING-MOBILE.png" alt="Endomarketing" width={1920} height={1080} className="block md:hidden w-full object-cover" quality={90}/>
+              <div className="hidden md:flex absolute bottom-50 flex-col md:flex-row w-full justify-center items-center gap-4 z-40 px-4 md:px-0">
                 <Button color="blue" onClick={() => openModal("treinamento", "blue", "endomarketing", false)}>
                   TREINAMENTO
                 </Button>
@@ -551,9 +551,9 @@ export default function Content() {
 
         <section data-section="section-employer" className="flex justify-center">
           <div className="w-full">
-            <div className="relative flex items-center justify-center w-full  md:h-full">
-              <Image src="/EMPLOYER-BRANDING.png" alt="Employer Branding" width={1920} height={1080} className="hidden md:block w-full object-cover" />
-              <Image src="/EMPLOYER-BRANDING-MOBILE.png" alt="Employer Branding" width={1920} height={1080} className="block md:hidden w-full object-cover" />
+            <div className="relative flex items-center justify-center w-full md:h-full">
+              <Image src="/EMPLOYER-BRANDING.png" alt="Employer Branding" width={1920} height={1080} className="hidden md:block w-full object-cover" quality={90}/>
+              <Image src="/EMPLOYER-BRANDING-MOBILE.png" alt="Employer Branding" width={1920} height={1080} className="block md:hidden w-full object-cover" quality={90}/>
               <div className="hidden md:flex absolute bottom-52 flex-col md:flex-row w-full justify-center items-center gap-4 z-40 px-4 md:px-0">
                 <Button color="blue" onClick={() => openModal("marcaEmpregadora", "blue", "employer", false)}>
                   MARCA EMPREGADORA
@@ -569,7 +569,7 @@ export default function Content() {
           </div>
         </section>
 
-        <div data-section="section-contact" className="bg-[#F0F8FB] p-8 ">
+        <div data-section="section-contact" className="bg-[#F0F8FB] p-8 flex items-center">
           <section
             className="flex items-center rounded-xl lg:flex-row gap-8 lg:gap-12 px-4 md:px-12 py-16 max-w-7xl mx-auto bg-white"
             style={{ boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.15)" }}
@@ -621,7 +621,7 @@ export default function Content() {
               <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 lg:gap-6">
                 {mockImages.map((image, index) => (
                   <div key={index} className="flex items-center justify-center">
-                    <Image src={image.src} alt={image.alt} width={30} height={30} className="w-full object-cover grayscale hover:grayscale-0 transition-all" />
+                    <Image src={image.src} alt={image.alt} width={30} height={30} className="w-full object-cover grayscale hover:grayscale-0 transition-all" quality={90}/>
                   </div>
                 ))}
               </div>

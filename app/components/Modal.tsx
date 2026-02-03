@@ -173,7 +173,6 @@ export const Modal = ({ isOpen, onClose, data, color, showSolutions = false, sho
                     allow="autoplay; encrypted-media"
                     allowFullScreen
                     className="w-full h-full object-cover rounded-xl shadow-lg border-none youtube-iframe"
-                    style={{ pointerEvents: "none" }}
                   ></iframe>
                 </div>
               </div>
@@ -279,7 +278,6 @@ export const Modal = ({ isOpen, onClose, data, color, showSolutions = false, sho
                             allow="autoplay; encrypted-media"
                             allowFullScreen
                             className="w-full h-full border-none"
-                            style={{ pointerEvents: "none" }}
                           ></iframe>
                           <div className="absolute bottom-2 right-2 bg-black/80 text-white text-xs px-2 py-1 rounded font-semibold">{item.duration}</div>
                         </div>
