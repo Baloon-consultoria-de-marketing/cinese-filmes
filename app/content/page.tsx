@@ -322,22 +322,22 @@ export default function Content() {
               </div>
             </div>
           </div>
-          <div className="flex flex-col lg:flex-row justify-evenly py-16 px-4 lg:px-8">
+          <div className="flex flex-col lg:flex-row justify-evenly px-10  lg:px-8">
             <div className="flex flex-col md:flex-row gap-6 lg:gap-40 items-center max-w-7xl mx-auto lg:mb-12">
               <div className="flex flex-col gap-2 max-w-full lg:max-w-156.25">
                 <p className="text-2xl md:text-3xl lg:text-[39px] font-extrabold font-[raleway]">CINESE CONTENT</p>
-                <p className="text-base md:text-lg font-normal text-justify font-[raleway]">
+                <p className="text-[15px] md:text-lg font-normal text-justify font-[raleway]">
                   Somos a parceira estratégica na construção de conexões autênticas entre marcas, colaboradores e público-alvo. E como fazemos isso? Com histórias visuais extremamente impactantes.
                 </p>
-                <p className="text-base md:text-lg font-normal text-justify font-[raleway]">
+                <p className="text-[15px] md:text-lg font-normal text-justify font-[raleway]">
                   ​Analisamos seu momento institucional, alinhamos objetivos corporativos e criamos estratégias precisas para que cada campanha atinja seu maior potencial dentro das métricas
                   estabelecidas. Sim somos mais que contadores de histórias, somos o racional e a sua estratégia para que seu conteúdo traga resultado de fato.
                 </p>
-                <p className="text-base md:text-lg font-normal text-justify font-[raleway]">Nosso coração pulsa em contar histórias que geram resultados reais.</p>
+                <p className="text-[15px] md:text-lg font-normal text-justify font-[raleway]">Nosso coração pulsa em contar histórias que geram resultados reais.</p>
                 <i className="text-center text-sm md:text-base">&quot;Afinal, todo mundo tem uma boa história, mas poucos sabem contar!&quot;</i>
               </div>
               <div
-                className="relative w-full lg:w-66.5 h-auto rounded-lg lg:h-118.5 aspect-video max-w-md"
+                className="relative w-33.75 lg:w-66.5 h-60 lg:h-118.5 rounded-lg aspect-video max-w-md"
                 style={{ WebkitBoxShadow: "0px 0px 11px 0px #000000", boxShadow: "0px 0px 11px 0px #000000" }}
               >
                 <div className="video-container-short">
