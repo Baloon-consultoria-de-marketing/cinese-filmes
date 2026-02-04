@@ -468,16 +468,16 @@ export const modalsDataMapEmployer: Record<string, ModalData> = {
       // Branded Content videos
       {
         type: "branded",
-        thumbnail: "",
-        duration: "4:31",
-        description: "",
+        thumbnail: "a6f_BVS5cqM",
+        duration: "0:33",
+        description: "BUNZL EPI - TPO OF MIND",
         format: "video", // NOVO
       },
       {
         type: "branded",
-        thumbnail: "",
-        duration: "5:01",
-        description: "",
+        thumbnail: "eSlxV7SRpE0",
+        duration: "11:07",
+        description: "ARAMIS - Juntos Somando Histórias",
         format: "video", // NOVO
       },
       // Recrutamento videos

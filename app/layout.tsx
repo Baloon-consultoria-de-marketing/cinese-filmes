@@ -25,7 +25,6 @@ const raleway = Raleway({
 export const metadata: Metadata = {
   title: "Cinese Filmes",
   description: "Seu projeto de filmes",
-  viewport:"width=device-width, initial-scale=1",
   icons: {
     icon: "/favicon.ico",
   },
