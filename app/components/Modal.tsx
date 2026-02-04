@@ -102,7 +102,7 @@ export const Modal = ({ isOpen, onClose, data, color, showSolutions = false, sho
   });
 
   const showCarouselButtons = isDesktop && filteredCarousel.length > 4;
-  const galleryImages = ["/amem.png", "/fair-price.png", "/cinese.png", "/amem.png", "/fair-price.png", "/cinese.png", "/amem.png", "/fair-price.png"];
+  const galleryImages = ["/campaign/01.jpg", "/campaign/02.jpg", "/campaign/03.jpg", "/campaign/04.jpg", "/campaign/05.jpg"];
 
   const scrollCarousel = (direction: "left" | "right") => {
     if (!carouselRef.current) return;
@@ -137,7 +137,7 @@ export const Modal = ({ isOpen, onClose, data, color, showSolutions = false, sho
                 <p className="text-gray-700 mb-6 leading-relaxed text-sm">{data.description}</p>
 
                 {showSolutions && (
-                  <div className="mb-6 mt-3 ml-6">
+                  <div className="mb-6 mt-3 ml-3">
                     <p className="font-semibold mb-3 -ml-3 text-gray-900 ">&bull; &nbsp;Soluções Indicadas:</p>
                     <ul className="">
                       {data.solutions?.map((solution, index) => (
@@ -151,7 +151,7 @@ export const Modal = ({ isOpen, onClose, data, color, showSolutions = false, sho
                     </ul>
                   </div>
                 )}
-                <div className="mb-6 ml-6">
+                <div className="mb-6 ml-3">
                   <p className="font-semibold mb-3 -ml-3 text-gray-900">&bull; &nbsp;Benefícios:</p>
                   <ul className="space-y-1">
                     {data.benefits.map((benefit, index) => (
@@ -177,7 +177,7 @@ export const Modal = ({ isOpen, onClose, data, color, showSolutions = false, sho
             </div>
 
             <div className="-mt-20">
-              <h3 className="text-xl font-bold mb-6 mt-24 md:mt-12 text-gray-900">Soluções Indicadas</h3>
+              <h3 className="text-xl font-bold mb-6 mt-24 md:mt-12 text-gray-900">Videos Relacionados</h3>
 
               {showTabs && (
                 <div className="mb-6">
@@ -214,10 +214,10 @@ export const Modal = ({ isOpen, onClose, data, color, showSolutions = false, sho
               )}
 
               {carouselFilter === "campanhas" ? (
-                <div className="max-h-96 overflow-y-auto pr-2 scrollbar-hide">
-                  <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div className="overflow-x-auto scrollbar-hide">
+                  <div className="flex gap-4 pb-4 w-max">
                     {galleryImages.map((image, index) => (
-                      <div key={index} className="relative aspect-square rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300">
+                      <div key={index} className="relative rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300 shrink-0" style={{ width: "350px", height: "200px" }}>
                         <Image src={image} alt={`Galeria ${index + 1}`} fill className="object-cover hover:scale-110 transition-transform duration-300" />
                       </div>
                     ))}

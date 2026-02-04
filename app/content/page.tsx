@@ -262,14 +262,14 @@ export default function Content() {
         @media (max-aspect-ratio: 16/9) { .video-container iframe { width: 177.77vh; height: 100vh; } }
         .video-container-short { position: relative; width: 100%; height: 100%; overflow: hidden; border-radius: 8px; }
         .video-container-short iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
-        .video-player-overlay { position: fixed; inset: 0; background-color: rgba(0, 0, 0, 0.6); backdrop-filter: blur(8px); z-index: 50; display: flex; align-items: center; justify-content: center; padding: 20px; animation: fadeInOverlay 0.3s ease-in-out; }
+        .video-player-overlay { position: fixed; inset: 0; background-color: rgba(0, 0, 0, 0.6); backdrop-filter: blur(8px); z-index: 9999; display: flex; align-items: center; justify-content: center; padding: 20px; animation: fadeInOverlay 0.3s ease-in-out; }
         @keyframes fadeInOverlay { from { opacity: 0; } to { opacity: 1; } }
         .video-player-container { position: relative; width: 80%; height: 80%; max-width: 1200px; animation: slideInPlayer 0.3s ease-in-out; }
         @keyframes slideInPlayer { from { transform: scale(0.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }
         .video-player-container iframe { position: absolute !important; top: 0 !important; left: 0 !important; width: 100% !important; height: 100% !important; transform: none !important; pointer-events: auto !important; }
-        .close-button { position: absolute; top: -40px; right: 0; background: white; border: none; width: 36px; height: 36px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 20px; color: #333; transition: all 0.2s ease; z-index: 51; padding: 0; line-height: 1; font-weight: 300; }
+        .close-button { position: fixed; top: 20px; right: 20px; background: white; border: none; width: 40px; height: 40px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 24px; color: #333; transition: all 0.2s ease; z-index: 9998; padding: 0; line-height: 1; font-weight: 300; }
         .close-button:hover { background: #f0f0f0; transform: scale(1.1); }
-        @media (max-width: 768px) { .video-player-container { width: 95%; height: 95%; } .close-button { top: -35px; width: 32px; height: 32px; font-size: 18px; } }
+        @media (max-width: 768px) { .close-button { top: 20px; right: 20px; width: 36px; height: 36px; font-size: 20px; z-index: 10000; } }
       `}</style>
 
       <Header isVisible={true} />
@@ -288,7 +288,7 @@ export default function Content() {
 
         <section data-section="section-brands" className="w-full">
           <div className="relative w-full overflow-hidden bg-white">
-            <p className="flex items-center w-full justify-center font-bold text-sm md:text-xl lg:text-2xl font-[raleway] pt-10 pb-10">MARCAS ATENDIDAS</p>
+            <p className="flex items-center w-full justify-center font-bold text-sm md:text-xl lg:text-2xl font-[raleway] pt-20 md:pt-10 md:pb-10">MARCAS ATENDIDAS</p>
             <div className="absolute left-0 top-0 bottom-0 w-32 bg-linear-to-r from-white to-transparent z-10 pointer-events-none"></div>
             <div className="absolute right-0 top-0 bottom-0 w-32 bg-linear-to-l from-white to-transparent z-10 pointer-events-none"></div>
             <div className="flex animate-scroll-infinite" style={{ width: "max-content" }}>
@@ -322,7 +322,7 @@ export default function Content() {
               </div>
             </div>
           </div>
-          <div className="flex flex-col lg:flex-row justify-evenly px-10  lg:px-8">
+          <div className="flex flex-col lg:flex-row justify-evenly px-10 lg:px-8 py-16">
             <div className="flex flex-col md:flex-row gap-6 lg:gap-40 items-center max-w-7xl mx-auto lg:mb-12">
               <div className="flex flex-col gap-2 max-w-full lg:max-w-156.25">
                 <p className="text-2xl md:text-3xl lg:text-[39px] font-extrabold font-[raleway]">CINESE CONTENT</p>
@@ -367,7 +367,7 @@ export default function Content() {
                 </Button>
               </div>
             </div>
-            <div className="flex md:hidden flex-col w-full justify-center items-center gap-4 z-40 px-4 py-8">
+            <div className="flex md:hidden flex-col w-full justify-center items-center gap-8 z-40 px-4 py-8">
               <Button color="blue" onClick={() => openModal("topo", "blue", "inbound", false, true)}>
                 TOPO
               </Button>
@@ -519,10 +519,10 @@ export default function Content() {
 
       {videoPlayer && (
         <div className="video-player-overlay" onClick={closeVideoPlayer}>
+          <button className="close-button" onClick={closeVideoPlayer}>
+            X
+          </button>
           <div className="video-player-container" onClick={(e) => e.stopPropagation()}>
-            <button className="close-button" onClick={closeVideoPlayer}>
-              X
-            </button>
             <iframe src={`https://www.youtube.com/embed/${videoPlayer.videoId}?autoplay=1`} allow="autoplay; encrypted-media;" allowFullScreen></iframe>
           </div>
         </div>

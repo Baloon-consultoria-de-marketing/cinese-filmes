@@ -29,7 +29,7 @@ export const modalDataMapInbound: Record<string, ModalData> = {
     title: "ATRAÇÃO",
     solutionStrong: ["Reels e Shorts:", ""],
     solutions: ["Videos curtos, criativos e dinamicos que utilizam tendências para engajamento.", "Tiktok - Instagram - YouTube"],
-    description: "Objetivo: Atrair a atenção do público-alvo, gerando interesse inicial.",
+    description: "Objetivo: Atrair a atenção do público, gerar reconhecimento e despertar interesse inicial.",
     benefits: ["Aumento do alcance da marca.", "Criação de uma primeira impressão forte e memorável.", "Atração de leads qualificados para avançar o funil."],
     videoSrc: "cHRPmNrrYeg",
     tabs: [
@@ -342,30 +342,48 @@ export const modalsDataMapEndomarketing: Record<string, ModalData> = {
     description: "Centralização de treinamentos e formações em um canal de fácil acesso, reduzindo custos e promovendo padronização de informações.",
     benefits: ["Formação de gerações de colaboradores.", "Comunicação clara das diretrizes corporativas.", "Redução de custos com treinamentos presenciais."],
     videoSrc: "cHRPmNrrYeg",
-    tabs: [
-      { id: "reels", label: "Reels" },
-      { id: "shorts", label: "Shorts" },
-    ],
+    tabs: [{ id: "reels", label: "Reels" }],
     carouselItems: [
       {
         type: "reels",
-        thumbnail: "/videoHorizontal.mp4",
-        duration: "4:31",
-        description: "Quem não instrui o cliente em sua jornada de compra, acaba perdendo ele para o concorrente.",
-        format: "video", // NOVO
-      },
-      {
-        type: "shorts",
-        thumbnail: "/videoHorizontal.mp4",
-        duration: "5:01",
-        description: "Quem não instrui o cliente em sua jornada de compra, acaba perdendo ele para o concorrente.",
+        thumbnail: "OkBbNz_bNIg",
+        duration: "2:12",
+        description: "Fair Price - Cálculo de Crédito Alimentar.",
         format: "video", // NOVO
       },
       {
         type: "reels",
-        thumbnail: "/videoHorizontal.mp4",
-        duration: "2:44",
-        description: "Quem não instrui o cliente em sua jornada de compra, acaba perdendo ele para o concorrente.",
+        thumbnail: "LmK2cSdfqCs",
+        duration: "2:14",
+        description: "ARAMIS | Armários",
+        format: "video", // NOVO
+      },
+      {
+        type: "reels",
+        thumbnail: "OPR-JfxOzg0",
+        duration: "2:10",
+        description: "ARAMIS - Experiência de compra",
+        format: "video", // NOVO
+      },
+      {
+        type: "reels",
+        thumbnail: "7KvZlzZlGx4",
+        duration: "2:14",
+        description: "Aramis | Conceito de Visual Merchandising",
+        format: "video", // NOVO
+      },
+      {
+        type: "reels",
+        thumbnail: "2mtHblO6B0Y",
+        duration: "3:55",
+        description: "Aramis | Montagem de Armário",
+        format: "video", // NOVO
+      },
+      {
+        type: "reels",
+        thumbnail: "rdyiTTv6Wps",
+        duration: "2:36",
+        description: "Controle Financeiro | Inttrodução",
         format: "video", // NOVO
       },
     ],
@@ -376,39 +394,34 @@ export const modalsDataMapEndomarketing: Record<string, ModalData> = {
     description: "Conteúdos emocionantes que destacam os valores da empresa e reconhecem o impacto dos colaboradores.",
     benefits: ["Reforço do orgulho de fazer parte da organização.", "Alinhamento da equipe à missão da empresa.", "Criação de um ambiente de trabalho mais positivo e colaborativo."],
     videoSrc: "cHRPmNrrYeg",
-    tabs: [
-      { id: "animacoes", label: "Animações Explicativas" },
-      { id: "institucional", label: "Vídeo Institucional" },
-      { id: "explicativos", label: "Vídeos Explicativos" },
-      { id: "branded", label: "Branded Content" },
-    ],
+    tabs: [{ id: "animacoes", label: "Animações Explicativas" }],
     carouselItems: [
       {
         type: "animacoes",
-        thumbnail: "/videoHorizontal.mp4",
-        duration: "4:31",
-        description: "Quem não instrui o cliente em sua jornada de compra, acaba perdendo ele para o concorrente.",
+        thumbnail: "eSlxV7SRpE0",
+        duration: "11:07",
+        description: "ARAMIS - Juntos Somando Histórias",
         format: "video", // NOVO
       },
       {
-        type: "institucional",
-        thumbnail: "/videoHorizontal.mp4",
+        type: "animacoes",
+        thumbnail: "oVUmlVC2fow",
         duration: "5:01",
-        description: "Quem não instrui o cliente em sua jornada de compra, acaba perdendo ele para o concorrente.",
+        description: "Aramis - Vulnerabilidade",
         format: "video", // NOVO
       },
       {
-        type: "explicativos",
-        thumbnail: "/videoHorizontal.mp4",
-        duration: "2:44",
-        description: "Quem não instrui o cliente em sua jornada de compra, acaba perdendo ele para o concorrente.",
+        type: "animacoes",
+        thumbnail: "eSeFNmZRTkM",
+        duration: "7:41",
+        description: "Aramis | Gestão da Mudança",
         format: "video", // NOVO
       },
       {
-        type: "branded",
-        thumbnail: "/videoHorizontal.mp4",
-        duration: "5:01",
-        description: "Quem não instrui o cliente em sua jornada de compra, acaba perdendo ele para o concorrente.",
+        type: "animacoes",
+        thumbnail: "13P7Fq6tTCA",
+        duration: "4:37",
+        description: "Aramis | Cultura",
         format: "video", // NOVO
       },
     ],
@@ -419,38 +432,20 @@ export const modalsDataMapEndomarketing: Record<string, ModalData> = {
     description: "Conteúdos informativos que alinham posicionamentos, metas e culturas organizacional para um grande número de colaboradores.",
     benefits: ["Reduz o tempo para fechamento de negócios.", "Prova de confiabilidade com cases reais.", "Geração de clientes satisfeitos e fidelizados."],
     videoSrc: "cHRPmNrrYeg",
-    tabs: [
-      { id: "videocases", label: "Videocases" },
-      { id: "publicitarios", label: "Vídeos Publicitários" },
-      { id: "retargeting", label: "Campanhas de Retargeting" },
-    ],
+    tabs: [{ id: "videocases", label: "Videocases" }],
     carouselItems: [
       {
         type: "videocases",
-        thumbnail: "/videoHorizontal.mp4",
-        duration: "4:31",
-        description: "Quem não instrui o cliente em sua jornada de compra, acaba perdendo ele para o concorrente.",
-        format: "video", // NOVO
-      },
-      {
-        type: "publicitarios",
-        thumbnail: "/videoHorizontal.mp4",
-        duration: "5:01",
-        description: "Quem não instrui o cliente em sua jornada de compra, acaba perdendo ele para o concorrente.",
-        format: "video", // NOVO
-      },
-      {
-        type: "retargeting",
-        thumbnail: "/videoHorizontal.mp4",
-        duration: "2:44",
-        description: "Quem não instrui o cliente em sua jornada de compra, acaba perdendo ele para o concorrente.",
+        thumbnail: "GCzZrRnQIUA",
+        duration: "3:47",
+        description: "Renault | Novo posicionamento de vendas",
         format: "video", // NOVO
       },
       {
         type: "videocases",
-        thumbnail: "/videoHorizontal.mp4",
-        duration: "5:01",
-        description: "Quem não instrui o cliente em sua jornada de compra, acaba perdendo ele para o concorrente.",
+        thumbnail: "rwgk3Wt7Grs",
+        duration: "1:55",
+        description: "FCamara - Do Open Banking ao Open Finance",
         format: "video", // NOVO
       },
     ],
@@ -470,32 +465,34 @@ export const modalsDataMapEmployer: Record<string, ModalData> = {
       { id: "campanhas", label: "Campanhas" },
     ],
     carouselItems: [
+      // Branded Content videos
       {
         type: "branded",
-        thumbnail: "/videoHorizontal.mp4",
+        thumbnail: "",
         duration: "4:31",
-        description: "Quem não instrui o cliente em sua jornada de compra, acaba perdendo ele para o concorrente.",
+        description: "",
+        format: "video", // NOVO
+      },
+      {
+        type: "branded",
+        thumbnail: "",
+        duration: "5:01",
+        description: "",
+        format: "video", // NOVO
+      },
+      // Recrutamento videos
+      {
+        type: "recrutamento",
+        thumbnail: "li8pIKDL4CA",
+        duration: "1:12",
+        description: "FCamara - Novos Colaboradores",
         format: "video", // NOVO
       },
       {
         type: "recrutamento",
-        thumbnail: "/videoHorizontal.mp4",
-        duration: "5:01",
-        description: "Quem não instrui o cliente em sua jornada de compra, acaba perdendo ele para o concorrente.",
-        format: "video", // NOVO
-      },
-      {
-        type: "campanhas",
-        thumbnail: "/videoHorizontal.mp4",
-        duration: "2:41",
-        description: "Quem não instrui o cliente em sua jornada de compra, acaba perdendo ele para o concorrente.",
-        format: "video", // NOVO
-      },
-      {
-        type: "branded",
-        thumbnail: "/videoHorizontal.mp4",
-        duration: "5:01",
-        description: "Quem não instrui o cliente em sua jornada de compra, acaba perdendo ele para o concorrente.",
+        thumbnail: "woZnzXyL9Jg",
+        duration: "1:53",
+        description: "FCamara - Cultura Laranja",
         format: "video", // NOVO
       },
     ],
