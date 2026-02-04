@@ -350,13 +350,12 @@ export default function Content() {
         </section>
 
         {/* --- INBOUND MARKETING (Tem Tabs) --- */}
-        <section data-section="section-inbound" className="flex justify-center">
+        <section data-section="section-inbound" className="flex justify-center md:h-auto md:min-h-0 min-h-screen items-center">
           <div className={`w-full transition-shadow duration-300 ${modalData ? "shadow-[0px_4px_4px_0px_rgba(0,0,0,0.1)]" : ""}`}>
             <div className="relative flex items-center justify-center w-full md:h-full">
               <Image src="/INBOUND-MARKETING.png" alt="Inbound Marketing" width={0} height={0} className="hidden md:block w-full object-cover" quality={90} />
               <Image src="/INBOUND-MARKETING-MOBILE.png" alt="Inbound Marketing" width={0} height={0} className="block md:hidden w-full object-cover" quality={90} />
               <div className="hidden md:flex absolute bottom-50 flex-col md:flex-row w-full justify-center items-center gap-4 z-40 px-4 md:px-0">
-                {/* 5º argumento 'true' ativa as tabs */}
                 <Button color="blue" onClick={() => openModal("topo", "blue", "inbound", true, true)}>
                   TOPO
                 </Button>
@@ -368,7 +367,7 @@ export default function Content() {
                 </Button>
               </div>
             </div>
-            <div className="flex md:hidden flex-col w-full justify-center items-center gap-4 z-40 px-4 ">
+            <div className="flex md:hidden flex-col w-full justify-center items-center gap-4 z-40 px-4 py-8">
               <Button color="blue" onClick={() => openModal("topo", "blue", "inbound", false, true)}>
                 TOPO
               </Button>
@@ -383,13 +382,12 @@ export default function Content() {
         </section>
 
         {/* --- ENDOMARKETING (NÃO Tem Tabs) --- */}
-        <section data-section="section-endomarketing" className="flex justify-center">
+        <section data-section="section-endomarketing" className="flex justify-center md:h-auto md:min-h-0 min-h-screen items-center">
           <div className={`w-full transition-shadow duration-300 ${modalData ? "shadow-[0px_4px_4px_0px_rgba(0,0,0,0.1)]" : ""}`}>
             <div className="relative flex flex-col items-center justify-center w-full md:h-full">
               <Image src="/ENDOMARKETING.png" alt="Endomarketing" width={1920} height={1080} className="hidden md:block w-full object-cover" quality={90} />
               <Image src="/ENDOMARKETING-MOBILE.png" alt="Endomarketing" width={1920} height={1080} className="block md:hidden w-full object-cover" quality={90} />
               <div className="hidden md:flex absolute bottom-50 flex-col md:flex-row w-full justify-center items-center gap-4 z-40 px-4 md:px-0">
-                {/* 5º argumento 'false' desativa as tabs */}
                 <Button color="blue" onClick={() => openModal("treinamento", "blue", "endomarketing", false, false)}>
                   TREINAMENTO
                 </Button>
@@ -401,7 +399,7 @@ export default function Content() {
                 </Button>
               </div>
             </div>
-            <div className="flex md:hidden flex-col w-full justify-center items-center gap-4 z-40 px-4 ">
+            <div className="flex md:hidden flex-col w-full justify-center items-center gap-4 z-40 px-4 py-8">
               <Button color="blue" onClick={() => openModal("treinamento", "blue", "endomarketing", false, false)}>
                 TREINAMENTO
               </Button>
@@ -416,19 +414,18 @@ export default function Content() {
         </section>
 
         {/* --- EMPLOYER BRANDING (Tem Tabs) --- */}
-        <section data-section="section-employer" className="flex justify-center">
+        <section data-section="section-employer" className="flex justify-center md:h-auto md:min-h-0 min-h-screen items-center">
           <div className="w-full">
             <div className="relative flex items-center justify-center w-full md:h-full">
               <Image src="/EMPLOYER-BRANDING.png" alt="Employer Branding" width={1920} height={1080} className="hidden md:block w-full object-cover" quality={90} />
               <Image src="/EMPLOYER-BRANDING-MOBILE.png" alt="Employer Branding" width={1920} height={1080} className="block md:hidden w-full object-cover" quality={90} />
               <div className="hidden md:flex absolute bottom-52 flex-col md:flex-row w-full justify-center items-center gap-4 z-40 px-4 md:px-0">
-                {/* 5º argumento 'true' ativa as tabs */}
                 <Button color="blue" onClick={() => openModal("marcaEmpregadora", "blue", "employer", false, true)}>
                   MARCA EMPREGADORA
                 </Button>
               </div>
             </div>
-            <div className="flex md:hidden flex-col w-full justify-center items-center gap-4 z-40 px-4 ">
+            <div className="flex md:hidden flex-col w-full justify-center items-center gap-4 z-40 px-4 py-8">
               <Button color="blue" onClick={() => openModal("marcaEmpregadora", "blue", "employer", false, true)}>
                 MARCA EMPREGADORA
               </Button>
