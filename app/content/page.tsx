@@ -67,7 +67,15 @@ export default function Content() {
   };
 
   const handleVideoClick = (videoId: string, url: string) => {
-    setVideoPlayer({ videoId, url });
+    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+
+    if (isMobile) {
+      // Abre direto no YouTube (app ou navegador)
+      window.open(url, "_blank");
+    } else {
+      // Desktop: abre o modal customizado
+      setVideoPlayer({ videoId, url });
+    }
   };
 
   const closeVideoPlayer = () => {
@@ -429,7 +437,10 @@ export default function Content() {
         </section>
 
         <div data-section="section-contact" className="bg-[#F0F8FB] p-8 flex items-center">
-          <section className="flex items-center rounded-xl lg:flex-row gap-8 lg:gap-12 px-4 md:px-12 py-16 max-w-7xl mx-auto bg-white" style={{ boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.15)" }}>
+          <section
+            className="flex flex-col md:flex-row items-center rounded-xl lg:flex-row gap-8 lg:gap-12 px-4 md:px-12 py-16 max-w-7xl mx-auto bg-white"
+            style={{ boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.15)" }}
+          >
             <div className="w-full lg:w-1/2">
               <div className="mb-8">
                 <h2 className="text-3xl md:text-4xl font-bold max-w-100 text-gray-900 mb-3">Vamos transformar seu negócio juntos?</h2>

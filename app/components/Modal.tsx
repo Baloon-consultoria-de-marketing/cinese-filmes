@@ -51,29 +51,22 @@ export const Modal = ({ isOpen, onClose, data, color, showSolutions = false, sho
     }, 500);
   };
 
-  // --- MUDANÇA CRÍTICA AQUI: Lógica de Scroll Corrigida ---
+  // Lógica de Scroll
   useEffect(() => {
     if (!isOpen) return;
 
-    // Salva a posição exata de onde o usuário está
     const scrollY = window.scrollY;
     scrollPositionRef.current = scrollY;
-
     const mediaQuery = window.matchMedia("(max-width: 768px)");
 
     const handleBodyScroll = () => {
-      // Sempre esconde a barra de rolagem
       document.body.style.overflow = "hidden";
 
       if (mediaQuery.matches) {
-        // MOBILE: Usa a técnica de position fixed para evitar bugs do iOS
-        // Isso faz o scroll visualmente pular para 0, então compensamos com 'top'
         document.body.style.position = "fixed";
         document.body.style.width = "100%";
         document.body.style.top = `-${scrollY}px`;
       } else {
-        // DESKTOP: NÃO usa position fixed. Apenas overflow hidden.
-        // Isso mantém a página exatamente onde está, sem pular para o topo.
         document.body.style.position = "";
         document.body.style.width = "";
         document.body.style.top = "";
@@ -85,21 +78,16 @@ export const Modal = ({ isOpen, onClose, data, color, showSolutions = false, sho
 
     return () => {
       mediaQuery.removeEventListener("change", handleBodyScroll);
-
-      // Limpa os estilos
       document.body.style.overflow = "";
       document.body.style.position = "";
       document.body.style.width = "";
       document.body.style.top = "";
 
-      // Restaura a posição APENAS se estivermos no mobile ou se o scroll tiver sido perdido
-      // (No desktop com overflow:hidden o scroll geralmente é preservado, mas garantimos aqui)
       if (mediaQuery.matches) {
         window.scrollTo(0, scrollPositionRef.current);
       }
     };
   }, [isOpen]);
-  // -------------------------------------------------------
 
   if (!isOpen && !isClosing) return null;
 
@@ -114,7 +102,6 @@ export const Modal = ({ isOpen, onClose, data, color, showSolutions = false, sho
   });
 
   const showCarouselButtons = isDesktop && filteredCarousel.length > 4;
-
   const galleryImages = ["/amem.png", "/fair-price.png", "/cinese.png", "/amem.png", "/fair-price.png", "/cinese.png", "/amem.png", "/fair-price.png"];
 
   const scrollCarousel = (direction: "left" | "right") => {
@@ -130,7 +117,7 @@ export const Modal = ({ isOpen, onClose, data, color, showSolutions = false, sho
     <>
       <div className={`fixed inset-0 z-40 bg-black/30 backdrop-blur-sm ${isClosing ? "animate-fadeOut" : "animate-fadeIn"}`} onClick={handleClose} />
 
-      <div className={`fixed inset-0 z-50 flex items-center justify-center  ${isClosing ? "animate-slideDown" : "animate-slideUp"}`}>
+      <div className={`fixed inset-0 z-50 flex items-center justify-center ${isClosing ? "animate-slideDown" : "animate-slideUp"}`}>
         <div className={`relative w-full h-full md:h-auto md:max-w-7xl md:max-h-[95vh] overflow-y-auto overflow-x-hidden md:rounded-2xl shadow-2xl scrollbar-hide ${colorMap[color]}`}>
           <div className="sticky top-0 flex items-start justify-end pt-4 px-4 bg-inherit z-10">
             <button
@@ -296,90 +283,45 @@ export const Modal = ({ isOpen, onClose, data, color, showSolutions = false, sho
             </div>
           </div>
         </div>
-        {/* ... (manter estilos do Modal) ... */}
-        <style jsx>{`
-            /* ... (seus estilos de animação originais) ... */
-            @keyframes fadeIn { 
-            from {
-            opacity: 0;
-             transform: translateY(10px); 
-             }
-             to {
-             opacity: 1;
-             transform: translateY(0); } }
-            @keyframes fadeOut { 
-            from {
-            opacity: 1;
-             
-            }
-            to {
-            opacity: 0;
-            } }
-            @keyframes slideUp { 
-            from {
-            opacity: 0;
-             transform: translateY(30px); 
-             }
-             to {
-             opacity: 1;
-             transform: translateY(0); } }
-            @keyframes slideDown { 
-            from {
-            opacity: 1;
-             transform: translateY(0); 
-             }
-             to {
-             opacity: 0;
-             transform: translateY(30px);
-             }}
-            .animate-fadeIn { 
-              animation: fadeIn 0.5s ease-in-out;
-             }
-            .animate-fadeOut { 
-              animation: fadeOut 0.5s ease-in-out;
-             }
-            .animate-slideUp { 
-              animation: slideUp 0.5s ease-in-out;
-             }
-            .animate-slideDown { 
-              animation: slideDown 0.5s ease-in-out;
-             }
-            .scrollbar-hide::-webkit-scrollbar { 
-              display: none; 
-            }
-            .scrollbar-hide { 
-              -ms-overflow-style: none; 
-              scrollbar-width: none; 
-            }
-            .carousel-smooth { 
-            scroll-behavior: smooth; 
-            -webkit-overflow-scrolling: touch;
-            overscroll-behavior-x: contain; 
-            }
-            .youtube-iframe { 
-              pointer-events: none !important; 
-            }
-            .youtube-iframe::after { 
-              display: none !important; 
-            }
-            iframe[src*="youtube.com"] { 
-            pointer-events: none !important; 
-            }
-            .youtube-iframe::-webkit-media-controls { 
-            display: none !important; 
-            }
-         `}</style>
       </div>
+
+      {/* --- CORREÇÃO AQUI: Estilos Inline (Tailwind) e Z-Index 60 --- */}
       {videoPlayer && (
-        <div className="video-player-overlay" onClick={closeVideoPlayer}>
-          <div className="video-player-container" onClick={(e) => e.stopPropagation()}>
-            <button className="close-button" onClick={closeVideoPlayer}>
+        <div className="fixed inset-0 z-60 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 animate-fadeIn" onClick={closeVideoPlayer}>
+          <div className="relative w-full max-w-5xl aspect-video bg-black shadow-2xl rounded-lg overflow-hidden" onClick={(e) => e.stopPropagation()}>
+            <button
+              className="absolute top-2 right-2 md:-top-10 md:-right-10 bg-white/90 hover:bg-white text-gray-800 rounded-full w-8 h-8 md:w-10 md:h-10 flex items-center justify-center font-bold text-lg md:text-xl shadow-lg z-50 transition-transform hover:scale-110"
+              onClick={closeVideoPlayer}
+            >
               ×
             </button>
-            <iframe src={`https://www.youtube.com/embed/${videoPlayer.videoId}?autoplay=1&loop=1&playlist=${videoPlayer.videoId}`} allow="autoplay; encrypted-media" allowFullScreen></iframe>
+            <iframe
+              src={`https://www.youtube.com/embed/${videoPlayer.videoId}?autoplay=1&loop=1&playlist=${videoPlayer.videoId}`}
+              allow="autoplay; encrypted-media"
+              allowFullScreen
+              className="w-full h-full border-none"
+            ></iframe>
           </div>
         </div>
       )}
+
+      <style jsx>{`
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeOut { from { opacity: 1; } to { opacity: 0; } }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes slideDown { from { opacity: 1; transform: translateY(0); } to { opacity: 0; transform: translateY(30px); } }
+        .animate-fadeIn { animation: fadeIn 0.5s ease-in-out; }
+        .animate-fadeOut { animation: fadeOut 0.5s ease-in-out; }
+        .animate-slideUp { animation: slideUp 0.5s ease-in-out; }
+        .animate-slideDown { animation: slideDown 0.5s ease-in-out; }
+        .scrollbar-hide::-webkit-scrollbar { display: none; }
+        .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+        .carousel-smooth { scroll-behavior: smooth; -webkit-overflow-scrolling: touch; overscroll-behavior-x: contain; }
+        .youtube-iframe { pointer-events: none !important; }
+        .youtube-iframe::after { display: none !important; }
+        iframe[src*="youtube.com"] { pointer-events: none !important; }
+        .youtube-iframe::-webkit-media-controls { display: none !important; }
+      `}</style>
     </>
   );
 };
