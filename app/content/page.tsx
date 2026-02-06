@@ -25,7 +25,6 @@ export default function Content() {
   const [phoneValue, setPhoneValue] = useState("");
   const [emailError, setEmailError] = useState("");
   const [videoPlayer, setVideoPlayer] = useState<{ videoId: string; url: string } | null>(null);
-  const [isFullscreenVideo, setIsFullscreenVideo] = useState(false);
   const isScrolling = useRef(false);
   const touchStartY = useRef(0);
 
@@ -71,9 +70,8 @@ export default function Content() {
     const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 
     if (isMobile) {
-      // Mobile: abre em fullscreen customizado
-      setVideoPlayer({ videoId, url });
-      setIsFullscreenVideo(true);
+      // Abre direto no YouTube (app ou navegador)
+      window.open(url, "_blank");
     } else {
       // Desktop: abre o modal customizado
       setVideoPlayer({ videoId, url });
@@ -82,7 +80,6 @@ export default function Content() {
 
   const closeVideoPlayer = () => {
     setVideoPlayer(null);
-    setIsFullscreenVideo(false);
   };
 
   const formatPhone = (value: string) => {
@@ -328,7 +325,7 @@ export default function Content() {
               </div>
             </div>
           </div>
-          <div className="flex flex-col lg:flex-row justify-evenly px-10 lg:px-8 py-8">
+          <div className="flex flex-col lg:flex-row justify-evenly px-10 lg:px-8 py-0">
             <div className="flex flex-col md:flex-row gap-6 lg:gap-40 items-center max-w-7xl mx-auto lg:mb-12">
               <div className="flex flex-col gap-2 max-w-full lg:max-w-156.25">
                 <p className="text-2xl md:text-3xl lg:text-[39px] font-extrabold font-[raleway]">CINESE CONTENT</p>
@@ -524,7 +521,10 @@ export default function Content() {
       )}
 
       {videoPlayer && (
-        <div className="video-player-overlay hidden md:flex" onClick={closeVideoPlayer}>
+        <div className="video-player-overlay" onClick={closeVideoPlayer}>
+          <button className="close-button close-button-mobile" onClick={closeVideoPlayer}>
+            X
+          </button>
           <button className="close-button close-button-desktop" onClick={closeVideoPlayer}>
             X
           </button>
@@ -533,26 +533,6 @@ export default function Content() {
           </div>
         </div>
       )}
-
-      {isFullscreenVideo && videoPlayer ? (
-        <div className="fixed inset-0 bg-black z-9999 w-full h-screen flex items-center justify-center md:hidden">
-          <button className="close-button close-button-mobile" onClick={closeVideoPlayer}>
-            X
-          </button>
-          <div className="w-full h-full">
-            <iframe src={`https://www.youtube.com/embed/${videoPlayer.videoId}?autoplay=1`} allow="autoplay; encrypted-media;" allowFullScreen className="w-full h-full"></iframe>
-          </div>
-        </div>
-      ) : videoPlayer ? (
-        <div className="video-player-overlay hidden md:flex" onClick={closeVideoPlayer}>
-          <button className="close-button close-button-desktop" onClick={closeVideoPlayer}>
-            X
-          </button>
-          <div className="video-player-container" onClick={(e) => e.stopPropagation()}>
-            <iframe src={`https://www.youtube.com/embed/${videoPlayer.videoId}?autoplay=1`} allow="autoplay; encrypted-media;" allowFullScreen></iframe>
-          </div>
-        </div>
-      ) : null}
     </>
   );
 }
