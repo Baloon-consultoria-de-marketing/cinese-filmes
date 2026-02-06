@@ -289,11 +289,11 @@ export const Modal = ({ isOpen, onClose, data, color, showSolutions = false, sho
       {videoPlayer && (
         <div className="fixed inset-0 z-60 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 animate-fadeIn" onClick={closeVideoPlayer}>
           <div className="relative w-full max-w-5xl aspect-video bg-black shadow-2xl rounded-lg overflow-hidden" onClick={(e) => e.stopPropagation()}>
-            <button
-              className="absolute top-2 right-2 md:-top-10 md:-right-10 bg-white/90 hover:bg-white text-gray-800 rounded-full w-8 h-8 md:w-10 md:h-10 flex items-center justify-center font-bold text-lg md:text-xl shadow-lg z-50 transition-transform hover:scale-110"
-              onClick={closeVideoPlayer}
-            >
-              ×
+            <button className="close-button-mobile" onClick={closeVideoPlayer}>
+              X
+            </button>
+            <button className="close-button-desktop" onClick={closeVideoPlayer}>
+              X
             </button>
             <iframe
               src={`https://www.youtube.com/embed/${videoPlayer.videoId}?autoplay=1&loop=1&playlist=${videoPlayer.videoId}`}
@@ -321,6 +321,12 @@ export const Modal = ({ isOpen, onClose, data, color, showSolutions = false, sho
         .youtube-iframe::after { display: none !important; }
         iframe[src*="youtube.com"] { pointer-events: none !important; }
         .youtube-iframe::-webkit-media-controls { display: none !important; }
+        .close-button-mobile { position: absolute; top: 20px; right: 20px; background: white; border: none; width: 36px; height: 36px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 20px; color: #333; transition: all 0.2s ease; z-index: 10000; padding: 0; line-height: 1; font-weight: 300; }
+        .close-button-mobile:hover { background: #f0f0f0; transform: scale(1.1); }
+        .close-button-desktop { display: none; position: absolute; top: 20px; right: 20px; background: white; border: none; width: 40px; height: 40px; border-radius: 50%; cursor: pointer; align-items: center; justify-content: center; font-size: 24px; color: #333; transition: all 0.2s ease; z-index: 10000; padding: 0; line-height: 1; font-weight: 400; }
+        .close-button-desktop:hover { background: #f0f0f0; transform: scale(1.1); }
+        @media (max-width: 768px) { .close-button-mobile { display: flex; } .close-button-desktop { display: none; } }
+        @media (min-width: 769px) { .close-button-mobile { display: none; } .close-button-desktop { display: flex; } }
       `}</style>
     </>
   );

@@ -269,7 +269,10 @@ export default function Content() {
         .video-player-container iframe { position: absolute !important; top: 0 !important; left: 0 !important; width: 100% !important; height: 100% !important; transform: none !important; pointer-events: auto !important; }
         .close-button { position: fixed; top: 20px; right: 20px; background: white; border: none; width: 40px; height: 40px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 24px; color: #333; transition: all 0.2s ease; z-index: 9998; padding: 0; line-height: 1; font-weight: 300; }
         .close-button:hover { background: #f0f0f0; transform: scale(1.1); }
-        @media (max-width: 768px) { .close-button { top: 20px; right: 20px; width: 36px; height: 36px; font-size: 20px; z-index: 10000; } }
+        .close-button-mobile { display: none; z-index: 10000; }
+        .close-button-desktop { display: none; z-index: 10000; }
+        @media (max-width: 768px) { .close-button-mobile { display: flex; top: 20px; right: 20px; width: 36px; height: 36px; font-size: 20px; } .close-button-desktop { display: none; } }
+        @media (min-width: 769px) { .close-button-mobile { display: none; } .close-button-desktop { display: flex; top: 20px; right: 20px; width: 40px; height: 40px; font-size: 24px; } }
       `}</style>
 
       <Header isVisible={true} />
@@ -519,7 +522,10 @@ export default function Content() {
 
       {videoPlayer && (
         <div className="video-player-overlay" onClick={closeVideoPlayer}>
-          <button className="close-button" onClick={closeVideoPlayer}>
+          <button className="close-button close-button-mobile" onClick={closeVideoPlayer}>
+            X
+          </button>
+          <button className="close-button close-button-desktop" onClick={closeVideoPlayer}>
             X
           </button>
           <div className="video-player-container" onClick={(e) => e.stopPropagation()}>
