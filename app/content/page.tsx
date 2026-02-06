@@ -67,15 +67,7 @@ export default function Content() {
   };
 
   const handleVideoClick = (videoId: string, url: string) => {
-    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-
-    if (isMobile) {
-      // Abre direto no YouTube (app ou navegador)
-      window.open(url, "_blank");
-    } else {
-      // Desktop: abre o modal customizado
-      setVideoPlayer({ videoId, url });
-    }
+    setVideoPlayer({ videoId, url });
   };
 
   const closeVideoPlayer = () => {
@@ -339,6 +331,7 @@ export default function Content() {
                 <p className="text-[15px] md:text-lg font-normal text-justify font-[raleway]">Nosso coração pulsa em contar histórias que geram resultados reais.</p>
                 <i className="text-center text-sm md:text-base">&quot;Afinal, todo mundo tem uma boa história, mas poucos sabem contar!&quot;</i>
               </div>
+              {/* video desktop */}
               <div
                 className="relative w-33.75 lg:w-66.5 h-60 lg:h-118.5 rounded-lg aspect-video max-w-md hidden md:block"
                 style={{ WebkitBoxShadow: "0px 0px 11px 0px #000000", boxShadow: "0px 0px 11px 0px #000000" }}
@@ -351,6 +344,7 @@ export default function Content() {
             </div>
           </div>
         </section>
+        {/* video mobile */}
         <section data-section="section-video" className="flex md:hidden w-full h-screen justify-center items-center ">
           <div className="w-4/5 h-[66%] relative" style={{ aspectRatio: "9/16" }}>
             <iframe
