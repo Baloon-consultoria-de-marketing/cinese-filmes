@@ -28,7 +28,7 @@ export default function Content() {
   const isScrolling = useRef(false);
   const touchStartY = useRef(0);
 
-  const sections = useMemo(() => ["section-hero", "section-brands", "section-inbound", "section-endomarketing", "section-employer", "section-contact", "section-footer"], []);
+  const sections = useMemo(() => ["section-hero", "section-brands", "section-video", "section-inbound", "section-endomarketing", "section-employer", "section-contact", "section-footer"], []);
 
   const scrollToIndex = useCallback(
     (index: number) => {
@@ -325,7 +325,7 @@ export default function Content() {
               </div>
             </div>
           </div>
-          <div className="flex flex-col lg:flex-row justify-evenly px-10 lg:px-8 py-0">
+          <div className="flex flex-col lg:flex-row justify-evenly px-10 lg:px-8 py-24">
             <div className="flex flex-col md:flex-row gap-6 lg:gap-40 items-center max-w-7xl mx-auto lg:mb-12">
               <div className="flex flex-col gap-2 max-w-full lg:max-w-156.25">
                 <p className="text-2xl md:text-3xl lg:text-[39px] font-extrabold font-[raleway]">CINESE CONTENT</p>
@@ -340,15 +340,26 @@ export default function Content() {
                 <i className="text-center text-sm md:text-base">&quot;Afinal, todo mundo tem uma boa história, mas poucos sabem contar!&quot;</i>
               </div>
               <div
-                className="relative w-33.75 lg:w-66.5 h-60 lg:h-118.5 rounded-lg aspect-video max-w-md"
+                className="relative w-33.75 lg:w-66.5 h-60 lg:h-118.5 rounded-lg aspect-video max-w-md hidden md:block"
                 style={{ WebkitBoxShadow: "0px 0px 11px 0px #000000", boxShadow: "0px 0px 11px 0px #000000" }}
               >
-                <div className="video-container-short">
+                <div className="video-container-short ">
                   <iframe src="https://www.youtube.com/embed/cHRPmNrrYeg?autoplay=1&loop=1&playlist=cHRPmNrrYeg&mute=1" allow="autoplay; encrypted-media" allowFullScreen></iframe>
                   <div className="video-overlay" onClick={() => handleVideoClick("cHRPmNrrYeg", "https://youtube.com/shorts/cHRPmNrrYeg?si=tXocsSBb2omHbDe5")}></div>
                 </div>
               </div>
             </div>
+          </div>
+        </section>
+        <section data-section="section-video" className="flex md:hidden w-full h-screen justify-center items-center ">
+          <div className="w-4/5 h-[66%] relative" style={{ aspectRatio: "9/16" }}>
+            <iframe
+              src="https://www.youtube.com/embed/cHRPmNrrYeg?autoplay=1&loop=1&playlist=cHRPmNrrYeg&mute=1"
+              allow="autoplay; encrypted-media"
+              allowFullScreen
+              className="w-full h-full rounded-lg"
+            ></iframe>
+            <div className="video-overlay" onClick={() => handleVideoClick("cHRPmNrrYeg", "https://youtube.com/shorts/cHRPmNrrYeg?si=tXocsSBb2omHbDe5")}></div>
           </div>
         </section>
 
