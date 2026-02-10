@@ -21,11 +21,11 @@ export default function Home() {
   const loadedVideos = useMemo(() => {
     const newSet = new Set<number>();
     const movieId = mockMovies[activeSection]?.id;
-    
+
     if (movieId) {
       // Carrega vídeo atual
       newSet.add(movieId);
-      
+
       // Carrega próximo e anterior para smooth scrolling
       if (activeSection > 0) {
         newSet.add(mockMovies[activeSection - 1].id);
@@ -34,7 +34,7 @@ export default function Home() {
         newSet.add(mockMovies[activeSection + 1].id);
       }
     }
-    
+
     return newSet;
   }, [activeSection]);
 
@@ -366,8 +366,8 @@ export default function Home() {
               ) : (
                 <div className="w-full h-full bg-black"></div>
               )}
-              <div 
-                className="video-overlay" 
+              <div
+                className="video-overlay"
                 onClick={() => handleVideoClick(movie.videoUrl, `https://www.youtube.com/watch?v=${movie.videoUrl}`)}
                 role="button"
                 aria-label={`Abrir vídeo: ${movie.title}`}
@@ -377,8 +377,8 @@ export default function Home() {
             <div className="movie-overlay absolute inset-0 flex flex-col items-center justify-center bg-black/20">
               <div className="relative flex flex-col items-center justify-center">
                 {movie.hasIcon && <TiSocialYoutube style={{ width: "var(--icon-size)", height: "var(--icon-size)" }} color="rgba(255,255,255,0.6)" className="absolute z-0" />}
-                <h2 className="text-white text-2xl md:text-4xl font-bold text-center px-4 drop-shadow-lg font-[raleway] tracking-widest relative z-10 movie-title">{movie.title}</h2>
-                <p className="text-white text-xl md:text-3xl font-light text-center px-4 drop-shadow-lg font-[raleway] tracking-wide relative z-10 ">{movie.brand}</p>
+                <h2 className="text-white text-2xl md:text-4xl font-light text-center px-4 drop-shadow-lg font-[raleway] tracking-widest relative z-10 movie-title">{movie.title}</h2>
+                <p className="text-white text-xl md:text-3xl font-bold text-center px-4 drop-shadow-lg font-[raleway] tracking-wide relative z-10 ">{movie.brand}</p>
               </div>
             </div>
           </section>

@@ -271,12 +271,12 @@ export default function Content() {
       <main className="w-full">
         <section data-section="section-hero" className="relative w-full h-screen overflow-hidden">
           <div className="video-container">
-            <iframe src="https://www.youtube.com/embed/RUpfQRCt3Go?autoplay=1&loop=1&playlist=RUpfQRCt3Go&mute=1" allow="autoplay; encrypted-media" allowFullScreen></iframe>
-            <div className="video-overlay" onClick={() => handleVideoClick("RUpfQRCt3Go", "https://www.youtube.com/watch?v=RUpfQRCt3Go")}></div>
+            <iframe src="https://www.youtube.com/embed/hbxq2_7chtg?autoplay=1&loop=1&playlist=hbxq2_7chtg&mute=1" allow="autoplay; encrypted-media" allowFullScreen></iframe>
+            <div className="video-overlay" onClick={() => handleVideoClick("hbxq2_7chtg", "https://youtu.be/hbxq2_7chtg?si=FUwGOMZ5flLoQmCu")}></div>
           </div>
           <div className="absolute inset-0 flex items-center justify-center bg-black/20">
             <i className="text-white text-xl md:text-3xl font-normal text-center px-4 drop-shadow-lg font-[raleway] tracking-widest md:max-w-250">
-              Se você não contar a sua historia <br /> Alguém fará isso por você!
+              &ldquo;Se você não contar a sua historia <br /> Alguém fará isso por você!&rdquo;
             </i>
           </div>
         </section>
@@ -360,7 +360,7 @@ export default function Content() {
         {/* --- INBOUND MARKETING (Tem Tabs) --- */}
         <section data-section="section-inbound" className="flex justify-center md:h-auto md:min-h-0 min-h-screen items-center">
           <div className={`w-full transition-shadow duration-300 ${modalData ? "shadow-[0px_4px_4px_0px_rgba(0,0,0,0.1)]" : ""}`}>
-            <div className="relative flex items-center justify-center w-full md:h-full">
+            <div className="relative flex items-center justify-center w-full md:h-full max-w-480 mx-auto">
               <Image src="/INBOUND-MARKETING.png" alt="Inbound Marketing" width={0} height={0} className="hidden md:block w-full object-cover" quality={90} />
               <Image src="/INBOUND-MARKETING-MOBILE.png" alt="Inbound Marketing" width={0} height={0} className="block md:hidden w-full object-cover" quality={90} />
               <div className="hidden md:flex absolute bottom-50 flex-col md:flex-row w-full justify-center items-center gap-4 z-40 px-4 md:px-0">
@@ -392,7 +392,7 @@ export default function Content() {
         {/* --- ENDOMARKETING (NÃO Tem Tabs) --- */}
         <section data-section="section-endomarketing" className="flex justify-center md:h-auto md:min-h-0 min-h-screen items-center">
           <div className={`w-full transition-shadow duration-300 ${modalData ? "shadow-[0px_4px_4px_0px_rgba(0,0,0,0.1)]" : ""}`}>
-            <div className="relative flex flex-col items-center justify-center w-full md:h-full">
+            <div className="relative flex flex-col items-center justify-center w-full md:h-full max-w-480 mx-auto">
               <Image src="/ENDOMARKETING.png" alt="Endomarketing" width={1920} height={1080} className="hidden md:block w-full object-cover" quality={90} />
               <Image src="/ENDOMARKETING-MOBILE.png" alt="Endomarketing" width={1920} height={1080} className="block md:hidden w-full object-cover" quality={90} />
               <div className="hidden md:flex absolute bottom-50 flex-col md:flex-row w-full justify-center items-center gap-4 z-40 px-4 md:px-0">
@@ -424,7 +424,7 @@ export default function Content() {
         {/* --- EMPLOYER BRANDING (Tem Tabs) --- */}
         <section data-section="section-employer" className="flex justify-center md:h-auto md:min-h-0 min-h-screen items-center">
           <div className="w-full">
-            <div className="relative flex items-center justify-center w-full md:h-full">
+            <div className="relative flex items-center justify-center w-full md:h-full max-w-480 mx-auto">
               <Image src="/EMPLOYER-BRANDING.png" alt="Employer Branding" width={1920} height={1080} className="hidden md:block w-full object-cover" quality={90} />
               <Image src="/EMPLOYER-BRANDING-MOBILE.png" alt="Employer Branding" width={1920} height={1080} className="block md:hidden w-full object-cover" quality={90} />
               <div className="hidden md:flex absolute bottom-52 flex-col md:flex-row w-full justify-center items-center gap-4 z-40 px-4 md:px-0">
