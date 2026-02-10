@@ -527,14 +527,11 @@ export default function Content() {
 
       {videoPlayer && (
         <div className="video-player-overlay" onClick={closeVideoPlayer}>
-          <button className="close-button close-button-mobile" onClick={closeVideoPlayer}>
-            X
-          </button>
-          <button className="close-button close-button-desktop" onClick={closeVideoPlayer}>
-            X
-          </button>
           <div className="video-player-container" onClick={(e) => e.stopPropagation()}>
-            <iframe src={`https://www.youtube.com/embed/${videoPlayer.videoId}?autoplay=1`} allow="autoplay; encrypted-media;" allowFullScreen></iframe>
+            <button className="close-button" onClick={closeVideoPlayer}>
+              X
+            </button>
+            <iframe src={`https://www.youtube.com/embed/${videoPlayer.videoId}?autoplay=1`} allow="autoplay; encrypted-media" allowFullScreen></iframe>
           </div>
         </div>
       )}
