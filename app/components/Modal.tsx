@@ -181,13 +181,19 @@ export const Modal = ({ isOpen, onClose, data, color, showSolutions = false, sho
                 </div>
               </div>
 
+              {/* --- ALTERAÇÃO 1: Vídeo de Destaque (Vertical) --- */}
               <div className="flex-1 flex items-start justify-center lg:sticky lg:top-8">
-                <div className="relative w-full cursor-pointer" style={{ aspectRatio: "9/16", maxHeight: "500px", maxWidth: "280px" }} onClick={() => handleCarouselVideoClick(data.videoSrc)}>
+                <div
+                  className="relative w-full cursor-pointer overflow-hidden rounded-xl shadow-lg"
+                  style={{ aspectRatio: "9/16", maxHeight: "500px", maxWidth: "280px" }}
+                  onClick={() => handleCarouselVideoClick(data.videoSrc)}
+                >
+                  {/* Iframe ampliado e deslocado para cortar o topo e rodapé */}
                   <iframe
-                    src={`https://www.youtube.com/embed/${data.videoSrc}?autoplay=1&loop=1&playlist=${data.videoSrc}&mute=1&controls=0&modestbranding=1`}
+                    src={`https://www.youtube.com/embed/${data.videoSrc}?autoplay=1&loop=1&playlist=${data.videoSrc}&mute=1&controls=0&modestbranding=1&disablekb=1&fs=0`}
                     allow="autoplay; encrypted-media"
                     allowFullScreen
-                    className="w-full h-full object-cover rounded-xl shadow-lg border-none youtube-iframe"
+                    className="absolute -top-16 left-0 w-full h-[calc(100%+128px)] border-none youtube-iframe pointer-events-none object-cover"
                   ></iframe>
                 </div>
               </div>
@@ -304,17 +310,19 @@ export const Modal = ({ isOpen, onClose, data, color, showSolutions = false, sho
                           aspectRatio: item.format === "reels" ? "9/16" : "16/9",
                         }}
                       >
+                        {/* --- ALTERAÇÃO 2: Itens do Carrossel --- */}
                         <div
                           className={`relative mb-3 rounded-xl overflow-hidden bg-gray-200 shadow-md cursor-pointer hover:scale-105 duration-300 transition-all object-cover ${
                             item.format === "reels" ? "h-full" : "aspect-video"
                           }`}
                           onClick={() => handleCarouselVideoClick(typeof item.thumbnail === "string" ? item.thumbnail : "")}
                         >
+                          {/* Iframe com corte aplicado (absoluto, topo negativo, altura > 100%) */}
                           <iframe
-                            src={`https://www.youtube.com/embed/${typeof item.thumbnail === "string" ? item.thumbnail : ""}?autoplay=1&loop=1&playlist=${typeof item.thumbnail === "string" ? item.thumbnail : ""}&mute=1&controls=0&showinfo=0&rel=0&iv_load_policy=3&modestbranding=1&playsinline=1`}
+                            src={`https://www.youtube.com/embed/${typeof item.thumbnail === "string" ? item.thumbnail : ""}?autoplay=1&loop=1&playlist=${typeof item.thumbnail === "string" ? item.thumbnail : ""}&mute=1&controls=0&showinfo=0&rel=0&iv_load_policy=3&modestbranding=1&playsinline=1&disablekb=1`}
                             allow="autoplay; encrypted-media"
                             allowFullScreen
-                            className="w-full h-full border-none youtube-iframe"
+                            className="absolute -top-14 left-0 w-full h-[calc(100%+112px)] border-none youtube-iframe pointer-events-none"
                           ></iframe>
                           <div className="absolute bottom-2 right-2 bg-black/80 text-white text-xs px-2 py-1 rounded font-semibold">{item.duration}</div>
                         </div>
