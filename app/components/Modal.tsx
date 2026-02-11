@@ -18,6 +18,8 @@ export const Modal = ({ isOpen, onClose, data, color, showSolutions = false, sho
   const [prevDataId, setPrevDataId] = useState<string | undefined>(undefined);
   const [isClosing, setIsClosing] = useState(false);
   const [videoPlayer, setVideoPlayer] = useState<{ videoId: string; url: string } | null>(null);
+  const [imageViewer, setImageViewer] = useState<string | null>(null);
+  const [isImageClosing, setIsImageClosing] = useState(false);
   const carouselRef = useRef<HTMLDivElement | null>(null);
   const [isDesktop, setIsDesktop] = useState(false);
   const scrollPositionRef = useRef(0);
@@ -36,6 +38,19 @@ export const Modal = ({ isOpen, onClose, data, color, showSolutions = false, sho
 
   const closeVideoPlayer = () => {
     setVideoPlayer(null);
+  };
+
+  const handleImageClick = (imageSrc: string) => {
+    setImageViewer(imageSrc);
+    setIsImageClosing(false);
+  };
+
+  const closeImageViewer = () => {
+    setIsImageClosing(true);
+    setTimeout(() => {
+      setImageViewer(null);
+      setIsImageClosing(false);
+    }, 300);
   };
 
   if (data.tabs?.[0]?.id !== prevDataId) {
@@ -103,6 +118,8 @@ export const Modal = ({ isOpen, onClose, data, color, showSolutions = false, sho
 
   const showCarouselButtons = isDesktop && filteredCarousel.length > 4;
   const galleryImages = ["/campaign/01.jpg", "/campaign/02.jpg", "/campaign/03.jpg", "/campaign/04.jpg", "/campaign/05.jpg"];
+
+  const showGalleryButtons = isDesktop && galleryImages.length > 3;
 
   const scrollCarousel = (direction: "left" | "right") => {
     if (!carouselRef.current) return;
@@ -214,13 +231,40 @@ export const Modal = ({ isOpen, onClose, data, color, showSolutions = false, sho
               )}
 
               {carouselFilter === "campanhas" ? (
-                <div className="overflow-x-auto scrollbar-hide">
-                  <div className="flex gap-4 pb-4 w-max">
-                    {galleryImages.map((image, index) => (
-                      <div key={index} className="relative rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300 shrink-0" style={{ width: "350px", height: "200px" }}>
-                        <Image src={image} alt={`Galeria ${index + 1}`} fill className="object-cover hover:scale-110 transition-transform duration-300" />
-                      </div>
-                    ))}
+                <div className="relative">
+                  {showGalleryButtons && (
+                    <>
+                      <button
+                        type="button"
+                        aria-label="Anterior"
+                        onClick={() => scrollCarousel("left")}
+                        className="hidden md:flex items-center justify-center cursor-pointer hover:scale-110 duration-300 absolute left-0 top-25 -translate-x-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/90 shadow-lg text-gray-800 hover:bg-white transition z-20"
+                      >
+                        ‹
+                      </button>
+                      <button
+                        type="button"
+                        aria-label="Próximo"
+                        onClick={() => scrollCarousel("right")}
+                        className="hidden md:flex items-center justify-center cursor-pointer hover:scale-110 duration-300 absolute right-0 top-25 translate-x-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/90 shadow-lg text-gray-800 hover:bg-white transition z-20"
+                      >
+                        ›
+                      </button>
+                    </>
+                  )}
+                  <div className="overflow-x-auto scrollbar-hide">
+                    <div className="flex gap-4 pb-4 w-max">
+                      {galleryImages.map((image, index) => (
+                        <div
+                          key={index}
+                          className="relative rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300 shrink-0 cursor-pointer"
+                          style={{ width: "350px", height: "200px" }}
+                          onClick={() => handleImageClick(image)}
+                        >
+                          <Image src={image} alt={`Galeria ${index + 1}`} fill className="object-cover hover:scale-110 transition-transform duration-300" />
+                        </div>
+                      ))}
+                    </div>
                   </div>
                 </div>
               ) : (
@@ -305,6 +349,28 @@ export const Modal = ({ isOpen, onClose, data, color, showSolutions = false, sho
         </div>
       )}
 
+      {/* --- IMAGE VIEWER --- */}
+      {imageViewer && (
+        <div
+          className={`fixed inset-0 z-60 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 transition-opacity duration-300 ${isImageClosing ? "opacity-0" : "opacity-100 animate-fadeIn"}`}
+          onClick={closeImageViewer}
+        >
+          <div
+            className={`relative transition-all duration-300 ${isImageClosing ? "scale-95 opacity-0" : "scale-100 opacity-100"}`}
+            style={{ width: "80vw", height: "80vh" }}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button
+              className="absolute -top-8 right-8 bg-white hover:bg-gray-200 border-none w-8 h-8 rounded-full cursor-pointer flex items-center justify-center text-2xl text-gray-900 transition-all duration-200 hover:scale-110 z-10 shadow-lg"
+              onClick={closeImageViewer}
+            >
+              X
+            </button>
+            <Image src={imageViewer} alt="Visualização em tamanho grande" fill className="object-contain" />
+          </div>
+        </div>
+      )}
+
       <style jsx>{`
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
         @keyframes fadeOut { from { opacity: 1; } to { opacity: 0; } }
@@ -327,6 +393,8 @@ export const Modal = ({ isOpen, onClose, data, color, showSolutions = false, sho
         .close-button-desktop:hover { background: #f0f0f0; transform: scale(1.1); }
         @media (max-width: 768px) { .close-button-mobile { display: flex; } .close-button-desktop { display: none; } }
         @media (min-width: 769px) { .close-button-mobile { display: none; } .close-button-desktop { display: flex; } }
+        @keyframes imageFadeIn { from { opacity: 0; } to { opacity: 1; } }
+        .image-viewer-enter { animation: imageFadeIn 0.3s ease-in-out; }
       `}</style>
     </>
   );
