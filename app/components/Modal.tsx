@@ -17,7 +17,10 @@ export const Modal = ({ isOpen, onClose, data, color, showSolutions = false, sho
   const [carouselFilter, setCarouselFilter] = useState<string>(data.tabs?.[0]?.id || "");
   const [prevDataId, setPrevDataId] = useState<string | undefined>(undefined);
   const [isClosing, setIsClosing] = useState(false);
-  const [videoPlayer, setVideoPlayer] = useState<{ videoId: string; url: string } | null>(null);
+
+  // 1. ALTERADO: O estado agora guarda o formato (video ou reels)
+  const [videoPlayer, setVideoPlayer] = useState<{ videoId: string; format: "reels" | "video" } | null>(null);
+
   const [imageViewer, setImageViewer] = useState<string | null>(null);
   const [isImageClosing, setIsImageClosing] = useState(false);
   const carouselRef = useRef<HTMLDivElement | null>(null);
@@ -32,8 +35,9 @@ export const Modal = ({ isOpen, onClose, data, color, showSolutions = false, sho
     return () => mediaQuery.removeEventListener("change", handleChange);
   }, []);
 
-  const handleCarouselVideoClick = (videoId: string) => {
-    setVideoPlayer({ videoId, url: "" });
+  // 2. ALTERADO: Recebe o formato. Se não informado, assume "video" (padrão 16:9)
+  const handleCarouselVideoClick = (videoId: string, format: "reels" | "video" = "video") => {
+    setVideoPlayer({ videoId, format });
   };
 
   const closeVideoPlayer = () => {
@@ -186,7 +190,8 @@ export const Modal = ({ isOpen, onClose, data, color, showSolutions = false, sho
                 <div
                   className="relative w-full cursor-pointer overflow-hidden rounded-xl shadow-lg"
                   style={{ aspectRatio: "9/16", maxHeight: "500px", maxWidth: "280px" }}
-                  onClick={() => handleCarouselVideoClick(data.videoSrc)}
+                  // 3. ALTERADO: Passamos explicitamente "video" para o destaque principal
+                  onClick={() => handleCarouselVideoClick(data.videoSrc, "video")}
                 >
                   {/* Iframe ampliado e deslocado para cortar o topo e rodapé */}
                   <iframe
@@ -315,7 +320,8 @@ export const Modal = ({ isOpen, onClose, data, color, showSolutions = false, sho
                           className={`relative mb-3 rounded-xl overflow-hidden bg-gray-200 shadow-md cursor-pointer hover:scale-105 duration-300 transition-all object-cover ${
                             item.format === "reels" ? "h-full" : "aspect-video"
                           }`}
-                          onClick={() => handleCarouselVideoClick(typeof item.thumbnail === "string" ? item.thumbnail : "")}
+                          // 4. ALTERADO: Passamos o item.format para a função
+                          onClick={() => handleCarouselVideoClick(typeof item.thumbnail === "string" ? item.thumbnail : "", item.format)}
                         >
                           {/* Iframe com corte aplicado (absoluto, topo negativo, altura > 100%) */}
                           <iframe
@@ -340,7 +346,15 @@ export const Modal = ({ isOpen, onClose, data, color, showSolutions = false, sho
       {/* --- CORREÇÃO AQUI: Estilos Inline (Tailwind) e Z-Index 60 --- */}
       {videoPlayer && (
         <div className="fixed inset-0 z-60 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 animate-fadeIn" onClick={closeVideoPlayer}>
-          <div className="relative w-full max-w-5xl aspect-video bg-black shadow-2xl rounded-lg overflow-hidden" onClick={(e) => e.stopPropagation()}>
+          {/* 5. ALTERADO: Renderização condicional de classes baseada no videoPlayer.format */}
+          <div
+            className={`relative bg-black shadow-2xl rounded-lg overflow-hidden transition-all duration-300 ${
+              videoPlayer.format === "reels"
+                ? "w-full max-w-100 aspect-9/16" // Formato Vertical
+                : "w-full max-w-5xl aspect-video" // Formato Padrão
+            }`}
+            onClick={(e) => e.stopPropagation()}
+          >
             <button className="close-button-mobile" onClick={closeVideoPlayer}>
               X
             </button>
