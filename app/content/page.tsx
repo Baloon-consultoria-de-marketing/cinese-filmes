@@ -28,7 +28,10 @@ export default function Content() {
   const isScrolling = useRef(false);
   const touchStartY = useRef(0);
 
-  const sections = useMemo(() => ["section-hero", "section-brands", "section-video", "section-inbound", "section-endomarketing", "section-employer", "section-contact", "section-footer"], []);
+  const sections = useMemo(
+    () => ["section-hero", "section-brands", "section-video", "section-inbound", "section-endomarketing", "section-employer", "section-contact", "section-brands-mobile", "section-footer"],
+    [],
+  );
 
   const scrollToIndex = useCallback(
     (index: number) => {
@@ -249,7 +252,7 @@ export default function Content() {
          @keyframes scroll-infinite { 0% { transform: translateX(0); } 100% { transform: translateX(calc(-100% / 2)); } }
         .animate-scroll-infinite { animation: scroll-infinite 40s linear infinite; }
         .video-container { position: absolute; top: 0; left: 0; width: 100%; height: 100%; overflow: hidden; }
-        .video-container iframe { position: absolute; top: 50%; left: 50%; width: 100vw; height: 56.25vw; transform: translate(-50%, -50%); border: none; }
+        .video-container iframe { position: absolute; top: 50%; left: 50%; width: 115vw; height: 56.25vw; transform: translate(-50%, -50%); border: none; }
         .video-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; cursor: pointer; z-index: 10; }
         @media (max-aspect-ratio: 16/9) { .video-container iframe { width: 177.77vh; height: 100vh; } }
         .video-container-short { position: relative; width: 100%; height: 100%; overflow: hidden; border-radius: 8px; }
@@ -488,7 +491,7 @@ export default function Content() {
                 </button>
               </form>
             </div>
-            <div className="w-full lg:w-1/2">
+            <div className="w-full lg:w-1/2 hidden md:flex flex-col">
               <h2 className="text-3xl md:text-2xl font-bold text-gray-900 mb-8 text-center lg:text-center">Marcas atendidas</h2>
               <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 lg:gap-6">
                 {mockImages.map((image, index) => (
@@ -505,8 +508,24 @@ export default function Content() {
                 ))}
               </div>
             </div>
+            {/* --- MARCAS ATENDIDAS MOBILE COM SCROLL --- */}
+            <div data-section="section-brands-mobile" className="flex md:hidden w-full flex-col items-center justify-center pt-36">
+              <div className="w-full px-4">
+                <h2 className="text-2xl font-bold text-gray-900 mb-6 text-center">Marcas atendidas</h2>
+                <div className="max-h-96 overflow-y-auto overflow-x-hidden">
+                  <div className="grid grid-cols-4 gap-3 place-items-center">
+                    {mockImages.map((image, index) => (
+                      <div key={index} className="flex items-center justify-center">
+                        <Image src={image.src} alt={image.alt} width={80} height={80} className="w-20 h-20 object-cover grayscale hover:grayscale-0 transition-all" quality={90} />
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
           </section>
         </div>
+
         <section data-section="section-footer" className="relative w-full h-auto overflow-visible">
           <Footer />
         </section>
