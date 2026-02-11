@@ -323,13 +323,15 @@ export const Modal = ({ isOpen, onClose, data, color, showSolutions = false, sho
                           // 4. ALTERADO: Passamos o item.format para a função
                           onClick={() => handleCarouselVideoClick(typeof item.thumbnail === "string" ? item.thumbnail : "", item.format)}
                         >
-                          {/* Iframe com corte aplicado (absoluto, topo negativo, altura > 100%) */}
+                          {/* --- CORREÇÃO AQUI (Zoom Scale) --- */}
                           <iframe
                             src={`https://www.youtube.com/embed/${typeof item.thumbnail === "string" ? item.thumbnail : ""}?autoplay=1&loop=1&playlist=${typeof item.thumbnail === "string" ? item.thumbnail : ""}&mute=1&controls=0&showinfo=0&rel=0&iv_load_policy=3&modestbranding=1&playsinline=1&disablekb=1`}
                             allow="autoplay; encrypted-media"
                             allowFullScreen
-                            className="absolute -top-14 left-0 w-full h-[calc(100%+112px)] border-none youtube-iframe pointer-events-none"
+                            className="w-full h-full scale-[1.35] origin-center border-none youtube-iframe pointer-events-none"
                           ></iframe>
+                          {/* ---------------------------------- */}
+
                           <div className="absolute bottom-2 right-2 bg-black/80 text-white text-xs px-2 py-1 rounded font-semibold">{item.duration}</div>
                         </div>
                         <p className="text-md text-gray-600 leading-relaxed">{item.description}</p>
@@ -343,15 +345,11 @@ export const Modal = ({ isOpen, onClose, data, color, showSolutions = false, sho
         </div>
       </div>
 
-      {/* --- CORREÇÃO AQUI: Estilos Inline (Tailwind) e Z-Index 60 --- */}
       {videoPlayer && (
         <div className="fixed inset-0 z-60 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 animate-fadeIn" onClick={closeVideoPlayer}>
-          {/* 5. ALTERADO: Renderização condicional de classes baseada no videoPlayer.format */}
           <div
             className={`relative bg-black shadow-2xl rounded-lg overflow-hidden transition-all duration-300 ${
-              videoPlayer.format === "reels"
-                ? "w-full max-w-100 aspect-9/16" // Formato Vertical
-                : "w-full max-w-5xl aspect-video" // Formato Padrão
+              videoPlayer.format === "reels" ? "w-full max-w-[400px] aspect-[9/16]" : "w-full max-w-5xl aspect-video"
             }`}
             onClick={(e) => e.stopPropagation()}
           >
@@ -371,7 +369,6 @@ export const Modal = ({ isOpen, onClose, data, color, showSolutions = false, sho
         </div>
       )}
 
-      {/* --- IMAGE VIEWER --- */}
       {imageViewer && (
         <div
           className={`fixed inset-0 z-60 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 transition-opacity duration-300 ${isImageClosing ? "opacity-0" : "opacity-100 animate-fadeIn"}`}
