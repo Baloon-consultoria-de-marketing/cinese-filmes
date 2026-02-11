@@ -314,7 +314,7 @@ export const Modal = ({ isOpen, onClose, data, color, showSolutions = false, sho
                             src={`https://www.youtube.com/embed/${typeof item.thumbnail === "string" ? item.thumbnail : ""}?autoplay=1&loop=1&playlist=${typeof item.thumbnail === "string" ? item.thumbnail : ""}&mute=1&controls=0&showinfo=0&rel=0&iv_load_policy=3&modestbranding=1&playsinline=1`}
                             allow="autoplay; encrypted-media"
                             allowFullScreen
-                            className="w-full h-full border-none"
+                            className="w-full h-full border-none youtube-iframe"
                           ></iframe>
                           <div className="absolute bottom-2 right-2 bg-black/80 text-white text-xs px-2 py-1 rounded font-semibold">{item.duration}</div>
                         </div>
@@ -385,8 +385,6 @@ export const Modal = ({ isOpen, onClose, data, color, showSolutions = false, sho
         .carousel-smooth { scroll-behavior: smooth; -webkit-overflow-scrolling: touch; overscroll-behavior-x: contain; }
         .youtube-iframe { pointer-events: none !important; }
         .youtube-iframe::after { display: none !important; }
-        iframe[src*="youtube.com"] { pointer-events: none !important; }
-        .youtube-iframe::-webkit-media-controls { display: none !important; }
         .close-button-mobile { position: absolute; top: 20px; right: 20px; background: white; border: none; width: 36px; height: 36px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 20px; color: #333; transition: all 0.2s ease; z-index: 10000; padding: 0; line-height: 1; font-weight: 300; }
         .close-button-mobile:hover { background: #f0f0f0; transform: scale(1.1); }
         .close-button-desktop { display: none; position: absolute; top: 20px; right: 20px; background: white; border: none; width: 40px; height: 40px; border-radius: 50%; cursor: pointer; align-items: center; justify-content: center; font-size: 24px; color: #333; transition: all 0.2s ease; z-index: 10000; padding: 0; line-height: 1; font-weight: 400; }
