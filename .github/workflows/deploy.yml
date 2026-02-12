@@ -31,5 +31,6 @@ jobs:
           local-dir: ./out/
           # ALTERADO: Removi 'public_html/', deixei apenas './'
           # Isso diz: "Jogue os arquivos na raiz de onde o FTP conecta"
-          server-dir: ./public_html/
+          server-dir: ./
           dangerous-clean-slate: false
+          delete: false
