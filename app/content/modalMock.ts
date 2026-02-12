@@ -37,34 +37,31 @@ export const modalDataMapInbound: Record<string, ModalData> = {
       { id: "videos", label: "Eventos Corporativos" },
     ],
     carouselItems: [
-      {
-        type: "reels",
-        thumbnail: "gFffM31hhl0",
-        duration: "0:26",
-        description: "Fair Price - Como eu não pensei nisso antes?",
-        format: "reels",
-      },
-      {
-        type: "reels",
-        thumbnail: "ee5JWsPKjUU",
-        duration: "0:43",
-        description: "Fair price - Relacionamento Tóxico",
-        format: "reels", // NOVO
-      },
-      {
-        type: "videos",
-        thumbnail: "a6f_BVS5cqM",
-        duration: "0:33",
-        description: "BUNZL EPI - TOP OF MIND",
-        format: "video", // NOVO
-      },
+      // Reels videos
+      { type: "reels", thumbnail: "gFffM31hhl0", duration: "0:26", description: "Fair Price - Como eu não pensei nisso antes?", format: "reels" },
+      { type: "reels", thumbnail: "ee5JWsPKjUU", duration: "0:43", description: "Fair price - Relacionamento Tóxico", format: "reels" },
+
+      { type: "reels", thumbnail: "4_B0_Vt6WAo", duration: "0:54", description: "Fair price - Saia da Matrix, receba seu precatório", format: "reels" },
+      { type: "reels", thumbnail: "EuiwrOgB9ak", duration: "0:29", description: "Fair price | Sexto Sentido", format: "reels" },
+      { type: "reels", thumbnail: "al1_LUwD_gI", duration: "0:57", description: "Fair price - Plantão Globo", format: "reels" },
+      { type: "reels", thumbnail: "fbvDGDJjzn8", duration: "0:16", description: "Fair price - Calote do Governo", format: "reels" },
+      { type: "reels", thumbnail: "UChw5nQb6iw", duration: "0:35", description: "Fair price - Sorteando contas", format: "reels" },
+      { type: "reels", thumbnail: "BTrZJ8l5QMQ", duration: "0:7", description: "Fair price - Esperando desde 2011", format: "reels" },
+      { type: "reels", thumbnail: "UnTCqGTit5Q", duration: "0:30", description: "Fair price - Dinheiro pro Básico", format: "reels" },
+      { type: "reels", thumbnail: "wbgUkfrRx8o", duration: "0:23", description: "Franco Guimarães - Acordo Direto", format: "reels" },
+      { type: "reels", thumbnail: "Sut4u98aWw0", duration: "0:15", description: "Fair price - Esperar ou Receber", format: "reels" },
+      { type: "reels", thumbnail: "gjnME8XaPLU", duration: "0:28", description: "Fair price - Síndroma do Predatório", format: "reels" },
+      { type: "reels", thumbnail: "5FRq8CferB0", duration: "0:13", description: "Fair price - Você vai esperar até quando?", format: "reels" },
+      // Eventos Corporativos videos
+      { type: "videos", thumbnail: "cw87nRerJr0", duration: "0:30", description: "Vivo Música - Poa", format: "reels" },
+      { type: "videos", thumbnail: "a6f_BVS5cqM", duration: "0:33", description: "BUNZL EPI - TOP OF MIND", format: "video" },
     ],
   },
   meio: {
     category: "MEIO DO FUNIL",
     title: "CONSIDERAÇÃO",
     description: "Obejtivo: Nutrir leads com informações relevantes, mostrando como sua solução resolve problemas específicos.",
-    solutionStrong: ["Animações:", "Video institucional:", "Vídeos de Produtos:", "Branded Content:"],
+    solutionStrong: ["Animações:", "Video institucional:", "Vídeos de Explicativos:", "Branded Content:"],
     solutions: [
       " Simplificação de conceitos complexos, mostrando soluções de forma didática e visual",
       " Video institucional: Reforça a identidade da marca e comunica valores e diferenciais.",
@@ -83,30 +80,51 @@ export const modalDataMapInbound: Record<string, ModalData> = {
       // Animacoes videos
       {
         type: "animacoes",
-        thumbnail: "l6vFK9gtDI4",
-        duration: "1:24",
-        description: "Skyone - Portal do Fornecedor",
+        thumbnail: "MyuMOOt1Wbs",
+        duration: "0:35",
+        description: "Skyone - Risco Sacado",
         format: "video", // NOVO
       },
       {
         type: "animacoes",
-        thumbnail: "_7hfvr27r28",
+        thumbnail: "g9y7bj1-CHY",
+        duration: "1:12",
+        description: "Integra.Sky",
+        format: "video", // NOVO
+      },
+      {
+        type: "animacoes",
+        thumbnail: "6TD0enJo0TM",
+        duration: "1:09",
+        description: "Simple.Sky",
+        format: "video", // NOVO
+      },
+      {
+        type: "animacoes",
+        thumbnail: "l6vFK9gtDI4",
+        duration: "1:00",
+        description: "Skyone",
+        format: "video", // NOVO
+      },
+      {
+        type: "animacoes",
+        thumbnail: "BvCkDnc2pFc",
         duration: "2:24",
         description: "Skyone - Risco Sacado",
         format: "video", // NOVO
       },
       {
         type: "animacoes",
-        thumbnail: "BvCkDnc2pFc",
-        duration: "1:26",
-        description: "Skyone  Sky Security",
+        thumbnail: "PK7igMX8_x0",
+        duration: "0:21",
+        description: "Cinese Content",
         format: "video", // NOVO
       },
       {
         type: "animacoes",
         thumbnail: "OLRU9NePZGU",
-        duration: "1:00",
-        description: "Skyone",
+        duration: "1:26",
+        description: "Skyone - Sky Security",
         format: "video", // NOVO
       },
       // Institucional videos

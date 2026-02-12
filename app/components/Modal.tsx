@@ -307,28 +307,24 @@ export const Modal = ({ isOpen, onClose, data, color, showSolutions = false, sho
 
                   <div
                     ref={carouselRef}
-                    className="relative z-0 flex gap-4 overflow-x-auto overflow-y-hidden pb-4 scrollbar-hide snap-x snap-mandatory w-full md:max-h-72 select-none carousel-smooth"
+                    className="relative z-0 flex gap-4 overflow-x-auto pb-4 scrollbar-hide snap-x snap-mandatory w-full h-auto select-none carousel-smooth items-center"
                     key={carouselFilter}
                   >
                     {filteredCarousel.map((item, index) => (
                       <div
                         key={`${carouselFilter}-${index}`}
-                        className={`shrink-0 snap-start transition-all duration-500 ease-in-out ${item.format === "reels" ? "w-36 h-64" : "w-60"}`}
+                        className={`shrink-0 snap-start transition-all duration-500 ease-in-out flex flex-col ${item.format === "reels" ? "w-36 h-auto" : "w-60 h-auto"}`}
                         style={{
                           animation: "fadeIn 0.5s ease-in-out",
-                          aspectRatio: item.format === "reels" ? "9/16" : "16/9",
                         }}
                       >
-                        {/* --- ALTERAÇÃO 2: Itens do Carrossel --- */}
+                        {/* Container da Imagem/Vídeo */}
                         <div
-                          className={`relative mb-3 rounded-xl overflow-hidden bg-gray-200 shadow-md cursor-pointer hover:scale-105 duration-300 transition-all object-cover ${
-                            item.format === "reels" ? "h-full" : "aspect-video"
+                          className={`relative mb-3 shrink-0 rounded-xl overflow-hidden bg-gray-200 shadow-md cursor-pointer hover:scale-105 duration-300 transition-all object-cover w-full ${
+                            item.format === "reels" ? "aspect-[9/16]" : "aspect-video"
                           }`}
-                          // 4. ALTERADO: Passamos o item.format para a função
                           onClick={() => handleCarouselVideoClick(typeof item.thumbnail === "string" ? item.thumbnail : "", item.format)}
                         >
-                          {/* --- CORREÇÃO FINAL PARA CARROSSEL --- */}
-                          {/* Container absoluto centralizado + Iframe 180% */}
                           <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
                             <iframe
                               src={`https://www.youtube.com/embed/${typeof item.thumbnail === "string" ? item.thumbnail : ""}?autoplay=1&loop=1&playlist=${typeof item.thumbnail === "string" ? item.thumbnail : ""}&mute=1&controls=0&showinfo=0&rel=0&iv_load_policy=3&modestbranding=1&playsinline=1&disablekb=1`}
@@ -340,7 +336,9 @@ export const Modal = ({ isOpen, onClose, data, color, showSolutions = false, sho
 
                           <div className="absolute bottom-2 right-2 bg-black/80 text-white text-xs px-2 py-1 rounded font-semibold z-10">{item.duration}</div>
                         </div>
-                        <p className="text-md text-gray-600 leading-relaxed">{item.description}</p>
+
+                        {/* Texto descritivo: Agora flui livremente abaixo do vídeo */}
+                        <p className="text-sm text-gray-700 ">{item.description}</p>
                       </div>
                     ))}
                   </div>
