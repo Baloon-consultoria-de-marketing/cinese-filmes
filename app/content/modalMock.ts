@@ -64,19 +64,19 @@ export const modalDataMapInbound: Record<string, ModalData> = {
     category: "MEIO DO FUNIL",
     title: "CONSIDERAÇÃO",
     description: "Obejtivo: Nutrir leads com informações relevantes, mostrando como sua solução resolve problemas específicos.",
-    solutionStrong: ["Animações:", "Video institucional:", "Branded Content:", "Vídeos de Produtos:"],
+    solutionStrong: ["Animações:", "Video institucional:", "Vídeos de Produtos:", "Branded Content:"],
     solutions: [
       " Simplificação de conceitos complexos, mostrando soluções de forma didática e visual",
       " Video institucional: Reforça a identidade da marca e comunica valores e diferenciais.",
-      "Storytelling opu documentário que emociona e iinforma, criando impacto social.",
       "Detalham produtos, serviços ou processos, promovendo tranquilidade e clareza.",
+      "Storytelling opu documentário que emociona e iinforma, criando impacto social.",
     ],
     benefits: ["Melhora o entendimento sobre os serviços ou produtos.", "Fortalece a confiança na marca como solução ideal.", "Posiciona a empresa como autoridade no segmento."],
     videoSrc: "cHRPmNrrYeg",
     tabs: [
       { id: "animacoes", label: "Animações " },
       { id: "institucional", label: "Vídeo Institucional" },
-      { id: "explicativos", label: "Vídeos de Produtos" },
+      { id: "explicativos", label: "Vídeos Explicativos" },
       { id: "branded", label: "Branded Content" },
     ],
     carouselItems: [
@@ -179,21 +179,21 @@ export const modalDataMapInbound: Record<string, ModalData> = {
         thumbnail: "Nil9rtGdPGY",
         duration: "0:59",
         description: "Fair Price - Como vender seu precatório?",
-        format: "video", // NOVO
+        format: "reels", // NOVO
       },
       {
         type: "explicativos",
         thumbnail: "-a3AUU9ehSU",
         duration: "0:46",
         description: "Franco Guimarães | O que preciso para um investimento.",
-        format: "video", // NOVO
+        format: "reels", // NOVO
       },
       {
         type: "explicativos",
         thumbnail: "voTtBqDKTs8",
         duration: "0:23",
         description: "PRA QUEM POSSO VENDER MEU PRECATÓRIO COM SEGURANÇA?",
-        format: "video", // NOVO
+        format: "reels", // NOVO
       },
       // Branded Content videos
       {
