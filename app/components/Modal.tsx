@@ -250,7 +250,8 @@ export const Modal = ({ isOpen, onClose, data, color, showSolutions = false, sho
                         type="button"
                         aria-label="Anterior"
                         onClick={() => scrollCarousel("left")}
-                        className="hidden md:flex items-center justify-center cursor-pointer hover:scale-110 duration-300 absolute left-0 top-25 -translate-x-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/90 shadow-lg text-gray-800 hover:bg-white transition z-20"
+                        /* Ajustei top-25 para top-1/2 para centralizar verticalmente de forma mais segura */
+                        className="hidden md:flex items-center justify-center cursor-pointer hover:scale-110 duration-300 absolute left-0 top-1/2 -translate-x-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/90 shadow-lg text-gray-800 hover:bg-white transition z-20"
                       >
                         ‹
                       </button>
@@ -258,13 +259,15 @@ export const Modal = ({ isOpen, onClose, data, color, showSolutions = false, sho
                         type="button"
                         aria-label="Próximo"
                         onClick={() => scrollCarousel("right")}
-                        className="hidden md:flex items-center justify-center cursor-pointer hover:scale-110 duration-300 absolute right-0 top-25 translate-x-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/90 shadow-lg text-gray-800 hover:bg-white transition z-20"
+                        /* Ajustei top-25 para top-1/2 para centralizar verticalmente de forma mais segura */
+                        className="hidden md:flex items-center justify-center cursor-pointer hover:scale-110 duration-300 absolute right-0 top-1/2 translate-x-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/90 shadow-lg text-gray-800 hover:bg-white transition z-20"
                       >
                         ›
                       </button>
                     </>
                   )}
-                  <div className="overflow-x-auto scrollbar-hide">
+                  {/* ADICIONADO: ref={carouselRef} para conectar o scroll aos botões */}
+                  <div className="overflow-x-auto scrollbar-hide" ref={carouselRef}>
                     <div className="flex gap-4 pb-4 w-max">
                       {galleryImages.map((image, index) => (
                         <div
@@ -304,7 +307,7 @@ export const Modal = ({ isOpen, onClose, data, color, showSolutions = false, sho
 
                   <div
                     ref={carouselRef}
-                    className="relative z-0 flex  gap-4 overflow-x-auto overflow-y-hidden pb-4 scrollbar-hide snap-x snap-mandatory w-full md:max-h-72 select-none carousel-smooth"
+                    className="relative z-0 flex gap-4 overflow-x-auto overflow-y-hidden pb-4 scrollbar-hide snap-x snap-mandatory w-full md:max-h-72 select-none carousel-smooth"
                     key={carouselFilter}
                   >
                     {filteredCarousel.map((item, index) => (
@@ -331,7 +334,7 @@ export const Modal = ({ isOpen, onClose, data, color, showSolutions = false, sho
                               src={`https://www.youtube.com/embed/${typeof item.thumbnail === "string" ? item.thumbnail : ""}?autoplay=1&loop=1&playlist=${typeof item.thumbnail === "string" ? item.thumbnail : ""}&mute=1&controls=0&showinfo=0&rel=0&iv_load_policy=3&modestbranding=1&playsinline=1&disablekb=1`}
                               allow="autoplay; encrypted-media"
                               allowFullScreen
-                              className="w-[180%] h-[180%] border-none"
+                              className="w-[165%] h-[165%] border-none"
                             ></iframe>
                           </div>
 

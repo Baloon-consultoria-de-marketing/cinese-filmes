@@ -24,7 +24,7 @@ export default function Content() {
 
   const [phoneValue, setPhoneValue] = useState("");
   const [emailError, setEmailError] = useState("");
-  const [videoPlayer, setVideoPlayer] = useState<{ videoId: string; url: string } | null>(null);
+  const [videoPlayer, setVideoPlayer] = useState<{ id: string; url: string; format: "video" | "reels" } | null>(null);
   const isScrolling = useRef(false);
   const touchStartY = useRef(0);
 
@@ -69,8 +69,8 @@ export default function Content() {
     setModalData(null);
   };
 
-  const handleVideoClick = (videoId: string, url: string) => {
-    setVideoPlayer({ videoId, url });
+  const handleVideoClick = (id: string, url: string, format: "video" | "reels" = "video") => {
+    setVideoPlayer({ id, url, format });
   };
 
   const closeVideoPlayer = () => {
@@ -275,7 +275,8 @@ export default function Content() {
         <section data-section="section-hero" className="relative w-full h-screen overflow-hidden">
           <div className="video-container">
             <iframe src="https://www.youtube.com/embed/hbxq2_7chtg?autoplay=1&loop=1&playlist=hbxq2_7chtg&mute=1" allow="autoplay; encrypted-media" allowFullScreen></iframe>
-            <div className="video-overlay" onClick={() => handleVideoClick("hbxq2_7chtg", "https://youtu.be/hbxq2_7chtg?si=FUwGOMZ5flLoQmCu")}></div>
+            {/* O vídeo HERO continua sendo padrão (horizontal) */}
+            <div className="video-overlay" onClick={() => handleVideoClick("hbxq2_7chtg", "https://youtu.be/hbxq2_7chtg?si=FUwGOMZ5flLoQmCu", "video")}></div>
           </div>
           <div className="absolute inset-0 flex items-center justify-center bg-black/20">
             <i className="text-white text-xl md:text-3xl font-normal text-center px-4 drop-shadow-lg font-[raleway] tracking-widest md:max-w-250">
@@ -339,9 +340,18 @@ export default function Content() {
                 className="relative w-33.75 lg:w-66.5 h-60 lg:h-118.5 rounded-lg aspect-video max-w-md hidden md:block"
                 style={{ WebkitBoxShadow: "0px 0px 11px 0px #000000", boxShadow: "0px 0px 11px 0px #000000" }}
               >
-                <div className="video-container-short ">
-                  <iframe src="https://www.youtube.com/embed/cHRPmNrrYeg?autoplay=1&loop=1&playlist=cHRPmNrrYeg&mute=1" allow="autoplay; encrypted-media" allowFullScreen></iframe>
-                  <div className="video-overlay" onClick={() => handleVideoClick("cHRPmNrrYeg", "https://youtube.com/shorts/cHRPmNrrYeg?si=tXocsSBb2omHbDe5")}></div>
+                {/* Removido a classe video-container-short para evitar conflito de CSS e aplicado o zoom hack */}
+                <div className="relative w-full h-full overflow-hidden rounded-lg bg-black">
+                  <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                    <iframe
+                      src="https://www.youtube.com/embed/cHRPmNrrYeg?autoplay=1&loop=1&playlist=cHRPmNrrYeg&mute=1&controls=0&showinfo=0&rel=0&modestbranding=1"
+                      allow="autoplay; encrypted-media"
+                      allowFullScreen
+                      className="w-[180%] h-[180%] border-none max-w-none"
+                    ></iframe>
+                  </div>
+                  {/* ADICIONADO "reels" NO FINAL DO ONCLICK */}
+                  <div className="absolute inset-0 cursor-pointer z-10" onClick={() => handleVideoClick("cHRPmNrrYeg", "https://youtube.com/shorts/cHRPmNrrYeg?si=tXocsSBb2omHbDe5", "reels")}></div>
                 </div>
               </div>
             </div>
@@ -349,14 +359,17 @@ export default function Content() {
         </section>
         {/* video mobile */}
         <section data-section="section-video" className="flex md:hidden w-full h-screen justify-center items-center ">
-          <div className="w-4/5 h-[66%] relative" style={{ aspectRatio: "9/16" }}>
-            <iframe
-              src="https://www.youtube.com/embed/cHRPmNrrYeg?autoplay=1&loop=1&playlist=cHRPmNrrYeg&mute=1"
-              allow="autoplay; encrypted-media"
-              allowFullScreen
-              className="w-full h-full rounded-lg"
-            ></iframe>
-            <div className="video-overlay" onClick={() => handleVideoClick("cHRPmNrrYeg", "https://youtube.com/shorts/cHRPmNrrYeg?si=tXocsSBb2omHbDe5")}></div>
+          <div className="w-4/5 h-[66%] relative overflow-hidden rounded-lg bg-black" style={{ aspectRatio: "9/16" }}>
+            <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+              <iframe
+                src="https://www.youtube.com/embed/cHRPmNrrYeg?autoplay=1&loop=1&playlist=cHRPmNrrYeg&mute=1&controls=0&showinfo=0&rel=0&modestbranding=1"
+                allow="autoplay; encrypted-media"
+                allowFullScreen
+                className="w-[180%] h-[180%] border-none max-w-none"
+              ></iframe>
+            </div>
+            {/* ADICIONADO "reels" NO FINAL DO ONCLICK */}
+            <div className="absolute inset-0 cursor-pointer z-10" onClick={() => handleVideoClick("cHRPmNrrYeg", "https://youtube.com/shorts/cHRPmNrrYeg?si=tXocsSBb2omHbDe5", "reels")}></div>
           </div>
         </section>
 
@@ -378,7 +391,7 @@ export default function Content() {
                 </Button>
               </div>
             </div>
-            <div className="flex md:hidden flex-col w-full justify-center items-center gap-8 z-40 px-4 py-8">
+            <div className="flex md:hidden flex-col w-full justify-center items-center gap-4 z-40 px-4 py-8">
               <Button color="blue" onClick={() => openModal("topo", "blue", "inbound", false, true)}>
                 TOPO
               </Button>
@@ -544,13 +557,27 @@ export default function Content() {
         />
       )}
 
+      {/* MODAL DE VÍDEO ATUALIZADA - Substitua o bloco antigo por este */}
       {videoPlayer && (
-        <div className="video-player-overlay" onClick={closeVideoPlayer}>
-          <div className="video-player-container" onClick={(e) => e.stopPropagation()}>
-            <button className="close-button" onClick={closeVideoPlayer}>
-              X
+        <div className="fixed inset-0 z-[60] bg-black/90 backdrop-blur-md flex items-center justify-center p-4 animate-fadeIn" onClick={() => setVideoPlayer(null)}>
+          <div
+            className={`relative bg-black shadow-2xl rounded-lg overflow-hidden transition-all duration-300 ${
+              videoPlayer.format === "reels" ? "w-full max-w-[400px] aspect-[9/16]" : "w-full max-w-5xl aspect-video"
+            }`}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button
+              className="absolute top-4 right-4 z-20 bg-white/20 cursor-pointer hover:bg-white text-white hover:text-black rounded-full w-10 h-10 flex items-center justify-center transition-all duration-300 backdrop-blur-sm"
+              onClick={() => setVideoPlayer(null)}
+            >
+              ✕
             </button>
-            <iframe src={`https://www.youtube.com/embed/${videoPlayer.videoId}?autoplay=1`} allow="autoplay; encrypted-media" allowFullScreen></iframe>
+            <iframe
+              src={`https://www.youtube.com/embed/${videoPlayer.id}?autoplay=1&rel=0&showinfo=0`}
+              allow="autoplay; encrypted-media"
+              allowFullScreen
+              className="w-full h-full border-none"
+            ></iframe>
           </div>
         </div>
       )}
