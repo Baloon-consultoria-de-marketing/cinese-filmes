@@ -29,7 +29,7 @@ jobs:
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
           local-dir: ./out/
-          server-dir: ./public_html/
-          # A flag abaixo remove arquivos do servidor que não existem no seu build local
-          # Útil para limpar o WordPress antigo automaticamente.
+          # ALTERADO: Removi 'public_html/', deixei apenas './'
+          # Isso diz: "Jogue os arquivos na raiz de onde o FTP conecta"
+          server-dir: ./
           dangerous-clean-slate: false
