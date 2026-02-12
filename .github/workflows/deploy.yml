@@ -15,7 +15,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: "18" # Garante a versão correta do Node
+          node-version: "20" # ALTERADO: De "18" para "20"
 
       - name: Instalar dependências e Build
         run: |
