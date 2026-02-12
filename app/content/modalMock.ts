@@ -192,27 +192,6 @@ export const modalDataMapInbound: Record<string, ModalData> = {
         description: "A Revolução da Segurança - Bepi Service.",
         format: "video", // NOVO
       },
-      {
-        type: "explicativos",
-        thumbnail: "Nil9rtGdPGY",
-        duration: "0:59",
-        description: "Fair Price - Como vender seu precatório?",
-        format: "reels", // NOVO
-      },
-      {
-        type: "explicativos",
-        thumbnail: "-a3AUU9ehSU",
-        duration: "0:46",
-        description: "Franco Guimarães | O que preciso para um investimento.",
-        format: "reels", // NOVO
-      },
-      {
-        type: "explicativos",
-        thumbnail: "voTtBqDKTs8",
-        duration: "0:23",
-        description: "PRA QUEM POSSO VENDER MEU PRECATÓRIO COM SEGURANÇA?",
-        format: "reels", // NOVO
-      },
       // Branded Content videos
       {
         type: "branded",
