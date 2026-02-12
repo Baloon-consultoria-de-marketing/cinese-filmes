@@ -25,6 +25,7 @@ export default function Content() {
   const [phoneValue, setPhoneValue] = useState("");
   const [emailError, setEmailError] = useState("");
   const [videoPlayer, setVideoPlayer] = useState<{ id: string; url: string; format: "video" | "reels" } | null>(null);
+  const [isVideoClosing, setIsVideoClosing] = useState(false);
   const isScrolling = useRef(false);
   const touchStartY = useRef(0);
 
@@ -74,7 +75,11 @@ export default function Content() {
   };
 
   const closeVideoPlayer = () => {
-    setVideoPlayer(null);
+    setIsVideoClosing(true);
+    setTimeout(() => {
+      setVideoPlayer(null);
+      setIsVideoClosing(false);
+    }, 300);
   };
 
   const formatPhone = (value: string) => {
@@ -252,9 +257,9 @@ export default function Content() {
          @keyframes scroll-infinite { 0% { transform: translateX(0); } 100% { transform: translateX(calc(-100% / 2)); } }
         .animate-scroll-infinite { animation: scroll-infinite 40s linear infinite; }
         .video-container { position: absolute; top: 0; left: 0; width: 100%; height: 100%; overflow: hidden; }
-        .video-container iframe { position: absolute; top: 50%; left: 50%; width: 115vw; height: 56.25vw; transform: translate(-50%, -50%); border: none; }
+        .video-container iframe { position: absolute; top: 50%; left: 50%; width: 115vw; height: 76.25vw; transform: translate(-50%, -50%); border: none; }
         .video-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; cursor: pointer; z-index: 10; }
-        @media (max-aspect-ratio: 16/9) { .video-container iframe { width: 177.77vh; height: 100vh; } }
+        @media (max-aspect-ratio: 16/9) { .video-container iframe { width: 240vh; height: 100vh; } }
         .video-container-short { position: relative; width: 100%; height: 100%; overflow: hidden; border-radius: 8px; }
         .video-container-short iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
         .video-player-overlay { position: fixed; inset: 0; background-color: rgba(0, 0, 0, 0.6); backdrop-filter: blur(8px); z-index: 9999; display: flex; align-items: center; justify-content: center; padding: 20px; animation: fadeInOverlay 0.3s ease-in-out; }
@@ -559,16 +564,25 @@ export default function Content() {
 
       {/* MODAL DE VÍDEO ATUALIZADA - Substitua o bloco antigo por este */}
       {videoPlayer && (
-        <div className="fixed inset-0 z-[60] bg-black/90 backdrop-blur-md flex items-center justify-center p-4 animate-fadeIn" onClick={() => setVideoPlayer(null)}>
+        <div
+          className={`fixed inset-0 z-[60] bg-black/90 backdrop-blur-md flex items-center justify-center p-4 transition-opacity duration-300 ${isVideoClosing ? "opacity-0" : "animate-fadeIn"}`}
+          onClick={closeVideoPlayer}
+        >
           <div
-            className={`relative bg-black shadow-2xl rounded-lg overflow-hidden transition-all duration-300 ${
-              videoPlayer.format === "reels" ? "w-full max-w-[400px] aspect-[9/16]" : "w-full max-w-5xl aspect-video"
-            }`}
+            /* 
+               ALTERAÇÃO AQUI:
+               - Adicionado `h-[80vh]` para mobile (md:h-auto).
+               - Adicionado `w-auto` para permitir que a largura se ajuste à altura no mobile.
+               - Mantida a lógica de aspect ratio para desktop.
+            */
+            className={`relative bg-black shadow-2xl rounded-lg overflow-hidden transition-all duration-300 
+              ${videoPlayer.format === "reels" ? "w-full max-w-[400px] aspect-[9/16] h-[80vh] md:h-auto" : "w-full md:w-auto h-[80vh] md:h-auto max-w-5xl md:aspect-video aspect-video"} 
+              ${isVideoClosing ? "scale-95 opacity-0" : "scale-100 opacity-100"}`}
             onClick={(e) => e.stopPropagation()}
           >
             <button
               className="absolute top-4 right-4 z-20 bg-white/20 cursor-pointer hover:bg-white text-white hover:text-black rounded-full w-10 h-10 flex items-center justify-center transition-all duration-300 backdrop-blur-sm"
-              onClick={() => setVideoPlayer(null)}
+              onClick={closeVideoPlayer}
             >
               ✕
             </button>
