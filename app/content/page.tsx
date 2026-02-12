@@ -11,6 +11,7 @@ import { Button } from "../components/Button";
 import { Modal } from "../components/Modal";
 import { modalDataMapInbound, modalsDataMapEndomarketing, modalsDataMapEmployer, ModalData } from "./modalMock";
 import Swal from "sweetalert2";
+import CarrosselBrands from "../components/CarrosselBrands";
 
 export default function Content() {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -28,6 +29,18 @@ export default function Content() {
   const [isVideoClosing, setIsVideoClosing] = useState(false);
   const isScrolling = useRef(false);
   const touchStartY = useRef(0);
+
+  // Bloqueia o scroll do body quando o modal está aberto ou videoPlayer ativo
+  useEffect(() => {
+    if (modalData || videoPlayer) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [modalData, videoPlayer]);
 
   const sections = useMemo(
     () => ["section-hero", "section-brands", "section-video", "section-inbound", "section-endomarketing", "section-employer", "section-contact", "section-brands-mobile", "section-footer"],
@@ -187,13 +200,40 @@ export default function Content() {
 
   // Scroll full-page por seções
   useEffect(() => {
-    const handleWheel = (e: WheelEvent) => {
-      if (isScrolling.current || modalData) return;
+    // Helper para encontrar a próxima seção visível
+    const findNextVisibleSection = (currentIndex: number, direction: 1 | -1) => {
+      let nextIndex = currentIndex + direction;
+      while (nextIndex >= 0 && nextIndex < sections.length) {
+        const element = document.querySelector(`[data-section="${sections[nextIndex]}"]`);
+        if (element) {
+          const style = window.getComputedStyle(element);
+          if (style.display !== "none" && style.visibility !== "hidden") {
+            return nextIndex;
+          }
+        }
+        nextIndex += direction;
+      }
+      return -1; // Não encontrou
+    };
 
-      if (e.deltaY > 0) {
-        scrollToIndex(activeSection + 1);
-      } else {
-        scrollToIndex(activeSection - 1);
+    const handleWheel = (e: WheelEvent) => {
+      // Se houver modal aberto ou video player ativo, não interfere
+      if (modalData || videoPlayer) return;
+
+      // Se estiver no meio de uma animação de scroll, bloqueia novas interações
+      if (isScrolling.current) {
+        e.preventDefault();
+        return;
+      }
+
+      // Bloqueia o scroll nativo da página
+      e.preventDefault();
+
+      const direction = e.deltaY > 0 ? 1 : -1;
+      const nextIndex = findNextVisibleSection(activeSection, direction);
+
+      if (nextIndex !== -1) {
+        scrollToIndex(nextIndex);
       }
     };
 
@@ -202,9 +242,19 @@ export default function Content() {
     };
 
     const handleTouchMove = (e: TouchEvent) => {
-      if (!modalData) return;
+      // Se não tem modal nem vídeo, bloqueia o scroll nativo (fullpage scroll)
+      if (!modalData && !videoPlayer) {
+        if (e.cancelable) e.preventDefault();
+        return;
+      }
 
+      // Se tem vídeo, deixa o evento propagar (pode ser interação com o player)
+      if (videoPlayer) return;
+
+      // Se tem modal, verifica se o toque foi DENTRO do modal
+      // Se for fora (no overlay), bloqueia o scroll
       const target = e.target as HTMLElement;
+      // Procura um elemento com classe z-50 (o modal normalmente tem essa classe ou maior)
       const isInsideModal = target.closest('[class*="z-50"]');
 
       if (!isInsideModal && e.cancelable) {
@@ -213,17 +263,17 @@ export default function Content() {
     };
 
     const handleTouchEnd = (e: TouchEvent) => {
-      if (isScrolling.current || modalData) return;
+      if (isScrolling.current || modalData || videoPlayer) return;
 
       const touchEndY = e.changedTouches[0].clientY;
       const deltaY = touchStartY.current - touchEndY;
       const threshold = 50;
 
       if (Math.abs(deltaY) > threshold) {
-        if (deltaY > 0) {
-          scrollToIndex(activeSection + 1);
-        } else {
-          scrollToIndex(activeSection - 1);
+        const direction = deltaY > 0 ? 1 : -1;
+        const nextIndex = findNextVisibleSection(activeSection, direction);
+        if (nextIndex !== -1) {
+          scrollToIndex(nextIndex);
         }
       }
     };
@@ -239,7 +289,7 @@ export default function Content() {
       window.removeEventListener("touchmove", handleTouchMove);
       window.removeEventListener("touchend", handleTouchEnd);
     };
-  }, [activeSection, scrollToIndex, modalData]);
+  }, [activeSection, scrollToIndex, modalData, videoPlayer]);
 
   return (
     <>
@@ -251,11 +301,10 @@ export default function Content() {
           overscroll-behavior-y: none;
           overscroll-behavior: none;
           touch-action: none;
+          overflow: hidden; /* ADICIONADO: Garante que o scroll nativo nunca apareça */
         }
       `}</style>
       <style jsx>{`
-         @keyframes scroll-infinite { 0% { transform: translateX(0); } 100% { transform: translateX(calc(-100% / 2)); } }
-        .animate-scroll-infinite { animation: scroll-infinite 40s linear infinite; }
         .video-container { position: absolute; top: 0; left: 0; width: 100%; height: 100%; overflow: hidden; }
         .video-container iframe { position: absolute; top: 50%; left: 50%; width: 115vw; height: 76.25vw; transform: translate(-50%, -50%); border: none; }
         .video-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; cursor: pointer; z-index: 10; }
@@ -280,7 +329,6 @@ export default function Content() {
         <section data-section="section-hero" className="relative w-full h-screen overflow-hidden">
           <div className="video-container">
             <iframe src="https://www.youtube.com/embed/hbxq2_7chtg?autoplay=1&loop=1&playlist=hbxq2_7chtg&mute=1" allow="autoplay; encrypted-media" allowFullScreen></iframe>
-            {/* O vídeo HERO continua sendo padrão (horizontal) */}
             <div className="video-overlay" onClick={() => handleVideoClick("hbxq2_7chtg", "https://youtu.be/hbxq2_7chtg?si=FUwGOMZ5flLoQmCu", "video")}></div>
           </div>
           <div className="absolute inset-0 flex items-center justify-center bg-black/20">
@@ -290,62 +338,31 @@ export default function Content() {
           </div>
         </section>
 
-        <section data-section="section-brands" className="w-full">
-          <div className="relative w-full overflow-hidden bg-white">
-            <p className="flex items-center w-full justify-center font-bold text-sm md:text-xl lg:text-2xl font-[raleway] pt-20 md:pt-10 md:pb-10">MARCAS ATENDIDAS</p>
+        <section data-section="section-brands" className="w-full overflow-hidden flex flex-col shrink-0">
+          <div className="relative w-full overflow-hidden bg-white shrink-0">
+            <p className="flex items-center w-full justify-center font-bold text-sm md:text-xl lg:text-2xl font-[raleway] pt-4 md:pt-10 md:pb-6">MARCAS ATENDIDAS</p>
             <div className="absolute left-0 top-0 bottom-0 w-32 bg-linear-to-r from-white to-transparent z-10 pointer-events-none"></div>
             <div className="absolute right-0 top-0 bottom-0 w-32 bg-linear-to-l from-white to-transparent z-10 pointer-events-none"></div>
-            <div className="flex animate-scroll-infinite" style={{ width: "max-content" }}>
-              <div className="flex gap-8 sm:gap-12 md:gap-16 shrink-0">
-                {mockImages.map((image, index) => (
-                  <div key={`first-${index}`} className="shrink-0 flex items-center justify-center">
-                    <Image
-                      src={image.src}
-                      alt={image.alt}
-                      width={100}
-                      height={100}
-                      className="w-24 h-24 sm:w-32 sm:h-32 md:w-40 md:h-40 lg:w-48 lg:h-48 object-cover grayscale hover:grayscale-0 transition-all duration-300"
-                      quality={90}
-                    />
-                  </div>
-                ))}
-              </div>
-              <div className="flex gap-8 sm:gap-12 md:gap-16 shrink-0">
-                {mockImages.map((image, index) => (
-                  <div key={`second-${index}`} className="shrink-0 flex items-center justify-center">
-                    <Image
-                      src={image.src}
-                      alt={image.alt}
-                      width={100}
-                      height={100}
-                      className="w-24 h-24 sm:w-32 sm:h-32 md:w-40 md:h-40 lg:w-48 lg:h-48 object-cover grayscale hover:grayscale-0 transition-all duration-300"
-                      quality={90}
-                    />
-                  </div>
-                ))}
-              </div>
-            </div>
+            <CarrosselBrands />
           </div>
-          <div className="flex flex-col lg:flex-row justify-evenly px-10 lg:px-8 py-24">
-            <div className="flex flex-col md:flex-row gap-6 lg:gap-40 items-center max-w-7xl mx-auto lg:mb-12">
+          <div className="flex flex-col lg:flex-row justify-evenly px-4 lg:px-8 py-4 grow items-center">
+            <div className="flex flex-col md:flex-row gap-4 lg:gap-40 items-center max-w-7xl mx-auto lg:mb-0">
               <div className="flex flex-col gap-2 max-w-full lg:max-w-156.25">
-                <p className="text-2xl md:text-3xl lg:text-[39px] font-extrabold font-[raleway]">CINESE CONTENT</p>
-                <p className="text-[15px] md:text-lg font-normal text-justify font-[raleway]">
+                <p className="text-xl md:text-2xl lg:text-[39px] font-extrabold font-[raleway]">CINESE CONTENT</p>
+                <p className="text-[14px] md:text-lg font-normal text-justify font-[raleway]">
                   Somos a parceira estratégica na construção de conexões autênticas entre marcas, colaboradores e público-alvo. E como fazemos isso? Com histórias visuais extremamente impactantes.
                 </p>
-                <p className="text-[15px] md:text-lg font-normal text-justify font-[raleway]">
+                <p className="text-[14px] md:text-lg font-normal text-justify font-[raleway]">
                   ​Analisamos seu momento institucional, alinhamos objetivos corporativos e criamos estratégias precisas para que cada campanha atinja seu maior potencial dentro das métricas
                   estabelecidas. Sim somos mais que contadores de histórias, somos o racional e a sua estratégia para que seu conteúdo traga resultado de fato.
                 </p>
-                <p className="text-[15px] md:text-lg font-normal text-justify font-[raleway]">Nosso coração pulsa em contar histórias que geram resultados reais.</p>
+                <p className="text-[14px] md:text-lg font-normal text-justify font-[raleway]">Nosso coração pulsa em contar histórias que geram resultados reais.</p>
                 <i className="text-center text-sm md:text-base">&quot;Afinal, todo mundo tem uma boa história, mas poucos sabem contar!&quot;</i>
               </div>
-              {/* video desktop */}
               <div
                 className="relative w-33.75 lg:w-66.5 h-60 lg:h-118.5 rounded-lg aspect-video max-w-md hidden md:block"
                 style={{ WebkitBoxShadow: "0px 0px 11px 0px #000000", boxShadow: "0px 0px 11px 0px #000000" }}
               >
-                {/* Removido a classe video-container-short para evitar conflito de CSS e aplicado o zoom hack */}
                 <div className="relative w-full h-full overflow-hidden rounded-lg bg-black">
                   <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
                     <iframe
@@ -355,14 +372,12 @@ export default function Content() {
                       className="w-[180%] h-[180%] border-none max-w-none"
                     ></iframe>
                   </div>
-                  {/* ADICIONADO "reels" NO FINAL DO ONCLICK */}
                   <div className="absolute inset-0 cursor-pointer z-10" onClick={() => handleVideoClick("cHRPmNrrYeg", "https://youtube.com/shorts/cHRPmNrrYeg?si=tXocsSBb2omHbDe5", "reels")}></div>
                 </div>
               </div>
             </div>
           </div>
         </section>
-        {/* video mobile */}
         <section data-section="section-video" className="flex md:hidden w-full h-screen justify-center items-center ">
           <div className="w-4/5 h-[66%] relative overflow-hidden rounded-lg bg-black" style={{ aspectRatio: "9/16" }}>
             <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
@@ -373,12 +388,10 @@ export default function Content() {
                 className="w-[180%] h-[180%] border-none max-w-none"
               ></iframe>
             </div>
-            {/* ADICIONADO "reels" NO FINAL DO ONCLICK */}
             <div className="absolute inset-0 cursor-pointer z-10" onClick={() => handleVideoClick("cHRPmNrrYeg", "https://youtube.com/shorts/cHRPmNrrYeg?si=tXocsSBb2omHbDe5", "reels")}></div>
           </div>
         </section>
 
-        {/* --- INBOUND MARKETING (Tem Tabs) --- */}
         <section data-section="section-inbound" className="flex justify-center md:h-auto md:min-h-0 min-h-screen items-center">
           <div className={`w-full transition-shadow duration-300 ${modalData ? "shadow-[0px_4px_4px_0px_rgba(0,0,0,0.1)]" : ""}`}>
             <div className="relative flex items-center justify-center w-full md:h-full max-w-480 mx-auto">
@@ -410,7 +423,6 @@ export default function Content() {
           </div>
         </section>
 
-        {/* --- ENDOMARKETING (NÃO Tem Tabs) --- */}
         <section data-section="section-endomarketing" className="flex justify-center md:h-auto md:min-h-0 min-h-screen items-center">
           <div className={`w-full transition-shadow duration-300 ${modalData ? "shadow-[0px_4px_4px_0px_rgba(0,0,0,0.1)]" : ""}`}>
             <div className="relative flex flex-col items-center justify-center w-full md:h-full max-w-480 mx-auto">
@@ -442,7 +454,6 @@ export default function Content() {
           </div>
         </section>
 
-        {/* --- EMPLOYER BRANDING (Tem Tabs) --- */}
         <section data-section="section-employer" className="flex justify-center md:h-auto md:min-h-0 min-h-screen items-center">
           <div className="w-full">
             <div className="relative flex items-center justify-center w-full md:h-full max-w-480 mx-auto">
@@ -562,7 +573,6 @@ export default function Content() {
         />
       )}
 
-      {/* MODAL DE VÍDEO ATUALIZADA - Substitua o bloco antigo por este */}
       {videoPlayer && (
         <div
           className={`fixed inset-0 z-[60] bg-black/90 backdrop-blur-md flex items-center justify-center p-4 transition-opacity duration-300 ${isVideoClosing ? "opacity-0" : "animate-fadeIn"}`}
