@@ -31,7 +31,7 @@ jobs:
           local-dir: ./out/
 
           # O local correto na Hostinger
-          server-dir: ./public_html
+          server-dir: ./
 
           # A SOLUÇÃO MÁGICA:
           # Mudamos o nome do arquivo de controle. O robô vai achar que é a
