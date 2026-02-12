@@ -1,6 +1,13 @@
+name: Deploy para Hostinger
+
+on:
+  push:
+    branches:
+      - main
+
 jobs:
   build-and-deploy:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latest # Mudança para Linux (mais rápido e estável)
     steps:
       - name: Checkout do código
         uses: actions/checkout@v3
@@ -8,14 +15,13 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: "20"
+          node-version: "20" # ALTERADO: De "18" para "20"
 
       - name: Instalar dependências e Build
         run: |
           npm install
           npm run build
 
-      # CORREÇÃO: Adicionei espaços aqui para alinhar com os passos de cima
       - name: Deploy via FTP
         uses: SamKirkland/FTP-Deploy-Action@v4.3.4
         with:
@@ -23,5 +29,7 @@ jobs:
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
           local-dir: ./out/
-          server-dir: ./public_html/
+          # ALTERADO: Removi 'public_html/', deixei apenas './'
+          # Isso diz: "Jogue os arquivos na raiz de onde o FTP conecta"
+          server-dir: ./
           dangerous-clean-slate: false
