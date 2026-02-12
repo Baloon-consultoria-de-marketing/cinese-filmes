@@ -36,6 +36,6 @@ jobs:
           # A SOLUÇÃO MÁGICA:
           # Mudamos o nome do arquivo de controle. O robô vai achar que é a
           # primeira vez e não vai tentar deletar a pasta '_next' antiga que dava erro 550.
-          state-name: .ftp-deploy-sync-state-v2.json
+          state-name: .ftp-deploy-sync-state-v4.json
 
-          dangerous-clean-slate: false
+          dangerous-clean-slate: true
