@@ -190,7 +190,8 @@ export const Modal = ({ isOpen, onClose, data, color, showSolutions = false, sho
                 <div
                   className="relative w-full cursor-pointer overflow-hidden rounded-xl shadow-lg bg-black"
                   style={{ aspectRatio: "9/16", maxHeight: "500px", maxWidth: "280px" }}
-                  onClick={() => handleCarouselVideoClick(data.videoSrc, "video")}
+                  /* ALTERADO: mudado de "video" para "reels" */
+                  onClick={() => handleCarouselVideoClick(data.videoSrc, "reels")}
                 >
                   {/* WRAPPER CENTRALIZADOR + ZOOM 180% */}
                   <div className="absolute inset-0 flex items-center justify-center pointer-events-none">

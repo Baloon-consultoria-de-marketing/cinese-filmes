@@ -570,13 +570,13 @@ export default function Content() {
         >
           <div
             /* 
-               ALTERAÇÃO AQUI:
-               - Adicionado `h-[80vh]` para mobile (md:h-auto).
-               - Adicionado `w-auto` para permitir que a largura se ajuste à altura no mobile.
-               - Mantida a lógica de aspect ratio para desktop.
+               ALTERAÇÃO REALIZADA:
+               - Removidas restrições de largura fixa e max-width.
+               - Definido w-[90%] para mobile e md:w-[80%] para desktop.
+               - Mantido aspect-video para calcular a altura proporcionalmente.
             */
             className={`relative bg-black shadow-2xl rounded-lg overflow-hidden transition-all duration-300 
-              ${videoPlayer.format === "reels" ? "w-full max-w-[400px] aspect-[9/16] h-[80vh] md:h-auto" : "w-full md:w-auto h-[80vh] md:h-auto max-w-5xl md:aspect-video aspect-video"} 
+              ${videoPlayer.format === "reels" ? "w-full max-w-[400px] aspect-[9/16] h-[80vh] md:h-auto" : "w-[90%] md:w-[80%] aspect-video"} 
               ${isVideoClosing ? "scale-95 opacity-0" : "scale-100 opacity-100"}`}
             onClick={(e) => e.stopPropagation()}
           >
