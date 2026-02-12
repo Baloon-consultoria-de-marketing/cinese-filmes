@@ -1,9 +1,10 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {
-  output: "export", // <--- ESSA LINHA É OBRIGATÓRIA PARA GERAR A PASTA 'out'
+const nextConfig: import("next").NextConfig = {
+  output: "export",
   images: {
-    unoptimized: true, // <--- OBRIGATÓRIO PARA IMAGENS NO NEXT STATIC EXPORT
+    unoptimized: true,
   },
+  trailingSlash: true,
 };
 
 export default nextConfig;
