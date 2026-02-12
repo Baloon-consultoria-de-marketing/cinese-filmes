@@ -14,15 +14,14 @@ jobs:
         run: |
           npm install
           npm run build
-          # DICA: Certifique-se que seu next.config.js tem "output: 'export'"
-          # para gerar a pasta 'out'.
 
-    - name: Deploy via FTP
+      # CORREÇÃO: Adicionei espaços aqui para alinhar com os passos de cima
+      - name: Deploy via FTP
         uses: SamKirkland/FTP-Deploy-Action@v4.3.4
         with:
           server: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
-          local-dir: ./out/         # Combina com seu output: "export"
-          server-dir: ./public_html # O lugar padrão onde o site deve viver
+          local-dir: ./out/
+          server-dir: ./public_html/
           dangerous-clean-slate: false
