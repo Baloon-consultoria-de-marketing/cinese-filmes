@@ -29,5 +29,7 @@ jobs:
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
           local-dir: ./out/
-          server-dir: ./ # ALTERADO: De './public_html/' para './'
+          server-dir: ./public_html/
+          # A flag abaixo remove arquivos do servidor que não existem no seu build local
+          # Útil para limpar o WordPress antigo automaticamente.
           dangerous-clean-slate: false
