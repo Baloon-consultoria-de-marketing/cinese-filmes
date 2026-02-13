@@ -348,7 +348,7 @@ export default function Content() {
             <div className="absolute right-0 top-0 bottom-0 w-32 bg-linear-to-l from-white to-transparent z-10 pointer-events-none"></div>
             <CarrosselBrands />
           </div>
-          <div className="flex flex-col lg:flex-row justify-evenly px-4 lg:px-8 py-4 grow items-center">
+          <div className="flex flex-col lg:flex-row justify-evenly px-4 lg:px-8 py-4 h-[70vh] items-center">
             <div className="flex flex-col md:flex-row gap-4 lg:gap-40 items-center max-w-7xl mx-auto lg:mb-0">
               <div className="flex flex-col gap-2 max-w-full lg:max-w-156.25">
                 <p className="text-xl md:text-2xl lg:text-[39px] font-extrabold font-[raleway]">CINESE CONTENT</p>
@@ -438,7 +438,7 @@ export default function Content() {
           >
             <div className="relative w-full h-full flex items-center justify-center">
               <Image src="/ENDOMARKETING.png" alt="Endomarketing" width={1920} height={1080} className="hidden md:block w-full h-full object-contain" quality={90} />
-              <Image src="/ENDOMARKETING-MOBILE.png" alt="Endomarketing" width={1920} height={1080} className="block md:hidden w-full absolute top-50" quality={90} />
+              <Image src="/ENDOMARKETING-MOBILE.png" alt="Endomarketing" width={1920} height={1080} className="block md:hidden w-full absolute top-40" quality={90} />
 
               <div className="hidden md:flex absolute top-[80%] left-0 right-0 w-full justify-center items-center gap-4 z-40 px-4 md:px-0">
                 <Button color="blue" onClick={() => openModal("treinamento", "blue", "endomarketing", false, false)}>
@@ -471,7 +471,7 @@ export default function Content() {
           <div className="relative w-full h-full max-w-[1920px] max-h-[1080px] flex items-center justify-center">
             <div className="relative w-full h-full flex items-center justify-center">
               <Image src="/EMPLOYER-BRANDING.png" alt="Employer Branding" width={1920} height={1080} className="hidden md:block w-full h-full object-contain" quality={90} />
-              <Image src="/EMPLOYER-BRANDING-MOBILE.png" alt="Employer Branding" width={1920} height={1080} className="block md:hidden w-full absolute top-70" quality={90} />
+              <Image src="/EMPLOYER-BRANDING-MOBILE.png" alt="Employer Branding" width={1920} height={1080} className="block md:hidden w-full absolute top-50" quality={90} />
 
               <div className="hidden md:flex absolute top-[80%] left-0 right-0 w-full justify-center items-center gap-4 z-40 px-4 md:px-0">
                 <Button color="blue" onClick={() => openModal("marcaEmpregadora", "blue", "employer", false, true)}>
