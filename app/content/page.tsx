@@ -220,6 +220,9 @@ export default function Content() {
       // Se houver modal aberto ou video player ativo, não interfere
       if (modalData || videoPlayer) return;
 
+      // PERMITIR ZOOM: Se a tecla Ctrl ou Meta (Command) estiver pressionada, libera o evento
+      if (e.ctrlKey || e.metaKey) return;
+
       // Se estiver no meio de uma animação de scroll, bloqueia novas interações
       if (isScrolling.current) {
         e.preventDefault();
