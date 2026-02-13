@@ -401,7 +401,7 @@ export default function Content() {
           >
             <div className="relative w-full h-full flex items-center justify-center">
               <Image src="/INBOUND-MARKETING.png" alt="Inbound Marketing" width={1920} height={1080} className="hidden md:block w-full h-full object-contain" quality={90} />
-              <Image src="/INBOUND-MARKETING-MOBILE.png" alt="Inbound Marketing" width={1080} height={1920} className="block md:hidden w-full absolute top-50" quality={90} />
+              <Image src="/INBOUND-MARKETING-MOBILE.png" alt="Inbound Marketing" width={1080} height={1920} className="block md:hidden w-full absolute top-30" quality={90} />
 
               {/* Buttons Desktop - Absolute relative to the container */}
               <div className="hidden md:flex absolute top-[80%] left-0 right-0 w-full justify-center items-center gap-4 z-40 px-4 md:px-0">
@@ -438,7 +438,7 @@ export default function Content() {
           >
             <div className="relative w-full h-full flex items-center justify-center">
               <Image src="/ENDOMARKETING.png" alt="Endomarketing" width={1920} height={1080} className="hidden md:block w-full h-full object-contain" quality={90} />
-              <Image src="/ENDOMARKETING-MOBILE.png" alt="Endomarketing" width={1920} height={1080} className="block md:hidden w-full absolute top-40" quality={90} />
+              <Image src="/ENDOMARKETING-MOBILE.png" alt="Endomarketing" width={1920} height={1080} className="block md:hidden w-full absolute top-30" quality={90} />
 
               <div className="hidden md:flex absolute top-[80%] left-0 right-0 w-full justify-center items-center gap-4 z-40 px-4 md:px-0">
                 <Button color="blue" onClick={() => openModal("treinamento", "blue", "endomarketing", false, false)}>
