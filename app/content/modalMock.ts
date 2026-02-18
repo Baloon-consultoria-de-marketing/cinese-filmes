@@ -146,21 +146,21 @@ export const modalDataMapInbound: Record<string, ModalData> = {
         type: "institucional",
         thumbnail: "0rjKuwDnoqk",
         duration: "2:36",
-        description: "Institucional Colégio Objetivo São Sebastião",
+        description: "Colégio Objetivo São Sebastião",
         format: "video", // NOVO
       },
       {
         type: "institucional",
         thumbnail: "jmC6k5t6ILs",
         duration: "2:13",
-        description: "Institucional Colégio Objetivo Salto",
+        description: "Colégio Objetivo Salto",
         format: "video", // NOVO
       },
       {
         type: "institucional",
         thumbnail: "M0kOZTYsdbs",
         duration: "2:27",
-        description: "Institucional Colégio Cruzeiro do Sul",
+        description: "Colégio Cruzeiro do Sul",
         format: "video", // NOVO
       },
       // Explicativos videos
@@ -318,7 +318,7 @@ export const modalDataMapInbound: Record<string, ModalData> = {
         type: "retargeting",
         thumbnail: "mSX6upid_8Y",
         duration: "0:40",
-        description: "Odontorani - Campanha de Retargeting",
+        description: "Odontorani",
         format: "reels", // NOVO
       },
       {
@@ -345,7 +345,7 @@ export const modalsDataMapEndomarketing: Record<string, ModalData> = {
         type: "reels",
         thumbnail: "OkBbNz_bNIg",
         duration: "2:12",
-        description: "Fair Price - Cálculo de Crédito Alimentar.",
+        description: "Fair Price - Cálculo de Crédito",
         format: "video", // NOVO
       },
       {
