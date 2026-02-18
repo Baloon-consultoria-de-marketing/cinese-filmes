@@ -336,7 +336,7 @@ export const Modal = ({ isOpen, onClose, data, color, showSolutions = false, sho
                               src={`https://www.youtube.com/embed/${typeof item.thumbnail === "string" ? item.thumbnail : ""}?autoplay=1&loop=1&playlist=${typeof item.thumbnail === "string" ? item.thumbnail : ""}&mute=1&controls=0&showinfo=0&rel=0&iv_load_policy=3&modestbranding=1&playsinline=1&disablekb=1`}
                               allow="autoplay; encrypted-media"
                               allowFullScreen
-                              className="w-[200%] h-[200%] border-none"
+                              className="w-[180%] h-[180%] border-none"
                             ></iframe>
                           </div>
 
