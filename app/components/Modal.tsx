@@ -359,7 +359,7 @@ export const Modal = ({ isOpen, onClose, data, color, showSolutions = false, sho
         <div className="fixed inset-0 z-60 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 animate-fadeIn" onClick={closeVideoPlayer}>
           <div
             className={`relative bg-black shadow-2xl rounded-lg overflow-hidden transition-all duration-300 ${
-              videoPlayer.format === "reels" ? "w-full max-w-[400px] aspect-[9/16]" : "w-full max-w-5xl aspect-video"
+              videoPlayer.format === "reels" ? "w-full max-w-100 aspect-9/16" : "w-full max-w-5xl aspect-video"
             }`}
             onClick={(e) => e.stopPropagation()}
           >
