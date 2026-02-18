@@ -120,6 +120,10 @@ export const Modal = ({ isOpen, onClose, data, color, showSolutions = false, sho
     return item.type === carouselFilter;
   });
 
+  // Lógica para definir o alinhamento
+  const allReels = filteredCarousel.length > 0 && filteredCarousel.every((item) => item.format === "reels");
+  const carouselAlignment = allReels ? "items-start" : "items-center";
+
   const showCarouselButtons = isDesktop && filteredCarousel.length > 4;
   const galleryImages = ["/campaign/01.jpg", "/campaign/02.jpg", "/campaign/03.jpg", "/campaign/04.jpg", "/campaign/05.jpg"];
 
@@ -308,7 +312,8 @@ export const Modal = ({ isOpen, onClose, data, color, showSolutions = false, sho
 
                   <div
                     ref={carouselRef}
-                    className="relative z-0 flex gap-4 overflow-x-auto pb-4 scrollbar-hide snap-x snap-mandatory w-full h-auto select-none carousel-smooth items-center"
+                    /* ALTERADO: Usa a variável carouselAlignment baseada no conteúdo */
+                    className={`relative z-0 flex gap-4 overflow-x-auto pb-4 scrollbar-hide snap-x snap-mandatory w-full h-fit select-none carousel-smooth ${carouselAlignment}`}
                     key={carouselFilter}
                   >
                     {filteredCarousel.map((item, index) => (
@@ -339,7 +344,7 @@ export const Modal = ({ isOpen, onClose, data, color, showSolutions = false, sho
                         </div>
 
                         {/* Texto descritivo: Agora flui livremente abaixo do vídeo */}
-                        <p className="text-sm text-gray-700 ">{item.description}</p>
+                        <p className="text-xs  text-gray-700 ">{item.description}</p>
                       </div>
                     ))}
                   </div>
